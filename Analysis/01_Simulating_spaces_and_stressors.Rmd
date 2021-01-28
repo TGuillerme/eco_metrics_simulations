@@ -1,0 +1,56 @@
+---
+title: "Simulating spaces and stressors"
+author: "Thomas Guillerme (guillert@tcd.ie)"
+date: "`r Sys.Date()`"
+bibliography: [../References.bib, ../packages.bib]
+output:
+  html_document: default
+  pdf_document: default
+---
+
+This is a demo on how to simulate the spaces and apply the different stressors to reflect the mechanisms of interest.
+
+# Simulating spaces
+
+We can use the package `dads` that's in development for simulating the trait spaces.
+
+```{r}
+library(devtools)
+install_github("TGuillerme/dads")
+```
+
+We will build simulate data using a Brownian Motion (the breath of trait values just increases with time, unconstrained), a pure birth tree (no extinction) and will stop the simulation as soon as we reach 100 taxa.
+Note that I'll simulate a 2D Brownian Motion trait just for facilitating the visualisation of the stressors, however, for the paper we can stick to one dimension (one trait).
+
+```{r}
+## Creating the trait object (2D BM)
+my_trait <- make.traits(process = BM.process, n = 2)
+
+## Setting up the birth death parameters (no extinction)
+bd_params <- list(speciation = 1)
+
+## Setting up the stopping rules
+stop_rule <- list(max.living = 100)
+
+## Simulating the data
+simulated_data <- dads(bd.params = bd_params,
+                       stop.rule = stop_rule,
+                       traits    = my_trait)
+
+## We can then visualise the simulated data (just two show the process)
+par(mfrow = c(1, 2))
+plot(simulated_data, main = "The simulated BM through time")
+plot(simulated_data, main = "The 2D BM", trait = c(1,2))
+
+## The orange data points are node values and will be ignored
+## Here we'll select only the tip values from the data
+trait_space <- simulated_data$data[rownames(simulated_data$data) %in% simulated_data$tree$tip.label, ]
+```
+
+# Simulating the stressors
+
+
+
+```{r}
+
+```
