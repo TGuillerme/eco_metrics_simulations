@@ -49,7 +49,35 @@ trait_space <- simulated_data$data[rownames(simulated_data$data) %in% simulated_
 
 # Simulating the stressors
 
+The stressors here are the processes we apply to change the normal pattern of the data (the BM motion generated normal distribution of the data) for simulating the different mechanisms.
 
+## Environmental filtering
+
+Position
+
+```{r}
+
+```
+
+## Competitive exclusion
+
+Evenness?
+
+```{r}
+
+```
+
+## Facilitation
+
+Adding data in empty spaces
+
+```{r}
+
+```
+
+## Equalizing fitness prosseces
+
+Size
 
 ```{r}
 
