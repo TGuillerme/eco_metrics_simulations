@@ -19,7 +19,7 @@ library(devtools)
 install_github("TGuillerme/dads")
 ```
 
-We will build simulate data using a Brownian Motion (the breath of trait values just increases with time, unconstrained), a pure birth tree (no extinction) and will stop the simulation as soon as we reach 100 taxa.
+We will build simulate data using a Brownian Motion (the breath of trait values just increases with time, unconstrained), a pure birth tree (no extinction) and will stop the simulation as soon as we reach 200 taxa.
 Note that I'll simulate a 2D Brownian Motion trait just for facilitating the visualisation of the stressors, however, for the paper we can stick to one dimension (one trait).
 
 ```{r}
@@ -30,7 +30,7 @@ my_trait <- make.traits(process = BM.process, n = 2)
 bd_params <- list(speciation = 1)
 
 ## Setting up the stopping rules
-stop_rule <- list(max.living = 100)
+stop_rule <- list(max.living = 200)
 
 ## Simulating the data
 simulated_data <- dads(bd.params = bd_params,
@@ -50,13 +50,84 @@ trait_space <- simulated_data$data[rownames(simulated_data$data) %in% simulated_
 # Simulating the stressors
 
 The stressors here are the processes we apply to change the normal pattern of the data (the BM motion generated normal distribution of the data) for simulating the different mechanisms.
+To simulate these patterns, we can use the function `dispRity::reduce.space` that has already several algorithms implemented.
+I'm happy to tweak/modify these algorithms (or create new ones!) to get results that better matches our needs.
+
+For the stressors, we can unfortunately only remove species.
+If we take the what-s-done-in-ecology approach this is not a big problem since this is what you'd expect anyways (i.e. your stressors can not "add" species, only make them go extinct).
+So, although we've simulated 200 species, we're gonna resample 100 of them every time.
+
+## Null mechanism
+
+This is the really basic one: just a null model were we randomly sample 100 species out of the 200.
+This can be done using the `stats::sample` function but for making the whole script neater, we can also use the `"random"` algorithm in `dispRity::reduce.space` that just randomly removes n% of species:
+
+```{r}
+## Removing 50% of the elements randomly
+random_reduction <- reduce.space(trait_space,
+                                 type = "random",
+                                 remove = 0.5)
+```
+
+And we can visualise these results compared to the full distribution of 200 species:
+
+```{r}
+## Function for simplifying the plots
+#' @param data the dataset
+#' @param reduction the vector of selected element for the reduction
+#' @param null the vector of selected element for the null
+#' @param col two colours
+#' @param pch the pch (default = 19)
+#' @param trait which trait to plot (default is 1 for plot.1D and c(1,2) for plot.2D)
+#' @param xlab the xlab
+#' @param legend the legend text
+plot.1D <- function(data, reduction, null, main, col = c("blue", "orange"), pch= 19, trait = 1, xlab = "trait values", legend) {
+    ## Plotting the histogram
+    hist(data, main = main, xlab = xlab, col = "white", border = "white")
+    hist(data[null, trait], col = col[1], add = TRUE)
+    hist(data[reduction, trait], col = col[2], add = TRUE)
+    ## Adding the legend
+    if(!missing(legend)) {
+        legend(x = "topleft", col = col, pch = pch, legend = legend)
+    }
+}
+plot.2D <- function(data, reduction, null, main, col = c("blue", "orange"), pch= 19, trait = c(1,2), xlab = "trait values", legend) {
+    ## Plotting the histogram
+    plot(NULL, xlim = range(trait_space[, trait[1]]), ylim = range(trait_space[, trait[2]]), main = main)
+    points(trait_space[null, trait], pch = pch, col = col[1])
+    points(trait_space[reduction, trait], pch = pch, col = col[2])
+    ## Adding the legend
+    if(!missing(legend)) {
+        legend(x = "topleft", col = col, pch = pch, legend = legend)
+    }
+}
+```
+
+```{r}
+## Visualising the results
+par(mfrow = c(1, 2))
+plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Random reduction (100sp)"))
+plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
+```
+
 
 ## Environmental filtering
 
-Position
+For the environmental filtering algorithm, we can use the
+We can use the "position" algorithm from the `dispRity` package that shifts that shifts the position of the group @@@
 
 ```{r}
+## Removing 50% to shift them
+filtering_reduction <- reduce.space(trait_space,
+                                    type = "position",
+                                    remove = 0.5)
+```
 
+```{r}
+## Visualising the results
+par(mfrow = c(1, 2))
+plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D null mechanism")
+plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D null mechanism")
 ```
 
 ## Competitive exclusion
