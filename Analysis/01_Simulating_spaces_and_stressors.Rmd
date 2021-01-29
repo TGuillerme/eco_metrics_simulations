@@ -138,7 +138,8 @@ Evenness?
 ## Removing 50% to flatten the curve
 competitive_exclusion <- reduce.space(trait_space,
                                     type = "evenness",
-                                    remove = 0.5)
+                                    remove = 0.5,
+                                    parameters = list(power = 3))
 ```
 
 ```{r}
