@@ -104,10 +104,10 @@ plot.2D <- function(data, reduction, null, main, col = c("blue", "orange"), pch=
 ```
 
 ```{r}
-## Visualising the results
-par(mfrow = c(1, 2))
-plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Random reduction (100sp)"))
-plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
+  ## Visualising the results
+  par(mfrow = c(1, 2))
+  plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Random reduction (100sp)"))
+  plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
 ```
 
 
@@ -135,20 +135,43 @@ plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, m
 Evenness?
 
 ```{r}
-
+## Removing 50% to flatten the curve
+competitive_exclusion <- reduce.space(trait_space,
+                                    type = "evenness",
+                                    remove = 0.5)
 ```
+
+```{r}
+## Visualising the results
+par(mfrow = c(1, 2))
+plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D null mechanism")
+plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D null mechanism")
+```
+
+
+## Equalizing fitness processes
+
+Size
+
+```{r}
+## Removing 50% to change the trait space size
+equalizing_fitness <- reduce.space(trait_space,
+                                    type = "size",
+                                    remove = 0.5)
+```
+
+```{r}
+## Visualising the results
+par(mfrow = c(1, 2))
+plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D null mechanism")
+plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D null mechanism")
+```
+
+
 
 ## Facilitation
 
-Adding data in empty spaces
-
-```{r}
-
-```
-
-## Equalizing fitness prosseces
-
-Size
+Adding data in empty spaces (or clumping things together?)
 
 ```{r}
 
