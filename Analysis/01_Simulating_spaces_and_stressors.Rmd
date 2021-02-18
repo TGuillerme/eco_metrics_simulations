@@ -12,11 +12,18 @@ This is a demo on how to simulate the spaces and apply the different stressors t
 
 # Simulating spaces
 
-We can use the package `dads` that's in development for simulating the trait spaces.
+We can use the package `dads` that's in development for simulating the trait spaces (note that the package is still pretty unstable but the simple tasks here should not change).
+Later, we can use the `dispRity::reduce.space` package to apply stressors to the data.
+
+```{r, eval = FALSE}
+library(devtools)
+devtools::install_github("TGuillerme/dads")
+devtools::install_github("TGuillerme/dispRity")
+```
 
 ```{r}
-library(devtools)
-install_github("TGuillerme/dads")
+library(dads)     # needs to be version >= 0.1.4
+library(dispRity) # needs to be version >= 1.5.7
 ```
 
 We will build simulate data using a Brownian Motion (the breath of trait values just increases with time, unconstrained), a pure birth tree (no extinction) and will stop the simulation as soon as we reach 200 taxa.
@@ -38,7 +45,7 @@ simulated_data <- dads(bd.params = bd_params,
                        traits    = my_trait)
 
 ## We can then visualise the simulated data (just two show the process)
-par(mfrow = c(1, 2))
+par(mfrow = c(2, 1))
 plot(simulated_data, main = "The simulated BM through time")
 plot(simulated_data, main = "The 2D BM", trait = c(1,2))
 
@@ -81,15 +88,36 @@ And we can visualise these results compared to the full distribution of 200 spec
 #' @param trait which trait to plot (default is 1 for plot.1D and c(1,2) for plot.2D)
 #' @param xlab the xlab
 #' @param legend the legend text
-plot.1D <- function(data, reduction, null, main, col = c("blue", "orange"), pch= 19, trait = 1, xlab = "trait values", legend) {
-    ## Plotting the histogram
-    hist(data, main = main, xlab = xlab, col = "white", border = "white")
-    hist(data[null, trait], col = col[1], add = TRUE)
-    hist(data[reduction, trait], col = col[2], add = TRUE)
+plot.1D <- function(data, reduction, null, main, col = c("blue", "orange"), pch = 19, trait = 1, xlab = "trait values", legend) {
+    ## Get the histograms
+    main_plot <- hist(data, plot = FALSE)
+    plot_1 <- hist(data[null, trait], plot = FALSE, breaks = main_plot$breaks)
+    plot_2 <- hist(data[reduction, trait], plot = FALSE, breaks = main_plot$breaks)
+    plot_height <- max(plot_1$counts, plot_2$counts)
+
+    ## Make the colours as transparent (for overlaps)
+    make.transparent <- function(col, alpha = 0.5) {
+      rgb_vals <- grDevices::col2rgb(col)
+      rgb_args <- list(red   = rgb_vals["red", ],
+                       green = rgb_vals["green", ],
+                       blue  = rgb_vals["blue", ],
+                       maxColorValue = 255,
+                       alpha = alpha * 255)
+      return(do.call(grDevices::rgb, rgb_args))
+    }
+    ## Plot the histograms
+    plot(plot_1, col = make.transparent(col[1]), ylim = c(0, plot_height),
+        main = ifelse(missing(main), "", main),
+        xlab = "Trait values", ylab = "Counts")
+    plot(plot_2, col = make.transparent(col[2]), add = TRUE)
+
     ## Adding the legend
     if(!missing(legend)) {
         legend(x = "topleft", col = col, pch = pch, legend = legend)
     }
+    ## Add the points
+    points(x = data[null, trait], y = rep(0, sum(null)), col = "black", bg = col[1], pch = 21)
+    points(x = data[reduction, trait], y = rep(-1, sum(reduction)), col = "black", bg = col[2], pch = 21)
 }
 plot.2D <- function(data, reduction, null, main, col = c("blue", "orange"), pch= 19, trait = c(1,2), xlab = "trait values", legend) {
     ## Plotting the histogram
@@ -104,17 +132,17 @@ plot.2D <- function(data, reduction, null, main, col = c("blue", "orange"), pch=
 ```
 
 ```{r}
-  ## Visualising the results
-  par(mfrow = c(1, 2))
-  plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Random reduction (100sp)"))
-  plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
+## Visualising the results
+par(mfrow = c(2, 1))
+plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Random reduction (100sp)"))
+plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
 ```
 
 
 ## Environmental filtering
 
 For the environmental filtering algorithm, we can use the
-We can use the "position" algorithm from the `dispRity` package that shifts that shifts the position of the group @@@
+We can use the `"position"` algorithm from the `dispRity::reduce.space` function that shifts the position of the group to one corner of the space so that X% of the data in on side and (1-X)% is on the other side (with side being weirder and weirder as dimensionality increases!):
 
 ```{r}
 ## Removing 50% to shift them
@@ -125,14 +153,14 @@ filtering_reduction <- reduce.space(trait_space,
 
 ```{r}
 ## Visualising the results
-par(mfrow = c(1, 2))
+par(mfrow = c(2, 1))
 plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D null mechanism")
 plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D null mechanism")
 ```
 
 ## Competitive exclusion
 
-Evenness?
+For simulating the competitive exclusion, we could use the `dispRity::reduce.space` `"evenness"` algorithm that basically "flattens" the curve (i.e. displacing things from the highest density regions to the sides).
 
 ```{r}
 ## Removing 50% to flatten the curve
@@ -144,15 +172,16 @@ competitive_exclusion <- reduce.space(trait_space,
 
 ```{r}
 ## Visualising the results
-par(mfrow = c(1, 2))
+par(mfrow = c(2, 1))
 plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D null mechanism")
 plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D null mechanism")
 ```
 
 
-## Equalizing fitness processes
+## Equalising fitness processes
 
-Size
+For simulating equalisation of fitness we can use the `"size"` algorithm from `dispRity::reduce.space`.
+This removes elements around past a distance from the centre of the population (with the distance being determined automatically so that X% are inside the radius and 1-X% are outside):
 
 ```{r}
 ## Removing 50% to change the trait space size
@@ -163,17 +192,29 @@ equalizing_fitness <- reduce.space(trait_space,
 
 ```{r}
 ## Visualising the results
-par(mfrow = c(1, 2))
+par(mfrow = c(2, 1))
 plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D null mechanism")
 plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D null mechanism")
 ```
 
-
-
 ## Facilitation
 
-Adding data in empty spaces (or clumping things together?)
+This one might be a bit trickier (though doable).
+One way to do it (as suggested in our last meeting) could be to simply add a number of data points to places that already have data. 
+However, this will result in non-comparable number of elements in each simulations.
+
+One alternative (at least for now) would be to use the `"density"` algorithm from `dispRity::reduce.space` that will reduce the nearest neighbours distance between elements (basically making clumps of two elements close to each other).
 
 ```{r}
+## Removing 50% to change the trait space size
+facilitation <- reduce.space(trait_space,
+                             type = "density",
+                             remove = 0.5)
+```
 
+```{r}
+## Visualising the results
+par(mfrow = c(2, 1))
+plot.1D(trait_space, reduction = facilitation, null = random_reduction, main = "1D null mechanism")
+plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "2D null mechanism")
 ```
