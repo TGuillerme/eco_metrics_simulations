@@ -2,7 +2,6 @@
 title: "Simulating spaces and stressors"
 author: "Thomas Guillerme (guillert@tcd.ie)"
 date: "`r Sys.Date()`"
-bibliography: [../References.bib, ../packages.bib]
 output:
   html_document: default
   pdf_document: default
@@ -29,7 +28,7 @@ library(dispRity) # needs to be version >= 1.5.7
 We will build simulate data using a Brownian Motion (the breath of trait values just increases with time, unconstrained), a pure birth tree (no extinction) and will stop the simulation as soon as we reach 200 taxa.
 Note that I'll simulate a 2D Brownian Motion trait just for facilitating the visualisation of the stressors, however, for the paper we can stick to one dimension (one trait).
 
-```{r}
+```{r, fig.height = 12, fig.width = 6}
 ## Creating the trait object (2D BM)
 my_trait <- make.traits(process = BM.process, n = 2)
 
@@ -117,7 +116,7 @@ plot.1D <- function(data, reduction, null, main, col = c("blue", "orange"), pch 
     }
     ## Add the points
     points(x = data[null, trait], y = rep(0, sum(null)), col = "black", bg = col[1], pch = 21)
-    points(x = data[reduction, trait], y = rep(-1, sum(reduction)), col = "black", bg = col[2], pch = 21)
+    points(x = data[reduction, trait], y = rep(-plot_height/50, sum(reduction)), col = "black", bg = col[2], pch = 21)
 }
 plot.2D <- function(data, reduction, null, main, col = c("blue", "orange"), pch= 19, trait = c(1,2), xlab = "trait values", legend) {
     ## Plotting the histogram
@@ -131,7 +130,7 @@ plot.2D <- function(data, reduction, null, main, col = c("blue", "orange"), pch=
 }
 ```
 
-```{r}
+```{r, fig.height = 12, fig.width = 6}
 ## Visualising the results
 par(mfrow = c(2, 1))
 plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Random reduction (100sp)"))
@@ -151,11 +150,11 @@ filtering_reduction <- reduce.space(trait_space,
                                     remove = 0.5)
 ```
 
-```{r}
+```{r, fig.height = 12, fig.width = 6}
 ## Visualising the results
 par(mfrow = c(2, 1))
-plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D null mechanism")
-plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D null mechanism")
+plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D filtering mechanism")
+plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D filtering mechanism")
 ```
 
 ## Competitive exclusion
@@ -170,11 +169,12 @@ competitive_exclusion <- reduce.space(trait_space,
                                     parameters = list(power = 3))
 ```
 
-```{r}
+```{r, fig.height = 12, fig.width = 6}
+
 ## Visualising the results
 par(mfrow = c(2, 1))
-plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D null mechanism")
-plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D null mechanism")
+plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D excluding mechanism")
+plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D excluding mechanism")
 ```
 
 
@@ -190,11 +190,12 @@ equalizing_fitness <- reduce.space(trait_space,
                                     remove = 0.5)
 ```
 
-```{r}
+```{r, fig.height = 12, fig.width = 6}
+
 ## Visualising the results
 par(mfrow = c(2, 1))
-plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D null mechanism")
-plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D null mechanism")
+plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D equalising mechanism")
+plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D equalising mechanism")
 ```
 
 ## Facilitation
@@ -212,9 +213,9 @@ facilitation <- reduce.space(trait_space,
                              remove = 0.5)
 ```
 
-```{r}
+```{r, fig.height = 12, fig.width = 6}
 ## Visualising the results
 par(mfrow = c(2, 1))
-plot.1D(trait_space, reduction = facilitation, null = random_reduction, main = "1D null mechanism")
-plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "2D null mechanism")
+plot.1D(trait_space, reduction = facilitation, null = random_reduction, main = "1D facilitation mechanism")
+plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "2D facilitation mechanism")
 ```
