@@ -394,6 +394,11 @@ for (p in 1 : n.perm) {
 } 
 
 
+## ------------------------------------------------------------------------
+# Some summarizing and plotting functions ---------------------------------
+## ------------------------------------------------------------------------
+ 
+
 
 #' @param method the name the method ("Rao", "Fdiv", "FEve", etc...)
 #' @param results the results table
@@ -415,7 +420,7 @@ pool.simulations <- function(method, result, scale.random = TRUE, centre.random 
 
     ## Scaling the results (optional)
     if(scale.random) {
-        ## Scaling the list
+        ## Scaling the list
         pooled_values <- lapply(pooled_values, function(mechanism, random) return(mechanism/random), random = pooled_values[[random_element]])
     }
 
@@ -439,7 +444,7 @@ pool.simulations <- function(method, result, scale.random = TRUE, centre.random 
 ## The summarised results for random and equalizing (default style)
 #' summarise.mechanism(result, mechanism = c("random_reduction", "equalizing_fitness"))
 #' 
-#' ## The summarised results for random and equalizing, unscaled (but centred) and with the sd rather than the variance and the mean without removing NAs
+#' ## The summarised results for random and equalizing, unscaled (but centred) and with the sd rather than the variance and the mean without removing NAs
 #' summarise.mechanism(result, mechanism = c("random_reduction", "equalizing_fitness"),
 #'                     scale.random = FALSE,
 #'                     stats.fun = list(mean = base::mean,
@@ -452,7 +457,7 @@ summarise.mechanism <- function(result, scale.random = TRUE, centre.random = TRU
     all_methods <- unique(result[, "method"])
     pooled_results <- sapply(all_methods, pool.simulations, result, scale.random, centre.random)[mechanism, ]
 
-    ## Get the statistics for each method
+    ## Get the statistics for each method
     ## Applying the stats to the results
     apply.stats <- function(table, stats) {
         lapply(stats, function(stat, table) apply(table, 2, stat), table = table)  
@@ -464,7 +469,7 @@ summarise.mechanism <- function(result, scale.random = TRUE, centre.random = TRU
     ## Getting all the statistics for all the pooled_results
     all_stats <- apply(pooled_results, 2, apply.stats.method, stats = stats.fun)
 
-    ## Return N tables per mechanisms
+    ## Return N tables per mechanisms
     #TG: where N is the number of results types (i.e. Obs, tree_dispersion and tree_regularity)
     tables <- list()
     for(one_mechanism in 1:length(mechanism)) {
@@ -497,7 +502,7 @@ plot.mechanism <- function(result, scale.random = TRUE, centre.random = TRUE, me
     all_methods <- unique(result[, "method"])
     pooled_results <- sapply(all_methods, pool.simulations, result, scale.random, centre.random)[mechanism, ]
 
-    ## Get the data for boxploting
+    ## Get the data for boxploting
     data <- do.call(cbind, pooled_results)
 
     ## Number of results (i.e. Obs, tree_dispersion and tree_regularity)
@@ -524,7 +529,7 @@ plot.mechanism <- function(result, scale.random = TRUE, centre.random = TRUE, me
     ## Plot the boxes
     do.call(boxplot, plot_args)
 
-    ## Add the separating bars
+    ## Add the separating bars
     separators_positions <- seq(from = 1, to = ncol(data), by = n_results) - 0.5
     abline(v = separators_positions, col = "grey")
 
@@ -544,3 +549,39 @@ plot.mechanism(result, mechanism = "facilitation")
 plot.mechanism(result, mechanism = "equalizing_fitness")
 plot.mechanism(result, mechanism = "competitive_exclusion")
 plot.mechanism(result, mechanism = "filtering_reduction")
+
+
+
+
+## ------------------------------------------------------------------------
+# Drafty method for testing the effect of different values levels (see Pedro's email idea)
+## ------------------------------------------------------------------------
+
+#TG: the idea here is to look at the effect of how removing different numbers of species affects the distribution of the metric (or if it is affected by these numbers at all).
+#TG: we can do this pretty easily using the dispRity::test.metric function for each metric (or at least the easy ones). Here is an example using FDiv and FEve implemented in dispRity from FD. Basically dispRity::func.div == FD::dbFD()$FDiv and dispRity::func.eve == FD::dbFD()$FEve.
+
+
+## Testing the effect of the reduction on FEve and FDiv
+test_FEve <- test.metric(trait_space,
+                         metric = func.eve,
+                         replicates = 20,
+                         verbose = TRUE,
+                         shifts = c("random", "density", "size", "evenness"),
+                         model = function(data) lm(disparity ~ reduction, data))
+
+test_FDiv <- test.metric(trait_space,
+                         metric = func.div,
+                         replicates = 20,
+                         verbose = TRUE,
+                         shifts = c("random", "density", "size", "evenness"),
+                         model = function(data) lm(disparity ~ reduction, data))
+
+#TG: Note here that the model is a simply lm (disparity here is the FDiv or FEve score and reduction is the %age of species removed) but if anyone fancy, they can input a more complex model using these variable names (see the test.metric doc for more details) 
+
+## Summarising the tests
+summary(test_FEve)
+summary(test_FDiv)
+
+## Visualising the test
+plot(test_FEve)
+plot(test_FDiv)
