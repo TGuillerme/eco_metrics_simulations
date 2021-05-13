@@ -12,10 +12,15 @@
 #' @author Thomas Guillerme
 #' @export
 
-make.simulation.pipeline <- function(sim.data = list(n.traits   = 2,
+make.simulation.pipeline <- function(type,
+                                     sim.data = list(n.traits   = 2,
                                                      speciation = 1,
                                                      n.taxa     = 200),
-                                     verbose  = TRUE) {
+                                     remove = c(0.2, 0.4, 0.6, 0.8),
+                                     verbose  = TRUE,
+                                     record.timer = TRUE) {
+    return(function() simulation.pipeline(sim.data, type, remove, verbose = verbose, record.timer = record.timer))
+}
 
 
 
