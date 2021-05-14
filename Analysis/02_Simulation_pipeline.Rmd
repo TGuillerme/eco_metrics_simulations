@@ -37,19 +37,51 @@ You'll also need the following custom functions (located in [here on github](htt
 ```{r}
 ## Loading the functions
 source("../Functions/melodic.rao.R")
-source("../Functions/optim.replicate.R")
 source("../Functions/make.simulation.pipeline.R")
 source("../Functions/simulation.pipeline.R")
 ```
 
-
-
-
 ## Setting up the simulations
 
+You then need to set up the simulation parameters using `make.simulation.pipeline()`.
+You can check the manual of that function by opening the function to see the different options but we suggest you use the default to replicate the parameters used in the manuscript.
 
-## Subtitle
+By default, the simulation does:
+
+ * Create a tree from a pure birth process with 2 independent birth-death processes to make a 2D trait space. The speciation (birth) rate is set to 1 and the simulation stops when reaching 200 taxa.
+ * Randomly remove 20%, 40%, 60% and 80% of the data to simulate the random (null) stressor.
+ * Remove 20%, 40%, 60% and 80% of the data using the required `type` of stressor (see below and/or `01_Simulating_spaces_and_stressors.Rmd`).
+ * Measure five families of metrics on the randomly reduced and stressor reduced spaces: dendrogram, dissimilarity, convex hull, kernel hypervolume and probability density based metrics.
+ * All the results are then collected into a table with the two stressors as rows and the different 15 metrics as columns.
+
+You then just need to set up which type of stressor you are going to simulate the metrics with:
+
+```{r}
+## Creating the function for simulating facilitation
+simulate.facilitation <- make.simulation.pipeline(type = "facilitaion")
+```
+
+You can then just run one replicate of the simulation by simply calling that function like (not run here):
+
+```{r, eval = FALSE}
+## Running one replicate
+simulate.facilitation()
+```
+
+## Running the simulations
+
+In order to simulate enough replicates we will replicate the simulation pipeline $n$ times until adding 5% more replicates does not increase the overall variance by more than 5% for any metric.
+In other words, we replicated each simulation $n$ times where $n$ is estimated so that $var(n + 0.05 \times n) < 0.05 \times var(n)$.
+
+For that we will use the custom `optim.replicate()` function which comes with one diagnosis function (checking if the variance for each metric is < 0.05) and one summarising (summarising the output of `simulate.facilitation()` for diagnosis) function
+
+```{r}
+## Loading the optimisation functions
+source("../Functions/optim.replicate.R")
+source("../Functions/optim.helpers.R")
+```
 
 
-```{r, eval = FALSE, message = FALSE, fig.width = 12, fig.height = 12, echo = FALSE}
+```{r}
+simulate.facilitation <- make.simulation.pipeline(type = "facilitation")
 ```
