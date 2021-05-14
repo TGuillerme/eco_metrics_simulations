@@ -207,9 +207,11 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
         all_results[[2]] <- NULL
     }
 
+    
+
     if(record.timer) {
-        return(list("results" = results, "trait_space" = trait_space, "reductions" = presences, "timer" = timer))
+        return(list("results" = all_results, "trait_space" = trait_space, "reductions" = presences, "timer" = timer))
     } else {
-        return(list("results" = results, "trait_space" = trait_space, "reductions" = presences))
+        return(list("results" = all_results, "trait_space" = trait_space, "reductions" = presences))
     }
 }

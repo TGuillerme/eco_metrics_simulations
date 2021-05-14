@@ -21,12 +21,3 @@ make.simulation.pipeline <- function(type,
                                      record.timer = TRUE) {
     return(function() simulation.pipeline(sim.data, type, remove, verbose = verbose, record.timer = record.timer))
 }
-
-
-
-n_traits <- 2
-speciation_rate <- 1
-n_taxa <- 200
-
-    return()
-}
