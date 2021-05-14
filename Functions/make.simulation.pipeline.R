@@ -2,9 +2,11 @@
 #'
 #' @description Set the variables for running one simulation
 #'
+#' @param type Which removal type (either \code{"facilitation"}, \code{"equalizing"}, \code{"competition"} or \code{"filtering"})}) to be paired with \code{"random"}.
 #' @param sim.data A named list of parameters for the data simulation (default is \code{list{n.traits = 2, speciation = 1, n.taxa = 200}})
+#' @param remove How much data to remove (can be a vector of multiple percentages)
 #' @param verbose whether to be verbose (\code{TRUE}, default) or not (\code{FALSE})
-#' 
+#' @param record.timer whether to record the timer for each step of the simulations#' 
 #' @examples
 #'
 #' @seealso
