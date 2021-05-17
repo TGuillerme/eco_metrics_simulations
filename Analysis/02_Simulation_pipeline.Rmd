@@ -83,7 +83,7 @@ source("../Functions/optim.helpers.R")
 
 ```{r}
 ## Running the full optimisation
-results <- optim.replicate(fun = simulate.facilitation(),
+results <- optim.replicate(input.fun = simulate.facilitation,
                            diagnose = var,
                            summarise = optim.summarise,
                            minimum = 20, maximum = 100,

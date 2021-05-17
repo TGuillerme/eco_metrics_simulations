@@ -2,9 +2,9 @@
 #'
 #' @description A wrapper for replicating a based on results variance
 #' 
-#' @param fun The function to execute. The function should output a single value or a vector or a list of values.
+#' @param input.fun The function to execute. The function should output a single value or a vector or a list of values.
 #' @param diagnose The diagnosis function should intake a vector of values.
-#' @param summarise Optional, if the output of \code{fun()} is complex, a function to summarise that output and pass it to \code{diagnose()}.
+#' @param summarise Optional, if the output of \code{input.fun()} is complex, a function to summarise that output and pass it to \code{diagnose()}.
 #' @param minimum The minimum of replicates to run (default is 20)
 #' @param maximum Optional, a maximum of iterations (default is Inf).
 #' @param stop.variance The percentage of variance change for stopping (default is 0.05).
@@ -32,7 +32,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-optim.replicate <- function(fun, diagnose, summarise, minimum = 20, maximum = Inf, stop.variance = 0.05, increment, verbose = FALSE, parallel = FALSE, par.plan = "future::multisession", bkp.path, bkp.name, ...) {
+optim.replicate <- function(input.fun, diagnose, summarise, minimum = 20, maximum = Inf, stop.variance = 0.05, increment, verbose = FALSE, parallel = FALSE, par.plan = "future::multisession", bkp.path, bkp.name, ...) {
 
     ## Check increment
     if(missing(increment)) {
@@ -88,12 +88,12 @@ optim.replicate <- function(fun, diagnose, summarise, minimum = 20, maximum = In
     if(verbose) {
         if(!parallel) {
             ## Set the function to be verbose
-            run.fun <- eval.verbose.count(fun, count = count)
+            run.fun <- eval.verbose.count(input.fun, count = count)
         } else {
-            run.fun <- eval.verbose(fun)
+            run.fun <- eval.verbose(input.fun)
         }
     } else {
-        run.fun <- fun
+        run.fun <- input.fun
     }
 
     if(!bkp_exists) {
