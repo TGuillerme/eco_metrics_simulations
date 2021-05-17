@@ -58,7 +58,7 @@ You then just need to set up which type of stressor you are going to simulate th
 
 ```{r}
 ## Creating the function for simulating facilitation
-simulate.facilitation <- make.simulation.pipeline(type = "facilitaion")
+simulate.facilitation <- make.simulation.pipeline(type = "facilitation")
 ```
 
 You can then just run one replicate of the simulation by simply calling that function like (not run here):
@@ -81,7 +81,14 @@ source("../Functions/optim.replicate.R")
 source("../Functions/optim.helpers.R")
 ```
 
-
 ```{r}
-simulate.facilitation <- make.simulation.pipeline(type = "facilitation")
+## Running the full optimisation
+results <- optim.replicate(fun = simulate.facilitation(),
+                           diagnose = var,
+                           summarise = optim.summarise,
+                           minimum = 20, maximum = 100,
+                           stop.variance = 0.05,
+                           verbose = TRUE,
+                           bkp.path = "../Data/Processed/",
+                           bkp.name = "sim_facilitation.rda")
 ```
