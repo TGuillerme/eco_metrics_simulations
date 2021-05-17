@@ -28,7 +28,7 @@
 
 ## SOLVED: Errors: Error in hclust(as.dist(thisTree)) : must have n >= 2 objects to cluster
 # set.seed(4)
-test <- simulation.pipeline(sim.data, type = "competition", remove = remove, verbose = TRUE)
+# test <- simulation.pipeline(sim.data, type = "facilitation", remove = remove, verbose = TRUE)
 simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.timer = FALSE) {
 
     if(record.timer) {
@@ -36,7 +36,7 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
     }
 
     if(verbose) {
-        message("Simulating the trait space:", appendLF = FALSE)
+        message("\nSimulating the trait space:", appendLF = FALSE)
     }
 
     ## Make empty reductions (all FALSE) for checking if the reduction worked
@@ -139,6 +139,7 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
 
     ## Run the convex.hull analyses
     hypervolume_results <- lapply(presences, fun.kernel, traits = trait_space, verbose)
+    # hypervolume_results <- lapply(presences, fun.tree, tree = tree, verbose) ; warning("DEBUG")
 
     if(record.timer) {
         time_end <- Sys.time()
@@ -154,6 +155,7 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
 
     ## Get the results
     TPD_results <- lapply(presences, fun.proba.den, traits = trait_space, verbose)
+    # TPD_results <- lapply(presences, fun.tree, tree = tree, verbose) ; warning("DEBUG")
 
     if(verbose) {
         message("Done.\n", appendLF = FALSE)
