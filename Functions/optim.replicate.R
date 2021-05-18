@@ -129,7 +129,7 @@ optim.replicate <- function(input.fun, diagnose, summarise, minimum = 20, maximu
     }
 
     ## Continue the runs if any of the diagnoses has not reached the correct variance
-    while(any(!abs(diagnosis[1,]/diagnosis[2,] - 1) < stop.variance) || n_iterations >= maximum) {
+    while(any(!abs(diagnosis[1,]/diagnosis[2,] - 1) < stop.variance) && n_iterations <= maximum) {
         
         ## Add some iterations
         add_iterations <- ceiling(n_iterations*increment)
