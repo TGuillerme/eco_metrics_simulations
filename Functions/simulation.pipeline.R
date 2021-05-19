@@ -228,14 +228,15 @@ fun.kernel <- function(presence, traits, verbose) {
     }
 
     ## Get the hypervolume (remove messages)
-    suppressMessages(silent <- capture.output(hypervolume <- BAT::kernel.alpha(comm = t(presence), trait = traits, return.hv = TRUE)))
+    suppressMessages(silent <- capture.output(hypervolume <- kernel.build(comm = t(presence), trait = traits)))
+    
+    ## Get the values (remove messages)
+    suppressMessages(silent <- capture.output(richness <- BAT::kernel.alpha(comm=hypervolume )))
+    suppressMessages(silent <- capture.output(dispersion <- BAT::kernel.dispersion(comm = hypervolume)))
+    suppressMessages(silent <- capture.output(regularity <- BAT::kernel.evenness(comm = hypervolume)))
 
     ## Get the values
-    suppressMessages(silent <- capture.output(dispersion <- BAT::kernel.dispersion(comm = hypervolume[[2]])))
-    suppressMessages(silent <- capture.output(regularity <- BAT::kernel.evenness(comm = hypervolume[[2]])))
-
-    ## Get the values
-    return(cbind("hypervolume_richness"   = hypervolume[[1]],
+    return(cbind("hypervolume_richness"   = richness,
           "hypervolume_dispersion" = dispersion,
           "hypervolume_regularity" = regularity))
 }
@@ -246,8 +247,11 @@ fun.convex.hull <- function(presence, traits, verbose) {
         message(".", appendLF = FALSE)
     }
 
-    ## run the hulls (remove messages)
-    suppressMessages(silent <- capture.output(results <- BAT::hull.alpha(comm = t(presence), trait = traits)))
+    ## get the hull
+    suppressMessages(silent <- capture.output(hull <- hull.build(comm = t(presence), trait = traits)))
+    
+    # run the volume
+    suppressMessages(silent <- capture.output(results <- BAT::hull.alpha(hull)))
     results <- t(t(results))
     rownames(results) <- colnames(presence)
     colnames(results) <- "convex.hull"
