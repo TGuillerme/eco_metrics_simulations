@@ -13,7 +13,7 @@
 
 optim.diagnose <- function() {
 
-    ## Combine all the replicates together
+    ## Combine all the replicates together
     #test
     return()
 }
