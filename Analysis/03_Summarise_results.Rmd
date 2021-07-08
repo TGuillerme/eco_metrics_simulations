@@ -115,11 +115,23 @@ plot.results(all_results, metric = "convex.hull", level.names = removals, col = 
 
 ## Hypervolume metrics
 
+### Richness
 
-"hypervolume_richness"    
-"hypervolume_dispersion"  
-"hypervolume_regularity"  
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "hypervolume_richness", level.names = removals, col = cols, legend.pos = "bottomright")
+``` 
 
+### Dispersion
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "hypervolume_dispersion", level.names = removals, col = cols, legend.pos = "bottomright")
+``` 
+
+### Regularity
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "hypervolume_regularity", level.names = removals, col = cols)
+``` 
 
 ## Probability density metrics
 
