@@ -109,5 +109,5 @@ source("../Functions/analyse.replicates.R")
 analyse.replicates("../Data/Processed/sim_filtering.rda") #140
 analyse.replicates("../Data/Processed/sim_equalizing.rda") #155
 analyse.replicates("../Data/Processed/sim_facilitation.rda") #126
-analyse.replicates("../Data/Processed/sim_competition.rda")
+analyse.replicates("../Data/Processed/sim_competition.rda") #163
 ```

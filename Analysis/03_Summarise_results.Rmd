@@ -11,6 +11,19 @@ output:
 This script is the repeatable script for measuring changes in the different diversity metrics and how they are affected by the different stressors. 
 In this section we are going to analyse the results from the `optim.replicates` chain.
 
+
+```{r}
+## Loading the results
+load("../Data/Processed/sim_equalizing.rda")
+equalizing <- bkp
+load("../Data/Processed/sim_facilitation.rda")
+facilitation <- bkp
+load("../Data/Processed/sim_filtering.rda")
+filtering <- bkp
+load("../Data/Processed/sim_competition.rda")
+competition <- bkp
+```
+
 # TODO
  - [ ] summarise.results: get ready to publish results tables
  - [ ] plot.results: get ready to publish plots (including results per methods and time per method)
