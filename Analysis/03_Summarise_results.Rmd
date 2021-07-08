@@ -9,8 +9,7 @@ output:
 ---
 
 This script is the repeatable script for measuring changes in the different diversity metrics and how they are affected by the different stressors. 
-In this section we are going to analyse the results from the `optim.replicates` chain.
-
+In this section we are going to analyse the results from the `optim.replicates` chain
 
 ```{r}
 ## Loading the results
@@ -24,6 +23,108 @@ load("../Data/Processed/sim_competition.rda")
 competition <- bkp
 ```
 
-# TODO
- - [ ] summarise.results: get ready to publish results tables
- - [ ] plot.results: get ready to publish plots (including results per methods and time per method)
+```{r}
+## Loading the functions
+source("../Functions/summarise.results.R")
+source("../Functions/plot.results.R")
+```
+
+# Results per metrics
+
+Here I'm going to display the results in box plot for each metric in each broad category.
+> We can probably think of a better way to display the results in the future.
+
+For each metric displayed here:
+ 
+ * The different colours correspond to the different stressors (equalizing, facilitation, filtering and competition)
+ * The different density of each colours correspond to the different levels of each stressor (removing 20, 40, 60 or 80% of the data)
+ * All the metrics values are centred on the null (random) stressor for each individual simulation (i.e. 1 dataset is simulated, X% of the data is removed, one time randomly, one time biased - following the stressor; the metric is calculated on both the random and the biased removal and the biased removal is then centred on the random one (`biased metric score - random metric score`) for each simulation).
+ * All the centred metric values are then scaled to the absolute maximum change (`centred scores/max(abs(centred scores))`).
+
+```{r}
+## Creating the list of results
+all_results <- list(equalizing   = equalizing,
+                    facilitation = facilitation,
+                    filtering    = filtering,
+                    competition  = competition)
+## The different removal level names
+removals <- c("20%", "40%", "60%", "80%")
+## The colours
+cols <- c("blue", "orange", "red", "green")
+```
+
+## Tree metrics
+
+### Alpha
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "alpha", level.names = removals, col = cols)
+```
+
+### Dispersion
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "dispersion", level.names = removals, col = cols)
+```
+
+### Evenness
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "evenness", level.names = removals, col = cols, legend.pos = "bottomright")
+```
+
+## Dissimilarity metrics 
+
+### Rao
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "FD_Rao", level.names = removals, col = cols, legend.pos = "bottomright")
+```
+
+### Divergence (FD)
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "FD_divergence", level.names = removals, col = cols, legend.pos = "bottomright")
+```
+
+### Evenness (FD)
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "FD_evenness", level.names = removals, col = cols, legend.pos = "bottomright")
+```
+
+### Melodic Rao
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "melodic_Rao", level.names = removals, col = cols, legend.pos = "bottomright")
+```
+
+### Melodic MPD
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "melodic_mpd", level.names = removals, col = cols)
+```         
+
+## Convex hull metrics
+
+### Convex hull alpha
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "convex.hull", level.names = removals, col = cols)
+```  
+
+## Hypervolume metrics
+
+
+"hypervolume_richness"    
+"hypervolume_dispersion"  
+"hypervolume_regularity"  
+
+
+## Probability density metrics
+
+
+
+"TPD_Richness"            
+"TPD_Evenness"            
+"TPD_Divergence"  
