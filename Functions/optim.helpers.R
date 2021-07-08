@@ -36,8 +36,11 @@ optim.summarise <- function(x) {
     output <- c(unlist(x$results))
 
     ## Names for one result
-    names <- c(paste(rownames(x$results[[1]])[1], colnames(x$results[[1]]), sep = "_"),
-               paste(rownames(x$results[[1]])[2], colnames(x$results[[1]]), sep = "_"))
+    # names <- c(paste(rownames(x$results[[1]])[1], colnames(x$results[[1]]), sep = "_"),
+    #            paste(rownames(x$results[[1]])[2], colnames(x$results[[1]]), sep = "_"))
+    # names <- paste(names, rep(paste0("rm", rep(1:length(x$results))), each = length(names)), sep = "_")
+    names <- c(sapply(colnames(x$results[[1]]), function(metric_names, x)paste(rownames(x$results[[1]]), metric_names, sep = "_"), x))
+
     names <- paste(names, rep(paste0("rm", rep(1:length(x$results))), each = length(names)), sep = "_")
 
     names(output) <- names
