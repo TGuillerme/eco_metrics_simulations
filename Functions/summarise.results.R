@@ -15,7 +15,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-summarise.results <- function(results, scale = TRUE, cent.tend = median, prob = c(0.975, 0.75, 0.25, 0.025), output.by = "stressor") {
+summarise.results <- function(results, scale = TRUE, centre = TRUE, cent.tend = median, prob = c(0.975, 0.75, 0.25, 0.025), output.by = "stressor") {
 
     ## Make the results into a list (or not)
     if(all(names(results) %in% c("results_table", "diagnosis", "output_save", "n_iterations"))) {
@@ -23,7 +23,7 @@ summarise.results <- function(results, scale = TRUE, cent.tend = median, prob = 
     }
 
     ## Extracting the results table
-    results_table <- extract.table(results, scale)
+    results_table <- extract.table(results, scale, centre)
 
     ## Summarise the results
     return(lapply(results_table, summarise.table, cent.tend, prob))
@@ -31,7 +31,7 @@ summarise.results <- function(results, scale = TRUE, cent.tend = median, prob = 
 
 
 ## Centring on the null
-centre.null.scale <- function(results, scale = FALSE) {
+centre.null.scale <- function(results, scale = FALSE, centre) {
 
     ## Finding the null results
     null_results <- grep("random", colnames(results$results_table))
@@ -41,36 +41,61 @@ centre.null.scale <- function(results, scale = FALSE) {
     pairs <- lapply(as.list(unique(metrics_names)), function(x, names) which(names %in% x), names = metrics_names)
     
     ## Centre each pair on the null
-    centre_results <- lapply(pairs, function(pair, matrix) return(matrix[, pair[2]] - matrix[, pair[1]]), matrix = results$results_table)
-    output <- do.call(cbind, centre_results)
+    if(centre) {
+        centre_results <- lapply(pairs, function(pair, matrix) return(matrix[, pair[2]] - matrix[, pair[1]]), matrix = results$results_table)
+        output <- do.call(cbind, centre_results)
+    } else {
+        output <- results$results_table
+    }
 
     ## Scale each centred results
     if(scale) {
-        output <- apply(output, 2, function(X) return(X/max(abs(X))))
+        if(centre) {
+            output <- apply(output, 2, function(X) return(X/max(abs(X))))
+        } else {
+            stop("DEBUG: TODO: allow scaling while not centring")
+            #TG: use something with pairs
+        }
     }
-    colnames(output) <- unique(metrics_names)
+    if(centre) {
+        colnames(output) <- unique(metrics_names)
+    } 
     return(output)
 }
 
 ## Sort the results per name
-sort.results.names <- function(results) {
+sort.results.names <- function(results, centre) {
+
     ## Find the different removal levels
     levels <- unique(gsub(".*_rm", "", colnames(results)))
-    ## Find the metrics names    
-    metrics <- unique(gsub("_rm.*", "", colnames(results)))
+     
+    if(centre) {   
+        ## Find the metrics names    
+        metrics <- unique(gsub("_rm.*", "", colnames(results)))
+    } else {
+        ## Find the metrics names    
+        metrics <- unique(gsub("stressor_", "", gsub("random_", "", gsub("_rm.*", "", colnames(results)))))     
+    }
+
     ## Sort the metrics names
     sorted_metrics <- unlist(lapply(as.list(metrics), function(x, levels) paste(x, levels, sep = "_rm"), levels = levels))
+
+    if(!centre) {
+        ## Sort the metric names
+        sorted_metrics <- c(apply(cbind(paste0("random_", sorted_metrics), paste0("stressor_", sorted_metrics)), 1, c))
+    }
+
     ## Return the sorted column names
     return(results[, match(sorted_metrics, colnames(results))])
 }
 
 ## Extract table
-extract.table <- function(results, scale) {
+extract.table <- function(results, scale, centre) {
     ## Centre and scale the results
-    results <- lapply(results, centre.null.scale, scale = scale)
+    results <- lapply(results, centre.null.scale, scale = scale, centre = centre)
 
     ## Sort the results per metric
-    results <- lapply(results, sort.results.names)    
+    results <- lapply(results, sort.results.names, centre = centre)
 
     return(results)
 }

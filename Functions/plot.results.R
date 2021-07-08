@@ -5,6 +5,7 @@
 #' @param results the different results output from 02_Simulation_pipeline.Rmd
 #' @param metric which metric to display?
 #' @param scale whether to scale all the metric between -1 and 1 (default is TRUE)
+#' @param centre whether to centre all the metrics on the random (null) changes (TRUE; default). If set to FALSE the results are not centred and the null changes are also displayed.
 #' @param level.names which level names to use (can be left empty)
 #' @param legend whether to add the legend (TRUE, default) or not (FALSE)
 #' @param legend.pos where to plot the legend (default is "topright")
@@ -16,7 +17,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-plot.results <- function(results, metric, scale = TRUE, level.names, legend = TRUE, legend.pos = "topright", ...) {
+plot.results <- function(results, metric, scale = TRUE, centre = TRUE, level.names, legend = TRUE, legend.pos = "topright", ...) {
 
     ## Make the results into a list (or not)
     if(!is.null(names(results)) && all(names(results) %in% c("results_table", "diagnosis", "output_save", "n_iterations"))) {
@@ -24,15 +25,15 @@ plot.results <- function(results, metric, scale = TRUE, level.names, legend = TR
     }
 
     ## Extracting the results table
-    results_table <- extract.table(results, scale)
+    results_table <- extract.table(results, scale, centre)
     names(results_table) <- names(results)
 
     ## Plot the metric results
-    plot.one.metric(results_table, metric, scale, level.names, legend, legend.pos, ...)
+    plot.one.metric(results_table, metric, scale, centre, level.names, legend, legend.pos,...)
 }
 
 ## Plotting one series of results
-plot.one.metric <- function(results_table, metric, scale, level.names, legend, legend.pos, ...) {
+plot.one.metric <- function(results_table, metric, scale, centre, level.names, legend, legend.pos, ...) {
 
     plot_args <- list(...)
 
