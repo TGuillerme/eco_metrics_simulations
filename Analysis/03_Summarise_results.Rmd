@@ -135,8 +135,20 @@ plot.results(all_results, metric = "hypervolume_regularity", level.names = remov
 
 ## Probability density metrics
 
+### Richness
 
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "TPD_Richness", level.names = removals, col = cols, legend.pos = "bottomright")
+``` 
 
-"TPD_Richness"            
-"TPD_Evenness"            
-"TPD_Divergence"  
+### Evenness
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "TPD_Evenness", level.names = removals, col = cols, legend.pos = "bottomright")
+``` 
+
+### Divergence
+
+```{r, fig.height = 4, fig.width = 12}
+plot.results(all_results, metric = "TPD_Divergence", level.names = removals, col = cols, legend.pos = "bottomright")
+``` 
