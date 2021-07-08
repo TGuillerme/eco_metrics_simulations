@@ -122,7 +122,7 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
         message("Calculating convex hull:", appendLF = FALSE)
     }
 
-    ## Run the convex.hull analyses
+    ## Run the convex.hull analyses
     convex_hull_results <- lapply(presences, fun.convex.hull, traits = trait_space, verbose)
 
     if(record.timer) {
@@ -137,7 +137,7 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
         message("Calculating kernel density hypervolumes:", appendLF = FALSE)
     }
 
-    ## Run the convex.hull analyses
+    ## Run the convex.hull analyses
     hypervolume_results <- lapply(presences, fun.kernel, traits = trait_space, verbose)
     # hypervolume_results <- lapply(presences, fun.tree, tree = tree, verbose) ; warning("DEBUG")
 
@@ -264,7 +264,7 @@ fun.proba.den <- function(presence, traits, verbose) {
         message(".", appendLF = FALSE)
     }
 
-    ## Get the sds matrix
+    ## Get the sds matrix
     standard_deviations <- matrix(
         data = rep(sqrt(diag(ks::Hpi.diag(traits))), nrow(presence)),
         nrow = nrow(presence),
