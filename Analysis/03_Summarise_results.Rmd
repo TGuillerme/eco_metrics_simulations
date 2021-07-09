@@ -96,7 +96,7 @@ plot.results(all_results, metric = "FD_evenness", level.names = removals, col = 
 ### Melodic Rao
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "melodic_Rao", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.results(all_results, metric = "melodic_Rao", level.names = removals, col = cols)
 ```
 
 ### Melodic MPD
@@ -118,13 +118,13 @@ plot.results(all_results, metric = "convex.hull", level.names = removals, col = 
 ### Richness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "hypervolume_richness", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.results(all_results, metric = "hypervolume_richness", level.names = removals, col = cols)
 ``` 
 
 ### Dispersion
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "hypervolume_dispersion", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.results(all_results, metric = "hypervolume_dispersion", level.names = removals, col = cols)
 ``` 
 
 ### Regularity
@@ -138,17 +138,68 @@ plot.results(all_results, metric = "hypervolume_regularity", level.names = remov
 ### Richness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "TPD_Richness", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.results(all_results, metric = "TPD_Richness", level.names = removals, col = cols)
 ``` 
 
 ### Evenness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "TPD_Evenness", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.results(all_results, metric = "TPD_Evenness", level.names = removals, col = cols)
 ``` 
 
 ### Divergence
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "TPD_Divergence", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.results(all_results, metric = "TPD_Divergence", level.names = removals, col = cols)
 ``` 
+
+# My interpretation
+
+ * The fact that most metrics pick up a negative change is interesting: a random decrease in number of elements often results in a smaller decrease in metric score than a non-random decrease in number of elements. In other words reducing X% of the elements in a biased way often reduces the score of all the metrics compared to a non-biased way. This is promising, if someone uses any metric to measure a decrease in something, it's better that it is due to a non-random cause rather than a random one ;).
+ * The fact that different levels of removal (20%, 40%, etc...) results in different distributions of the metrics is also a good check (the level of the removal seems to often impact either the variance or the mean of the metric score - or both).
+ * The fact that we can roughly see differences between the response of the metric and the different stressors is also encouraging (e.g. TPD divergence seems to pick up differences in scenarios pretty neatly!).
+ * And finally, one that seems to be clearly working is the FD_evenness metric which seems to pick up changes in facilitation pretty neatly (if not too many species are removed).
+
+
+
+
+
+
+
+
+
+<!-- # Sanity checking
+
+This is what is happening in one simulation (e.g. for alpha)
+ -->
+
+```{r, eval = FALSE, echo = FALSE}
+## Get the result table
+results_table <- facilitation$results_table
+
+## Get the alpha metric
+alpha_results <- results_table[, grep("alpha", colnames(results_table))]
+
+## Get the results of the first simulation
+first_sim_alpha <- alpha_results[1,]
+
+## Get the data removal from the first simulation for 40% removal
+first_sim <- facilitation$output_save[[1]]
+random_sim_40 <- first_sim$reductions[[2]][, "random"]
+stress_sim_40 <- first_sim$reductions[[2]][, "stressor"]
+
+par(mfrow = c(1, 2))
+plot(first_sim$trait_space, col = "grey", pch = 19, main = "stressor")
+points(first_sim$trait_space[stress_sim_40, ], col = "orange", pch = 19)
+plot(first_sim$trait_space, col = "grey", pch = 19, main = "random")
+points(first_sim$trait_space[random_sim_40, ], col = "blue", pch = 19)
+
+## Recalculate the metrics
+tree <- hclust(dist(first_sim$trait_space), method = "average")
+BAT::alpha(t(first_sim$reductions[[2]]), tree)
+#          Richness
+# random   65.29787
+# stressor 46.76265
+first_sim_alpha[3:4] # OK
+```
+
