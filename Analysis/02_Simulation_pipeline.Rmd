@@ -57,15 +57,15 @@ By default, the simulation does:
 You then just need to set up which type of stressor you are going to simulate the metrics with:
 
 ```{r}
-## Creating the function for simulating equalizing
-simulate.equalizing <- make.simulation.pipeline(type = "equalizing")
+## Creating the function for simulating facilitation
+simulate.facilitation <- make.simulation.pipeline(type = "facilitation")
 ```
 
 You can then just run one replicate of the simulation by simply calling that function like (not run here):
 
 ```{r, eval = FALSE}
 ## Running one replicate
-simulate.equalizing()
+simulate.facilitation()
 ```
 
 ## Running the simulations
@@ -73,7 +73,7 @@ simulate.equalizing()
 In order to simulate enough replicates we will replicate the simulation pipeline $n$ times until adding 5% more replicates does not increase the overall variance by more than 5% for any metric.
 In other words, we replicated each simulation $n$ times where $n$ is estimated so that $var(n + 0.05 \times n) < 0.05 \times var(n)$.
 
-For that we will use the custom `optim.replicate()` function which comes with one diagnosis function (checking if the variance for each metric is < 0.05) and one summarising (summarising the output of `simulate.equalizing()` for diagnosis) function
+For that we will use the custom `optim.replicate()` function which comes with one diagnosis function (checking if the variance for each metric is < 0.05) and one summarising (summarising the output of `simulate.facilitation()` for diagnosis) function
 
 ```{r}
 ## Loading the optimisation functions
@@ -88,14 +88,14 @@ There are options to
 
 ```{r, eval = TRUE}
 ## Running the full optimisation
-results <- optim.replicate(input.fun = simulate.equalizing,
+results <- optim.replicate(input.fun = simulate.facilitation,
                            diagnose = var,
                            summarise = optim.summarise,
-                           minimum = 20, maximum = 1000,
-                           stop.variance = 0.05,
+                           minimum = 20, maximum = 170,
+                           stop.variance = 0.0001,
                            verbose = TRUE,
                            bkp.path = "../Data/Processed/",
-                           bkp.name = "sim_equalizing.rda")
+                           bkp.name = "sim_facilitation.rda")
 ```
 > Note that you can use the parallel version by adding the argument `parallel = TRUE` that is automatised using the package `future` and `future.apply` which makes the whole process run on all your available cores but is way less verbose. Without using the parallel version, it takes roughly 10 hours (overnight) to run the analyses on an old 2.2Ghz 8GB core.
 
@@ -106,8 +106,8 @@ We can then visualise the "convergence" of the results using the `analyse.replic
 ```{r, eval = FALSE}
 source("../Functions/analyse.replicates.R")
 ## Check the change in variance for all 120 parameters
-analyse.replicates("../Data/Processed/sim_filtering.rda") #140
+analyse.replicates("../Data/Processed/sim_filtering.rda") #140 -> #170
 analyse.replicates("../Data/Processed/sim_equalizing.rda") #155
-analyse.replicates("../Data/Processed/sim_equalizing.rda") #126
-analyse.replicates("../Data/Processed/sim_equalizing.rda") #163
+analyse.replicates("../Data/Processed/sim_competition.rda") #126
+analyse.replicates("../Data/Processed/sim_facilitation.rda") #163
 ```
