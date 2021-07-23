@@ -100,7 +100,13 @@ kable(model_table, caption = "Results of the model scaled metric ~ removal level
 ```
 
 ```{r, echo = FALSE}
-kable(null_table, caption = "Difference between the null metric and the stressed metric (raw) for each level of removal and each stressor", align = "c")
+## Even fancier column names
+colnames(null_table) <- gsub(".d_rm", ".rm", colnames(null_table))
+colnames(null_table) <- gsub("equalizing", "equa", colnames(null_table))
+colnames(null_table) <- gsub("facilitation", "faci", colnames(null_table))
+colnames(null_table) <- gsub("filtering", "filt", colnames(null_table))
+colnames(null_table) <- gsub("competition", "comp", colnames(null_table))
+kable(null_table, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor", align = "c")
 ```
 
 ## Tree metrics
@@ -108,19 +114,19 @@ kable(null_table, caption = "Difference between the null metric and the stressed
 ### Alpha
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.metric.results(all_results, metric = "alpha", scale.method = "within", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "tree_alpha", scale.method = "within", level.names = removals, col = cols)
 ```
 
 ### Dispersion
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.metric.results(all_results, metric = "dispersion", scale.method = "within", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "tree_dispersion", scale.method = "within", level.names = removals, col = cols)
 ```
 
 ### Evenness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.metric.results(all_results, metric = "evenness", scale.method = "within", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.metric.results(all_results, metric = "tree_evenness", scale.method = "within", level.names = removals, col = cols, legend.pos = "bottomright")
 ```
 
 ## Dissimilarity metrics 
