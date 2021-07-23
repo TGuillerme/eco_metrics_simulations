@@ -27,5 +27,13 @@ paired.tests <- function(one_stressor) {
     }
     test_table <- t(do.call(cbind, lapply(test_list, extract.params)))
     rownames(test_table) <- gsub("random_", "", rownames(test_table))
-    return(test_table)
+    
+    ## Splitting by rm levels
+    test_list <- split.metric(t(test_table))
+    merge.results <- function(one_metric) {
+        out <- c(one_metric)
+        names(out) <- c(t(sapply(paste0(rownames(one_metric), "_rm"), function(X) paste0(X, 1:4))))
+        return(out)
+    }
+    return(t(do.call(cbind, lapply(test_list, merge.results))))
 }
