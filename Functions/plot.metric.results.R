@@ -17,7 +17,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-plot.results <- function(results, metric, scale = TRUE, centre = TRUE, level.names, legend = TRUE, legend.pos = "topright", ...) {
+plot.metric.results <- function(results, metric, scale = TRUE, centre = TRUE, level.names, legend = TRUE, legend.pos = "topright", ...) {
 
     ## Make the results into a list (or not)
     if(!is.null(names(results)) && all(names(results) %in% c("results_table", "diagnosis", "output_save", "n_iterations"))) {
