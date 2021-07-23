@@ -4,7 +4,7 @@
 #'
 #' @param results the different results output from 02_Simulation_pipeline.Rmd
 #' @param metric which metric to display?
-#' @param scale whether to scale all the metric between -1 and 1 (default is TRUE)
+#' @param scale.method optional, which scaling method to use. Either "within" for scaling each metric within each stressor (abs(max(metric$stressor))), "between" for scaling each metric between each stressor (abs(max(unlist(metric)))) or left empty for no scaling.
 #' @param centre whether to centre all the metrics on the random (null) changes (TRUE; default). If set to FALSE the results are not centred and the null changes are also displayed.
 #' @param level.names which level names to use (can be left empty)
 #' @param legend whether to add the legend (TRUE, default) or not (FALSE)
@@ -17,7 +17,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-plot.metric.results <- function(results, metric, scale = TRUE, centre = TRUE, level.names, legend = TRUE, legend.pos = "topright", ...) {
+plot.metric.results <- function(results, metric, scale.method = "between", centre = TRUE, level.names, legend = TRUE, legend.pos = "topright", ...) {
 
     ## Make the results into a list (or not)
     if(!is.null(names(results)) && all(names(results) %in% c("results_table", "diagnosis", "output_save", "n_iterations"))) {
@@ -25,15 +25,15 @@ plot.metric.results <- function(results, metric, scale = TRUE, centre = TRUE, le
     }
 
     ## Extracting the results table
-    results_table <- extract.table(results, scale, centre)
+    results_table <- extract.table(results, centre, scale.method = scale.method)
     names(results_table) <- names(results)
 
     ## Plot the metric results
-    plot.one.metric(results_table, metric, scale, centre, level.names, legend, legend.pos,...)
+    plot.one.metric(results_table, metric, scale.method, centre, level.names, legend, legend.pos,...)
 }
 
 ## Plotting one series of results
-plot.one.metric <- function(results_table, metric, scale, centre, level.names, legend, legend.pos, ...) {
+plot.one.metric <- function(results_table, metric, scale.method, centre, level.names, legend, legend.pos, ...) {
 
     plot_args <- list(...)
 
@@ -60,7 +60,7 @@ plot.one.metric <- function(results_table, metric, scale, centre, level.names, l
     ## Graphics handling
     ## y limit
     if(is.null(plot_args$ylim)) {
-        if(scale) {
+        if(!missing(scale.method)) {
             plot_args$ylim <- c(-1, 1)
         } else {
             plot_args$ylim <- range(plot_data)
