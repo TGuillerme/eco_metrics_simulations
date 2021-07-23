@@ -26,7 +26,7 @@ competition <- bkp
 ```{r}
 ## Loading the functions
 source("../Functions/summarise.results.R")
-source("../Functions/plot.results.R")
+source("../Functions/plot.metric.results.R")
 ```
 
 # Results per metrics
@@ -53,24 +53,42 @@ removals <- c("20%", "40%", "60%", "80%")
 cols <- c("blue", "orange", "red", "green")
 ```
 
+# TODOs:
+
+  1. reworking the scaling 
+    > Carlos: I suspect the standardization you made removes part of the signal, since you are standardizing within each level of each stressor, right? The way I see it, this probably "smoothes out" the differences between levels of the same stressor. I would use the maximum absolute change of a method for a stressor ACROSS ALL LEVELS as the value to standardize. But maybe I am wrong, or maybe I did not understand it correctly
+    `TODO: work on scale function`
+  2. plotting the metrics per stressors (i.e. all metrics for each stressor).
+    `TODO: re-work the plots (15 rows * 4 columns; each row is a metric and contains the lines for the 4 rarefactions; each column is a stressor)`
+  3. fitting a linear model per metric per stressor to rank models based on their r2
+    > Pedro: Wonder if it makes sense to fit linear (or other) models to each trend (20, 40, 60, 80) and the higher the r2 the higher the clearer or more probable the detection of the trend?
+  4. t-test of difference between each random score and the stressor
+    `TODO 3+4: results table per metric`
+
+  5. run a psych-style pairwise comparison between each scaled metric
+  6. put the results in the context of the expectation table from the paper (Null vs process.docx)
+
+
+
+
 ## Tree metrics
 
 ### Alpha
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "alpha", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "alpha", level.names = removals, col = cols)
 ```
 
 ### Dispersion
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "dispersion", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "dispersion", level.names = removals, col = cols)
 ```
 
 ### Evenness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "evenness", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.metric.results(all_results, metric = "evenness", level.names = removals, col = cols, legend.pos = "bottomright")
 ```
 
 ## Dissimilarity metrics 
@@ -78,31 +96,31 @@ plot.results(all_results, metric = "evenness", level.names = removals, col = col
 ### Rao
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "FD_Rao", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.metric.results(all_results, metric = "FD_Rao", level.names = removals, col = cols, legend.pos = "bottomright")
 ```
 
 ### Divergence (FD)
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "FD_divergence", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.metric.results(all_results, metric = "FD_divergence", level.names = removals, col = cols, legend.pos = "bottomright")
 ```
 
 ### Evenness (FD)
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "FD_evenness", level.names = removals, col = cols, legend.pos = "bottomright")
+plot.metric.results(all_results, metric = "FD_evenness", level.names = removals, col = cols, legend.pos = "bottomright")
 ```
 
 ### Melodic Rao
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "melodic_Rao", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "melodic_Rao", level.names = removals, col = cols)
 ```
 
 ### Melodic MPD
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "melodic_mpd", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "melodic_mpd", level.names = removals, col = cols)
 ```         
 
 ## Convex hull metrics
@@ -110,7 +128,7 @@ plot.results(all_results, metric = "melodic_mpd", level.names = removals, col = 
 ### Convex hull alpha
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "convex.hull", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "convex.hull", level.names = removals, col = cols)
 ```  
 
 ## Hypervolume metrics
@@ -118,19 +136,19 @@ plot.results(all_results, metric = "convex.hull", level.names = removals, col = 
 ### Richness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "hypervolume_richness", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "hypervolume_richness", level.names = removals, col = cols)
 ``` 
 
 ### Dispersion
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "hypervolume_dispersion", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "hypervolume_dispersion", level.names = removals, col = cols)
 ``` 
 
 ### Regularity
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "hypervolume_regularity", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "hypervolume_regularity", level.names = removals, col = cols)
 ``` 
 
 ## Probability density metrics
@@ -138,19 +156,19 @@ plot.results(all_results, metric = "hypervolume_regularity", level.names = remov
 ### Richness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "TPD_Richness", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "TPD_Richness", level.names = removals, col = cols)
 ``` 
 
 ### Evenness
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "TPD_Evenness", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "TPD_Evenness", level.names = removals, col = cols)
 ``` 
 
 ### Divergence
 
 ```{r, fig.height = 4, fig.width = 12}
-plot.results(all_results, metric = "TPD_Divergence", level.names = removals, col = cols)
+plot.metric.results(all_results, metric = "TPD_Divergence", level.names = removals, col = cols)
 ``` 
 
 # My interpretation
