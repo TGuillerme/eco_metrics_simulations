@@ -32,5 +32,7 @@ split.metric <- function(table, stressor = FALSE, just.names = FALSE) {
     splits <- lapply(as.list(metric_names), function(X, table) grep(X, colnames(table)), table = table)
 
     ## Splitting the data
-    return(lapply(splits, function(split, table) return(table[, split]), table = table))
+    output <- lapply(splits, function(split, table) return(table[, split]), table = table)
+    names(output) <- metric_names
+    return(output)
 }
