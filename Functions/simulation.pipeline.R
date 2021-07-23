@@ -196,7 +196,7 @@ fun.tree <- function(comm, tree, verbose) {
             "tree_dispersion" = BAT::dispersion(t(comm), tree),
             "tree_evenness"   = BAT::evenness(t(comm), tree))
         table <- do.call(cbind, table)
-        colnames(table) <- c("alpha", "dispersion", "evenness")
+        colnames(table) <- c("tree_alpha", "tree_dispersion", "tree_evenness")
         return(table)
 }
 
