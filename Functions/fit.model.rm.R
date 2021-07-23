@@ -44,5 +44,8 @@ fit.model.rm <- function(one_stressor, model.fun = lm, formula = metric ~ rm, su
 ## Extract the summary
 summarise.models <- function(one_model){
     model <- summary(one_model)
-    return(c(model$coefficients[1,c(1,4)], model$coefficients[2,c(1,4)], "adj.R^2" = model$adj.r.squared))
+    results <- c(model$coefficients[1,c(1,4)], model$coefficients[2,c(1,4)], "adj.R^2" = model$adj.r.squared)
+    names(results)[c(1,3)] <- c("Intercept", "Slope")
+    return(results)
+
 }

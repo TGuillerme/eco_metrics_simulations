@@ -12,6 +12,7 @@ This script is the repeatable script for measuring changes in the different dive
 In this section we are going to analyse the results from the `optim.replicates` chain
 
 ```{r}
+library(knitr)
 ## Loading the results
 load("../Data/Processed/sim_equalizing.rda")
 equalizing <- bkp
@@ -28,6 +29,9 @@ competition <- bkp
 source("../Functions/extract.table.R")
 source("../Functions/plot.metric.results.R")
 source("../Functions/paired.tests.R")
+source("../Functions/split.metric.R")
+source("../Functions/fit.model.rm.R")
+source("../Functions/fancy.table.R")
 ```
 
 # Results per metrics
@@ -59,8 +63,7 @@ cols <- c("blue", "orange", "red", "green")
   * [x]1. reworking the scaling
   * [ ]2. plotting the metrics per stressors (i.e. all metrics for each stressor).
     `TODO: re-work the plots (15 rows * 4 columns; each row is a metric and contains the lines for the 4 rarefactions; each column is a stressor)`
-  * [ ]3. fitting a linear model per metric per stressor to rank models based on their r2
-    > Pedro: Wonder if it makes sense to fit linear (or other) models to each trend (20, 40, 60, 80) and the higher the r2 the higher the clearer or more probable the detection of the trend?
+  * [x]3. fitting a linear model per metric per stressor to rank models based on their r2
   * [x]4. t-test (paired) of difference between each random score and the stressor
     `TODO 3+4: results table per metric`
   * [ ]5. run a psych-style pairwise comparison between each scaled metric
@@ -78,27 +81,27 @@ scaled_results <- extract.table(all_results, scale.method = "between")
 
 ## Measuring the statistics for each metric
 
-> TODO: we measure paired difference between random and stressor
+> TODO: we measure paired difference between random and stressor on the raw data
+> TODO: we fitted a lm on the scaled data (scaled_metric ~ removal_level)
 
 ```{r}
-## Measuring the paired t-tests
-metric_null_diff <- lapply(all_results, paired.tests)
+## Slope and R2 for each model
+model_fits <- lapply(scaled_results, fit.model.rm)
+## Differences between stressor and random
+null_differences <- lapply(all_results, paired.tests)
+
+## Making the fancy tables
+model_table <- fancy.table(model_fits, columns = list(c(3,4), 5))
+null_table <- fancy.table(null_differences, columns = list(c(1,3), c(4, 6), c(7, 9)))
 ```
 
+```{r, echo = FALSE}
+kable(model_table, caption = "Results of the model scaled metric ~ removal level per stressor", align = "c")
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+```{r, echo = FALSE}
+kable(null_table, caption = "Difference between the null metric and the stressed metric (raw) for each level of removal and each stressor", align = "c")
+```
 
 ## Tree metrics
 
