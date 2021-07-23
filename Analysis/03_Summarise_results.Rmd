@@ -65,7 +65,6 @@ cols <- c("blue", "orange", "red", "green")
     `TODO: re-work the plots (15 rows * 4 columns; each row is a metric and contains the lines for the 4 rarefactions; each column is a stressor)`
   * [x]3. fitting a linear model per metric per stressor to rank models based on their r2
   * [x]4. t-test (paired) of difference between each random score and the stressor
-    `TODO 3+4: results table per metric`
   * [ ]5. run a psych-style pairwise comparison between each scaled metric
   * [ ]6. put the results in the context of the expectation table from the paper (Null vs process.docx)
 
