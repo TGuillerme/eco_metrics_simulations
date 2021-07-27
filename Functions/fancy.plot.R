@@ -50,17 +50,23 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                        add.y = FALSE)
 
             ## Adding the data
-            add.one.stressor(results[[one_stressor]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics)
+            if(!missing(lm)) {
+                model_data <- lm[[one_stressor]]
+            } else {
+                model_data <- NULL
+            }
+            if(!missing(null)) {
+                null_data <- null[[one_stressor]]
+            } else {
+                null_data <- NULL
+            }
+            ## Plot the data
+            add.one.stressor(results[[one_stressor]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data)
         }
     }
 }
 
 ## Adding one single line
-#plot(NULL, xlim = c(-1, 1), ylim = c(0, 5))
-#one_line <- one_metric[, 1]
-#plot_params <- list(y = 1, lwd = 1, col = "blue", pch = 19)
-#cent.tend = median
-#probs = c(0.025, 0.25, 0.75, 0.975)
 add.one.line <- function(one_line, plot_params, probs, cent.tend) {
 
     ## Get the number of quantiles
@@ -87,13 +93,11 @@ add.one.line <- function(one_line, plot_params, probs, cent.tend) {
     ## Adding the median
     add_point <- plot_params
     add_point$x <- cent.tend(one_line)
-    add_point$pch <- 19
     do.call(points, add_point)
 }
 
 ## Adding the results for one metric
-#one_metric <- one_results_sub[, 1:4]
-add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col) {
+add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col, lm_data = NULL, null_data = NULL) {
     
     ## Selecting the levels
     levels <- ncol(one_metric)
@@ -104,18 +108,48 @@ add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col) {
     ## Get the plotting base
     base <- plot_params$y
 
+    ## Add the linear model (if not null)
+    if(!is.null(lm_data)) {
+        ## Select the line significance
+        lty <- ifelse(all(lm_data[c(2,4)] < 0.05), 1, 3)
+        ## Set the coordinates of the lm
+        y = c((1-0.2),(4+0.2))
+        ## Calculate the x coordinates (normally y = ax+b but flipped)
+        x <- c(lm_data["Slope"]*y[2] + lm_data["Intercept"],
+               lm_data["Slope"]*y[1] + lm_data["Intercept"])
+        ## Adjust the y coordinates
+        y = y+(base-4)
+        ## Add the model line
+        lines(x, y, lty = lty, col = "darkgrey")
+
+        ## Add the R^2
+        text(paste(names(lm_data[5]), round(lm_data[5], 3), sep = "\n") , y = base-0.4, x = 0.6, cex = 1)
+    }
+
     ## Plot each level
     for(one_level in 1:levels) {
         ## Setting the plot params
         plot_params$col <- colours[one_level]
         plot_params$y   <- rev(((base-levels)+1):base)[one_level]
+        ## Setting the pch param
+        if(!is.null(null_data)) {
+            if(null_data[3*one_level] > 0.05) {
+                plot_params$col <- "grey"
+            }
+            # plot_params$pch <- 1
+            # if(null_data[3*one_level] < 0.05) {
+            #     plot_params$pch <- 20
+            #     if(null_data[3*one_level] < 0.001) {
+            #         plot_params$pch <- 19
+            #     }
+            # }
+        }
         add.one.line(one_metric[, one_level], plot_params = plot_params, probs = probs, cent.tend = cent.tend)
     }
 }
 
 ## Adding the results for one stressor
-#one_results <- results[[1]]
-add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col) {
+add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col, lm, null) {
 
     ## Number of metrics
     n_metrics <- length(split.metric(one_results, just.names = TRUE))
@@ -131,8 +165,23 @@ add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col) {
     for(i in 1:n_metrics) {
         ## Update the plotting location
         plot_params$y <- rev(1:n_metrics*n_levels)[i]
+
+        ## lm
+        if(!is.null(lm)) {
+            lm_data <- lm[i,]
+        } else {
+            lm_data <- NULL
+        }
+
+        ## null
+        if(!is.null(null)) {
+            null_data <- null[i,]
+        } else {
+            null_data <- NULL
+        }
+
         ## Plotting the metric
-        add.one.metric(one_results[, seq(from = 1 + (n_levels*(i-1)), to = i*n_levels, by = 1)], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col[i])
+        add.one.metric(one_results[, seq(from = 1 + (n_levels*(i-1)), to = i*n_levels, by = 1)], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col[i], lm_data = lm_data, null_data = null_data)
     }
 }
 
