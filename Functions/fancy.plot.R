@@ -218,9 +218,9 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
         ## Add the separators
         if(scaled) {
             ## Vertical 0 line
-            abline(v = 0, col = "grey")
+            abline(v = 0, col = "lightgrey")
         }
         ## Horizontal metric lines
-        abline(h = 0:length(metric_names)*4+0.5, col = "grey", lty = 2)
+        abline(h = 0:length(metric_names)*4+0.5, col = "lightgrey", lty = 2)
     }
 }
