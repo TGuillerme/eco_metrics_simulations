@@ -32,6 +32,7 @@ source("../Functions/paired.tests.R")
 source("../Functions/split.metric.R")
 source("../Functions/fit.model.rm.R")
 source("../Functions/fancy.table.R")
+source("../Functions/fancy.plot.R")
 ```
 
 # Results per metrics
@@ -61,7 +62,7 @@ cols <- c("blue", "orange", "red", "green")
 # TODOs:
 
   * [x]1. reworking the scaling
-  * [ ]2. plotting the metrics per stressors (i.e. all metrics for each stressor).
+  * [x]2. plotting the metrics per stressors (i.e. all metrics for each stressor).
     `TODO: re-work the plots (15 rows * 4 columns; each row is a metric and contains the lines for the 4 rarefactions; each column is a stressor)`
   * [x]3. fitting a linear model per metric per stressor to rank models based on their r2
   * [x]4. t-test (paired) of difference between each random score and the stressor
@@ -76,6 +77,7 @@ cols <- c("blue", "orange", "red", "green")
 ```{r}
 ## Extracting all the scaled results
 scaled_results <- extract.table(all_results, scale.method = "between")
+scaled_within <- extract.table(all_results, scale.method = "within")
 ```
 
 ## Measuring the statistics for each metric
@@ -107,6 +109,19 @@ colnames(null_table) <- gsub("filtering", "filt", colnames(null_table))
 colnames(null_table) <- gsub("competition", "comp", colnames(null_table))
 kable(null_table, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor", align = "c")
 ```
+
+# Plots per stressor
+
+```{r, fig.width = 8, fig.height = 12}
+fancy.plot(scaled_results, col = c("blue", "orange"))
+```
+
+Here is the visualisation of the results per stressor and per metric.
+
+
+
+
+# Plots per metric
 
 ## Tree metrics
 
