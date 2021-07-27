@@ -112,11 +112,26 @@ kable(null_table, caption = "Average difference between the null metric and the 
 
 # Plots per stressor
 
-```{r, fig.width = 8, fig.height = 12}
+```{r, fig.width = 8, fig.height = 10, echo = FALSE}
 fancy.plot(scaled_results, col = c("blue", "orange"))
 ```
+Figure X1: Simulation results: the y axes represent the different metrics tested (sorted by categories). The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors. Negative and positive values signify a decrease/increase in the metric score. The dots represent the median metric value, the full line their 50% confidence interval (CI) and the dashed line their 95% CI. The colours are just here to visually separate the metrics rows but the colour gradient within each row corresponds to a removal of respectively 80%, 60%, 40% and 20% of the data (from top to bottom).
 
-Here is the visualisation of the results per stressor and per metric.
+>TG: Here is the visualisation of the results per stressor and per metric.
+
+```{r, fig.width = 8, fig.height = 10, echo = FALSE}
+fancy.plot(scaled_results, col = c("blue", "orange"), lm = model_fits, null = null_differences)
+```
+Figure X2: See above + Grey lines in the background are a fitted linear model on the scaled metric score function of removal amount and the value displayed is the adjusted R^2 from each of these models. Dashed grey lines represent non-significant models (slope or/and intercept). The grey line plots represent (CI + median) represent distribution of metrics scores not clearly different from the random metric scores (paired t-test p value > 0.05).
+
+>TG: Here is the visualisation of the results per stressor and per metric.
+
+
+
+
+
+
+
 
 
 
@@ -230,46 +245,4 @@ plot.metric.results(all_results, metric = "TPD_Divergence", scale.method = "with
  * The fact that we can roughly see differences between the response of the metric and the different stressors is also encouraging (e.g. TPD divergence seems to pick up differences in scenarios pretty neatly!).
  * And finally, one that seems to be clearly working is the FD_evenness metric which seems to pick up changes in facilitation pretty neatly (if not too many species are removed).
 
-
-
-
-
-
-
-
-
-<!-- # Sanity checking
-
-This is what is happening in one simulation (e.g. for alpha)
- -->
-
-```{r, eval = FALSE, echo = FALSE}
-## Get the result table
-results_table <- facilitation$results_table
-
-## Get the alpha metric
-alpha_results <- results_table[, grep("alpha", colnames(results_table))]
-
-## Get the results of the first simulation
-first_sim_alpha <- alpha_results[1,]
-
-## Get the data removal from the first simulation for 40% removal
-first_sim <- facilitation$output_save[[1]]
-random_sim_40 <- first_sim$reductions[[2]][, "random"]
-stress_sim_40 <- first_sim$reductions[[2]][, "stressor"]
-
-par(mfrow = c(1, 2))
-plot(first_sim$trait_space, col = "grey", pch = 19, main = "stressor")
-points(first_sim$trait_space[stress_sim_40, ], col = "orange", pch = 19)
-plot(first_sim$trait_space, col = "grey", pch = 19, main = "random")
-points(first_sim$trait_space[random_sim_40, ], col = "blue", pch = 19)
-
-## Recalculate the metrics
-tree <- hclust(dist(first_sim$trait_space), method = "average")
-BAT::alpha(t(first_sim$reductions[[2]]), tree)
-#          Richness
-# random   65.29787
-# stressor 46.76265
-first_sim_alpha[3:4] # OK
-```
 
