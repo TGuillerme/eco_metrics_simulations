@@ -211,7 +211,7 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
     ## Add the y labels
     if(add.y) {
         n_levels <- ncol(one_results)/length(metric_names)
-        axis(2, at = 1:length(metric_names)*n_levels-median(1:n_levels)+1, labels = metric_names, las = 2)
+        axis(2, at = 1:length(metric_names)*n_levels-median(1:n_levels)+1, labels = fancy.names(metric_names), las = 2)
     }
 
     if(grid) {

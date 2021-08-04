@@ -28,7 +28,6 @@ extract.table <- function(results, centre = TRUE, scale.method) {
         if(scale.method == "between") {
             ## Merging all the results together to the the max per metric
             metric_max <- apply(do.call(rbind, results), 2, function(x) return(max(abs(x))))
-            #TG: use absolute values?
             ## Scaling each result by its maximum
             results <- lapply(results, function(X, max) t(apply(X, 1, function(x, max) return(x/max), max = metric_max)), max = metric_max)
         }
