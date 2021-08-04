@@ -11,7 +11,7 @@ output:
 This script is the repeatable script for measuring changes in the different diversity metrics and how they are affected by the different stressors. 
 In this section we are going to analyse the results from the `optim.replicates` chain
 
-```{r}
+```{r, echo = FALSE}
 library(knitr)
 ## Loading the results
 load("../Data/Processed/sim_equalizing.rda")
@@ -22,9 +22,7 @@ load("../Data/Processed/sim_filtering.rda")
 filtering <- bkp
 load("../Data/Processed/sim_competition.rda")
 competition <- bkp
-```
 
-```{r}
 ## Loading the functions
 source("../Functions/extract.table.R")
 source("../Functions/plot.metric.results.R")
@@ -33,6 +31,7 @@ source("../Functions/split.metric.R")
 source("../Functions/fit.model.rm.R")
 source("../Functions/fancy.table.R")
 source("../Functions/fancy.plot.R")
+source("../Functions/fancy.names.R")
 ```
 
 # Results per metrics
@@ -47,7 +46,7 @@ For each metric displayed here:
  * All the metrics values are centred on the null (random) stressor for each individual simulation (i.e. 1 dataset is simulated, X% of the data is removed, one time randomly, one time biased - following the stressor; the metric is calculated on both the random and the biased removal and the biased removal is then centred on the random one (`biased metric score - random metric score`) for each simulation).
  * All the centred metric values are then scaled to the absolute maximum change (`centred scores/max(abs(centred scores))`).
 
-```{r}
+```{r, echo = FALSE}
 ## Creating the list of results
 all_results <- list(equalizing   = equalizing,
                     facilitation = facilitation,
@@ -59,22 +58,12 @@ removals <- c("20%", "40%", "60%", "80%")
 cols <- c("blue", "orange", "red", "green")
 ```
 
-# TODOs:
-
-  * [x]1. reworking the scaling
-  * [x]2. plotting the metrics per stressors (i.e. all metrics for each stressor).
-    `TODO: re-work the plots (15 rows * 4 columns; each row is a metric and contains the lines for the 4 rarefactions; each column is a stressor)`
-  * [x]3. fitting a linear model per metric per stressor to rank models based on their r2
-  * [x]4. t-test (paired) of difference between each random score and the stressor
-  * [ ]5. run a psych-style pairwise comparison between each scaled metric
-  * [ ]6. put the results in the context of the expectation table from the paper (Null vs process.docx)
-
 ## Scaling and centring the results
 
-> TODO: we centre like this
-> TODO: we scale like this
+We centre the metric based on the null results by substracting the score of the metric from the randomly reduced trait space to the stressed trait space (i.e. $score_{centred} = score_{stressed} - score_{random}$).
+We then scale the centred metric by dividing it by it's maximum absolute centred value between all stressors (i.e. $score_{scaled} = score_{centred} / \text{max}(|scores_{centred}|))$).
 
-```{r}
+```{r, echo = FALSE}
 ## Extracting all the scaled results
 scaled_results <- extract.table(all_results, scale.method = "between")
 scaled_within <- extract.table(all_results, scale.method = "within")
@@ -82,10 +71,11 @@ scaled_within <- extract.table(all_results, scale.method = "within")
 
 ## Measuring the statistics for each metric
 
-> TODO: we measure paired difference between random and stressor on the raw data
-> TODO: we fitted a lm on the scaled data (scaled_metric ~ removal_level)
+To measure the differences between the random and stressed metric scores, we ran paired t-tests between each pairs of unscaled metric score for the random reduction of the trait space and the stressed reduction of the trait space (`t.test(random_scores, stressor_scores, paired = TRUE)`).
 
-```{r}
+To check the trend in the different level of data removals (20, 40, 60 and 80%) using a linear model with the $scores_{scaled}$ as a response to the different removal levels (`lm(scaled_metric ~ removal_level`).
+
+```{r, echo = FALSE}
 ## Slope and R2 for each model
 model_fits <- lapply(scaled_results, fit.model.rm)
 ## Differences between stressor and random
@@ -118,29 +108,233 @@ fancy.plot(scaled_results, col = c("blue", "orange"))
 
 Figure X1: Simulation results: the y axes represent the different metrics tested (sorted by categories). The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors. Negative and positive values signify a decrease/increase in the metric score. The dots represent the median metric value, the full line their 50% confidence interval (CI) and the dashed line their 95% CI. The colours are just here to visually separate the metrics rows but the colour gradient within each row corresponds to a removal of respectively 80%, 60%, 40% and 20% of the data (from top to bottom).
 
->TG: Here is the visualisation of the results per stressor and per metric.
-
 ```{r, fig.width = 8, fig.height = 10, echo = FALSE}
 fancy.plot(scaled_results, col = c("blue", "orange"), lm = model_fits, null = null_differences)
 ```
 
 Figure X2: See above + Grey lines in the background are a fitted linear model on the scaled metric score function of removal amount and the value displayed is the adjusted R^2 from each of these models. Dashed grey lines represent non-significant models (slope or/and intercept). The grey line plots represent (CI + median) represent distribution of metrics scores not clearly different from the random metric scores (paired t-test p value > 0.05).
 
->TG: Here is the visualisation of the results per stressor and per metric.
+> I think that Figure X2 would do a good summary of how the metrics pick up changes. Here's a couple of interpretations of it in the light of my previous work on which metric to choose:
+  * Don't use the TPD richness metric, it doesn't do much.
+  * On the other hand, hypervolume regularity and richness are two good metrics because they only pick up really specific changes (respectively "equalizing" and "facilitation") and nothing else.
+
+
+# Results interpretations in the light of our expectation table
+
+These were our expectations:
+
+Mechanism | Richness| Dispersion | Regularity
+-------------|-------|-------|-------|
+Equalizing   | Lower | Lower | Higher|
+Facilitation | Higher| Higher| Higher|
+Filtering (exclusion) | Higher| Higher| Higher|
+Competition  | Lower | Lower |Nothing|
+
+And these are our results per metric family: 
+
+ * [ok] prediction is correct (lower = decrease; higher = increase)
+ * [-ok] prediction is kinda correct (there is a change compared to the null but not in the right direction)
+ * [NO] to a wrong prediction: no change when change is expected or change when no change is expected
+
+> NOTE: the difference between [ok] and [-ok] is actually not really meaningful here since these graphs shows differences compared to the null results so if both the null and stressor results increase but the stressor increases slowlier than the stressor, the results in the table will decrease. Although in general, if this is the case, this is a "bad" results since ideally we would want the null to not change at all (i.e. if the metric is just picking up changes in number of elements, this is not really useful).
+
+#### Tree (dissimilarity)
+
+Mechanism    | Richness (alpha)| Dispersion | Regularity
+-------------|------------|-------------|-------|
+Equalizing   | [ok] Lower | [ok] Lower  | [-ok] Higher|
+Facilitation | [NO] Higher| [-ok] Higher| [-ok] Higher|
+Exclusion    | [NO] Higher| [-ok] Higher| [-ok] Higher|
+Competition  | [ok] Lower | [ok] Lower  | [NO] Nothing|
+
+#### FD
+
+Mechanism | Richness (Rao)| Dispersion | Regularity
+-------------|-------|-------|-------|
+Equalizing   | [NO] Lower  | [ok] Lower | [-ok] Higher|
+Facilitation | [NO] Higher | [-ok] Higher| [NO] Higher|
+Exclusion    | [-ok] Higher| [-ok] Higher| [-ok] Higher|
+Competition  | [ok] Lower  | [ok] Lower | [NO] Nothing|
+
+#### hypervolume
+
+Mechanism | Richness (Rao)| Dispersion | Regularity
+-------------|-------|-------|-------|
+Equalizing   | [NO] Lower  | [-ok] Lower | [-ok] Higher|
+Facilitation | [-ok] Higher| [NO] Higher| [NO] Higher|
+Exclusion    | [NO] Higher | [NO] Higher| [NO] Higher|
+Competition  | [ok] Lower  | [NO] Lower | [ok] Nothing|
+
+
+#### TPD
+
+Mechanism | Richness (Rao)| Dispersion | Regularity
+-------------|-------|-------|-------|
+Equalizing   | [NO] Lower  | [ok] Lower | [-ok] Higher|
+Facilitation | [NO] Higher | [-ok] Higher| [-ok] Higher|
+Exclusion    | [NO] Higher | [-ok] Higher| [-ok] Higher|
+Competition  | [NO] Lower  | [ok] Lower | [NO] Nothing|
+
+#### Other
+
+I actually don't remember of the top of my head what the convex.hull and melodic rao/mpd are representing.
 
 
 
 
 
 
+# Metrics correlations
+
+And finally below are all the correlations per stressor between each metric per removal levels (20, 40, 60, 80%).
+
+> TODO: do the PCA plots as suggested by Carlos to see things clearlier.
+
+
+```{r, eval = TRUE, echo = FALSE, message = FALSE}
+require(psych)
+
+## Split the results per stressor and per metric
+## (to extract the different removal levels)
+splitted_results <- lapply(scaled_results, split.metric)
+
+## Get the right removal level
+get.matrix.level <- function(results, level = 1) {
+    do.call(cbind, lapply(results, function(X, level) return(X[, level, drop = FALSE]), level = level))
+}
+## Wrapper for pairs.panels (with fancy names)
+pairs.panels.wrapper <- function(results, ...) {
+    ## Make fancy names
+    colnames(results) <- fancy.names(colnames(results), sep = ":\n")
+    psych::pairs.panels(results, ...)
+}
+
+```
+
+## Equalizing
+
+### Metrics correlation for equalizing with 20% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 1))
+```
+
+### Metrics correlation for equalizing with 40% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 2))
+```
+
+### Metrics correlation for equalizing with 60% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 3))
+```
+
+### Metrics correlation for equalizing with 80% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 4))
+```
+
+## Facilitation
+
+### Metrics correlation for facilitation with 20% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 1))
+```
+
+### Metrics correlation for facilitation with 40% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 2))
+```
+
+### Metrics correlation for facilitation with 60% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 3))
+```
+
+### Metrics correlation for facilitation with 80% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 4))
+```
+
+## Filtering
+
+### Metrics correlation for filtering with 20% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 1))
+```
+
+### Metrics correlation for filtering with 40% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 2))
+```
+
+### Metrics correlation for filtering with 60% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 3))
+```
+
+### Metrics correlation for filtering with 80% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 4))
+```
+
+## Competition
+
+### Metrics correlation for competition with 20% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 1))
+```
+
+### Metrics correlation for competition with 40% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 2))
+```
+
+### Metrics correlation for competition with 60% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 3))
+```
+
+### Metrics correlation for competition with 80% removal
+
+```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
+## Equalizing level 1
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 4))
+```
 
 
 
-# My interpretation
 
- * The fact that most metrics pick up a negative change is interesting: a random decrease in number of elements often results in a smaller decrease in metric score than a non-random decrease in number of elements. In other words reducing X% of the elements in a biased way often reduces the score of all the metrics compared to a non-biased way. This is promising, if someone uses any metric to measure a decrease in something, it's better that it is due to a non-random cause rather than a random one ;).
- * The fact that different levels of removal (20%, 40%, etc...) results in different distributions of the metrics is also a good check (the level of the removal seems to often impact either the variance or the mean of the metric score - or both).
- * The fact that we can roughly see differences between the response of the metric and the different stressors is also encouraging (e.g. TPD divergence seems to pick up differences in scenarios pretty neatly!).
- * And finally, one that seems to be clearly working is the FD_evenness metric which seems to pick up changes in facilitation pretty neatly (if not too many species are removed).
+
+
 
 
