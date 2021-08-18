@@ -8,6 +8,7 @@
 #' @param col.metrics the colours for each metric
 #' @param lm optional, lm results to add to the plot
 #' @param null optional, paired t-tests to add to the plot
+#' @param metric.names optional, a vector of fancy names for the results (rows)
 #' @param ... plot options
 #' 
 #' @examples
@@ -16,7 +17,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, ...) {
+fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, ...) {
 
     ## Get the plot parameters
     plot_params <- list(...)
@@ -39,7 +40,8 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                        plot.main = "",
                        add.x = FALSE,
                        add.y = TRUE,
-                       grid  = FALSE)
+                       grid  = FALSE,
+                       metric.names = metric.names)
 
         } else {
             par(mar = c(5, 0, 4, 1))
@@ -186,7 +188,7 @@ add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col, lm
 }
 
 ## Creating an empty plot
-empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE, plot.main) {
+empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE, plot.main, metric.names = NULL) {
     
     ## Number of metrics
     y_lim <- c(1,ncol(one_results))
@@ -206,12 +208,16 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
     }
 
     ## Get the metric names
-    metric_names <- split.metric(one_results, just.names = TRUE)
+    if(is.null(metric.names)) {
+        metric_names <- fancy.names(split.metric(one_results, just.names = TRUE))
+    } else {
+        metric_names <- metric.names
+    }
 
     ## Add the y labels
     if(add.y) {
         n_levels <- ncol(one_results)/length(metric_names)
-        axis(2, at = 1:length(metric_names)*n_levels-median(1:n_levels)+1, labels = fancy.names(metric_names), las = 2)
+        axis(2, at = 1:length(metric_names)*n_levels-median(1:n_levels)+1, labels = metric_names, las = 2)
     }
 
     if(grid) {
