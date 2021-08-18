@@ -5,6 +5,8 @@
 #' @param results the list of results (per stressor)
 #' @param centre whether to centre the data on the null results (TRUE; default)
 #' @param scale.method optional, which scaling method to use. Either "within" for scaling each metric within each stressor (abs(max(metric$stressor))), "between" for scaling each metric between each stressor (abs(max(unlist(metric)))) or left empty for no scaling.
+#' @param reorder optional, change the order of the metrics (rows)
+#' @param rename optional, change the names of the metrics
 #' 
 #' @examples
 #'
@@ -14,7 +16,7 @@
 #' @export
 
 ## Extract table
-extract.table <- function(results, centre = TRUE, scale.method) {
+extract.table <- function(results, centre = TRUE, scale.method, reorder, rename) {
 
 
     # stop("DEBUG extract.table")
@@ -39,7 +41,7 @@ extract.table <- function(results, centre = TRUE, scale.method) {
     }
 
     ## Sort the results per metric
-    results <- lapply(results, sort.results.names, centre = centre)
+    results <- lapply(results, sort.results.names, centre = centre, reorder, rename)
 
     return(results)
 }
@@ -69,7 +71,7 @@ centre.null <- function(one_results, centre = TRUE) {
 }
 
 ## Sort the results per name
-sort.results.names <- function(results, centre) {
+sort.results.names <- function(results, centre, reorder, rename) {
 
     ## Find the different removal levels
     levels <- unique(gsub(".*_rm", "", colnames(results)))
@@ -82,6 +84,10 @@ sort.results.names <- function(results, centre) {
         metrics <- unique(gsub("stressor_", "", gsub("random_", "", gsub("_rm.*", "", colnames(results)))))     
     }
 
+    if(!missing(reorder)) {
+        metrics <- metrics[reorder]
+    }
+
     ## Sort the metrics names
     sorted_metrics <- unlist(lapply(as.list(metrics), function(x, levels) paste(x, levels, sep = "_rm"), levels = levels))
 
@@ -90,7 +96,21 @@ sort.results.names <- function(results, centre) {
         sorted_metrics <- c(apply(cbind(paste0("random_", sorted_metrics), paste0("stressor_", sorted_metrics)), 1, c))
     }
 
-    ## Return the sorted column names
-    return(results[, match(sorted_metrics, colnames(results))])
+    ## Sort the column names
+    results <- results[, match(sorted_metrics, colnames(results))]
+    if(!missing(rename)) {
+        ## TODO: optimise this bit (but just for the challenge)
+        original_names <- metrics
+        new_names <- rename
+        col_names <- colnames(results)
+        while(length(original_names) > 0) {
+            col_names <- gsub(original_names[1], new_names[1], col_names)
+            original_names <- original_names[-1]
+            new_names <- new_names[-1]
+        }
+        colnames(results) <- col_names
+    }
+    ## Rename the column names
+    return(results)
 }
 
