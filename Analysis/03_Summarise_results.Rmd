@@ -140,12 +140,12 @@ null_table <- fancy.table(null_differences, columns = list(c(1,3), c(4, 6), c(7,
 ```
 
 ```{r, echo = FALSE}
-rownames(model_table) <- gsub("\n", "_", fancy_names)
+rownames(model_table) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
 kable(model_table, caption = "Results of the model scaled metric ~ removal level per stressor", align = "c")
 ```
 
 ```{r, echo = FALSE}
-rownames(null_table) <- fancy_names
+rownames(null_table) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
 ## Even fancier column names
 colnames(null_table) <- gsub(".d_rm", ".rm", colnames(null_table))
 colnames(null_table) <- gsub("equalizing", "equa", colnames(null_table))
@@ -252,9 +252,13 @@ get.matrix.level <- function(results, level = 1) {
     do.call(cbind, lapply(results, function(X, level) return(X[, level, drop = FALSE]), level = level))
 }
 ## Wrapper for pairs.panels (with fancy names)
-pairs.panels.wrapper <- function(results, ...) {
+pairs.panels.wrapper <- function(results, metric.names, ...) {
     ## Make fancy names
-    colnames(results) <- fancy.names(colnames(results), sep = ":\n")
+    if(missing(metric.names)) {
+        colnames(results) <- fancy.names(colnames(results), sep = ":\n")
+    } else {
+        colnames(results) <- metric.names
+    }
     psych::pairs.panels(results, ...)
 }
 
@@ -266,28 +270,28 @@ pairs.panels.wrapper <- function(results, ...) {
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 1))
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 1), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for equalizing with 40% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 2))
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 2), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for equalizing with 60% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 3))
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 3), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for equalizing with 80% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 4))
+pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 4), metric.names = fancy_names)
 ```
 
 ## Facilitation
@@ -296,28 +300,28 @@ pairs.panels.wrapper(get.matrix.level(splitted_results$equalizing, level = 4))
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 1))
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 1), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for facilitation with 40% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 2))
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 2), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for facilitation with 60% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 3))
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 3), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for facilitation with 80% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 4))
+pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 4), metric.names = fancy_names)
 ```
 
 ## Filtering
@@ -326,28 +330,28 @@ pairs.panels.wrapper(get.matrix.level(splitted_results$facilitation, level = 4))
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 1))
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 1), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for filtering with 40% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 2))
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 2), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for filtering with 60% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 3))
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 3), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for filtering with 80% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 4))
+pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 4), metric.names = fancy_names)
 ```
 
 ## Competition
@@ -356,28 +360,28 @@ pairs.panels.wrapper(get.matrix.level(splitted_results$filtering, level = 4))
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 1))
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 1), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for competition with 40% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 2))
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 2), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for competition with 60% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 3))
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 3), metric.names = fancy_names)
 ```
 
 ### Metrics correlation for competition with 80% removal
 
 ```{r, fig.height = 18, fig.width = 18, echo = FALSE, eval = TRUE}
 ## Equalizing level 1
-pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 4))
+pairs.panels.wrapper(get.matrix.level(splitted_results$competition, level = 4), metric.names = fancy_names)
 ```
 
 
