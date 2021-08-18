@@ -52,10 +52,63 @@ all_results <- list(equalizing   = equalizing,
                     facilitation = facilitation,
                     filtering    = filtering,
                     competition  = competition)
+
+
+## Sort the results per name
+sort.metrics <- function(one_results, order) {
+
+    ## Get the results table
+    all_results <- colnames(one_results$results_table)
+
+    ## Extract the metric names
+    metrics <- unique(gsub("stressor_", "", gsub("random_", "", gsub("_rm.*", "", all_results))))  
+
+    ## Reorder these names
+    metrics <- metrics[order]
+
+    ## Get the removal levels
+    levels <- unique(gsub(".*_rm", "", all_results))
+
+    ## Sort the metrics_names
+    sorted_metrics <- unlist(lapply(as.list(metrics), function(x, levels) paste(x, levels, sep = "_rm"), levels = levels))
+    ## Adding the random/stressor bits
+    sorted_metrics <- c(apply(cbind(paste0("random_", sorted_metrics), paste0("stressor_", sorted_metrics)), 1, c))
+
+    ## Match the new column order
+    one_results$results_table <- one_results$results_table[, match(sorted_metrics, all_results)]
+    
+    ## Return the updated results
+    return(one_results)
+}
+
+## Re-ordering results for fancyness
+new_order <- c(14, 12, 3, 6,
+               15, 11, 2, 8,
+               7, 4, 5, 13,
+               10, 9, 1)
+all_results <- lapply(all_results, sort.metrics, order = new_order)
+
 ## The different removal level names
 removals <- c("20%", "40%", "60%", "80%")
 ## The colours
 cols <- c("blue", "orange", "red", "green")
+
+## Fancier names
+fancy_names <- c("TPD[TPD]\nregularity",
+                 "hypervolume[BAT]\nregularity",
+                 "dendrogram[BAT]\nregularity",
+                 "dissimilarity[FD]\nregularity",
+                 "TPD[TPD]\ndivergence",
+                 "hypervolume[BAT]\ndivergence",
+                 "dendrogram[BAT]\ndivergence",
+                 "dissimilarity[melodicMPD]\ndivergence(MPD)",
+                 "dissimilarity[melodicRao]\ndivergence(Rao)",
+                 "dissimilarity[FD]\ndivergence(Rao)",
+                 "dissimilarity[FD]\ndivergence",
+                 "TPD[TPD]\nrichness",
+                 "hypervolume[BAT]\nrichness",
+                 "convex hull[BAT]\nrichness",
+                 "dendrogram[BAT]\nrichness")
 ```
 
 ## Scaling and centring the results
@@ -67,28 +120,6 @@ We then scale the centred metric by dividing it by it's maximum absolute centred
 ## Extracting all the scaled results
 scaled_results <- extract.table(all_results, scale.method = "between")
 scaled_within <- extract.table(all_results, scale.method = "within")
-
-## Re-ordering results for fancyness
-new_order <- c(14, 12, 3, 6,
-               15, 11, 2, 8,
-               7, 4, 5, 13,
-               10, 9, 1)
-new_names <- c("TPD[TPD]\nevenness",
-               "hypervolume[BAT]\nevenness",
-               "dendrogram[BAT]\nevenness",
-               "dissimilarity[FD]\nevenness",
-               "TPD[TPD]\ndivergence",
-               "hypervolume[BAT]\ndispersion",
-               "dendrogram[BAT]\ndispersion",
-               "dissimilarity[melodic]\nMPD",
-               "dissimilarity[melodic]\nRao",
-               "dissimilarity[FD]\nRao",
-               "dissimilarity[FD]\ndivergence",
-               "TPD[TPD]\nalpha",
-               "hypervolume[BAT]\nalpha",
-               "convex hull[BAT]\nalpha",
-               "dendrogram[BAT]\nalpha")
-## TODO: add that to fancy plot as options
 ```
 
 ## Measuring the statistics for each metric
@@ -109,10 +140,12 @@ null_table <- fancy.table(null_differences, columns = list(c(1,3), c(4, 6), c(7,
 ```
 
 ```{r, echo = FALSE}
+rownames(model_table) <- gsub("\n", "_", fancy_names)
 kable(model_table, caption = "Results of the model scaled metric ~ removal level per stressor", align = "c")
 ```
 
 ```{r, echo = FALSE}
+rownames(null_table) <- fancy_names
 ## Even fancier column names
 colnames(null_table) <- gsub(".d_rm", ".rm", colnames(null_table))
 colnames(null_table) <- gsub("equalizing", "equa", colnames(null_table))
@@ -126,10 +159,14 @@ kable(null_table, caption = "Average difference between the null metric and the 
 
 
 ```{r, fig.width = 8, fig.height = 10, echo = FALSE}
-fancy.plot(scaled_results, col = c("blue", "orange"), lm = model_fits, null = null_differences)
+col_vector <- c(rep("blue", 4), # The richness ones
+                rep("orange", 7), # The divergence ones
+                rep("darkgreen", 4)) # The regularity ones
+## The plot
+fancy.plot(scaled_results, col = col_vector, lm = model_fits, null = null_differences, metric.names = fancy_names)
 ```
 
-Figure X2: Simulation results: the y axes represent the different metrics tested (sorted by categories). The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors. Negative and positive values signify a decrease/increase in the metric score. The dots represent the median metric value, the full line their 50% confidence interval (CI) and the dashed line their 95% CI. The colours are just here to visually separate the metrics rows but the colour gradient within each row corresponds to a removal of respectively 80%, 60%, 40% and 20% of the data (from top to bottom). Grey lines in the background are a fitted linear model on the scaled metric score function of removal amount and the value displayed is the adjusted R^2 from each of these models. Dashed grey lines represent non-significant models (slope or/and intercept). The grey line plots represent (CI + median) represent distribution of metrics scores not clearly different from the random metric scores (paired t-test p value > 0.05).
+Figure 1: Simulation results: the y axes represent the different metrics tested (sorted by categories). The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors. Negative and positive values signify a decrease/increase in the metric score. The dots represent the median metric value, the full line their 50% confidence interval (CI) and the dashed line their 95% CI. The colours are just here to visually separate the metrics rows but the colour gradient within each row corresponds to a removal of respectively 80%, 60%, 40% and 20% of the data (from top to bottom). Grey lines in the background are a fitted linear model on the scaled metric score function of removal amount and the value displayed is the adjusted R^2 from each of these models. Dashed grey lines represent non-significant models (slope or/and intercept). The grey line plots represent (CI + median) represent distribution of metrics scores not clearly different from the random metric scores (paired t-test p value > 0.05).
 
 # Results interpretations in the light of our expectation table
 
