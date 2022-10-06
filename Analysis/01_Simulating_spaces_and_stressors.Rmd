@@ -21,9 +21,11 @@ devtools::install_github("TGuillerme/dispRity")
 ```
 
 ```{r}
+set.seed(1)
 library(dads)     # needs to be version >= 0.1.4
 library(dispRity) # needs to be version >= 1.5.7
 ```
+
 
 We will build simulate data using a Brownian Motion (the breath of trait values just increases with time, unconstrained), a pure birth tree (no extinction) and will stop the simulation as soon as we reach 200 taxa.
 Note that I'll simulate a 2D Brownian Motion trait just for facilitating the visualisation of the stressors, however, for the paper we can stick to one dimension (one trait).
@@ -90,6 +92,9 @@ plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, mai
 ```
 
 
+
+
+
 ## Environmental filtering
 
 For the environmental filtering algorithm, we can use the
@@ -143,7 +148,6 @@ equalizing_fitness <- reduce.space(trait_space,
 ```
 
 ```{r, fig.height = 12, fig.width = 6}
-
 ## Visualising the results
 par(mfrow = c(2, 1))
 plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D equalising mechanism")
@@ -170,4 +174,44 @@ facilitation <- reduce.space(trait_space,
 par(mfrow = c(2, 1))
 plot.1D(trait_space, reduction = facilitation, null = random_reduction, main = "1D facilitation mechanism")
 plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "2D facilitation mechanism")
+```
+
+
+## Paper figure
+
+```{r}
+plot.text.box <- function(my_text, ...) {
+  plot(1,1, xaxt = "n", yaxt = "n", xlab = "", ylab = "", col = "white", pch = 21)
+  text(c(1,1), my_text, ...)
+}
+
+pdf(file = "../Manuscript/Figures/simulation_protocol.pdf", height = 16, width = 8)
+par(mfrow = c(6, 3), bty = "n")
+
+## First line
+plot.text.box("Tree and trait\nsimulation:", cex = 2)
+plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (1D)", col = c("lightgrey", "blue"), ylab = "Trait 1")
+plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (2D)", col = c("lightgrey", "blue"), trait = c(1,2), xlab = "Trait 1", ylab = "Trait 2")
+
+## Stressors
+plot.text.box("Resampling\nwith stressor:\nnull mechanism", cex = 2)
+plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Resample (100sp)"))
+plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
+
+plot.text.box("Resampling\nwith stressor:\nfiltering\nmechanism", cex = 2)
+plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D filtering mechanism")
+plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D filtering mechanism")
+
+plot.text.box("Reseampling\nwith stressor:\nequalizing\nmechanism", cex = 2)
+plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D equalising mechanism")
+plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D equalising mechanism")
+
+plot.text.box("Reseampling\nwith stressor:\nexcluding\nmechanism", cex = 2)
+plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D excluding mechanism")
+plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D excluding mechanism")
+
+plot.text.box("Reseampling\nwith stressor:\nfacilitating\nmechanism", cex = 2)
+plot.1D(trait_space, reduction = facilitation, null = random_reduction, main = "1D facilitation mechanism")
+plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "2D facilitation mechanism")
+dev.off()
 ```
