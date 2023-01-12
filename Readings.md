@@ -7,16 +7,18 @@ Mechanism = WHY. fundamental process resposible for action, reaction or other ph
 
 Pattern is the descriptor and process the function. E.g. for any f(x), x is describing the pattern at the moment of the observation (e.g. where is x) and f() is the function/process allowing to know where x is. The mechanism is then how a specific function (here f()) can be used to explain the observation of the pattern (x).
   
-
 "pattern recognition [which] can be regarded as a precursor or limiting factor in the pursuit of understanding"
 "pattern is "the zero-dimensional characteristic of a set of points which describes the location of these points in terms of the relative distances of one point to another" (Upton and Fingleton 1985)"
-
 
 # Modeling: Neutral, Null, and Baseline
 https://www.cambridge.org/core/journals/philosophy-of-science/article/modeling-neutral-null-and-baseline/83B2891C55CF386BDBB5380BDE8E9C65
 
+Null is maybe not the right term. Maybe it's just testing the process of interest.
+
 # Revisiting the Holy Grail: using plant functional traits to understand ecological processes
 https://onlinelibrary.wiley.com/doi/10.1111/brv.12275
+
+Outstanding questions (in 2016): (i) selecting relevant traits; (ii) describing intraspecific trait variation and incorporating this variation into models; and (iii) scaling trait data to community- and ecosystem-level processes.
 
 # Let the concept of trait be functional!
 https://onlinelibrary.wiley.com/doi/10.1111/j.0030-1299.2007.15559.x
