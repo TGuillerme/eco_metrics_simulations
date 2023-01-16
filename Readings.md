@@ -23,6 +23,27 @@ Outstanding questions (in 2016): (i) selecting relevant traits; (ii) describing 
 # Let the concept of trait be functional!
 https://onlinelibrary.wiley.com/doi/10.1111/j.0030-1299.2007.15559.x
 
+Discussing what traits should (could) or should not be.
+“Functional traits” are defined as morpho-physio-phenological traits which impact fitness indirectly via their effects on growth, reproduction and survival, the three components of individual performance. 
+
+# HOW DO DIFFERENT MEASURES OF FUNCTIONAL DIVERSITY PERFORM?
+https://esajournals.onlinelibrary.wiley.com/doi/10.1890/03-0226
+
+# The dimensionality and structure of species trait spaces
+https://onlinelibrary.wiley.com/doi/10.1111/ele.13778
+
+# Assessing functional diversity: the influence of the number of the functional traits
+https://link.springer.com/article/10.1007/s12080-019-00433-x
+
+# Reconciling trait based perspectives along a trait-integration continuum
+https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.3472
+
+# Beyond the single index: Investigating ecological mechanisms underpinning ecosystem multifunctionality with network analysis
+https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7987
+
+# Predictability of Functional Diversity Depends on the Number of Traits
+https://bioone.org/journals/journal-of-resources-and-ecology/volume-12/issue-3/j.issn.1674-764x.2021.03.003/Predictability-of-Functional-Diversity-Depends-on-the-Number-of-Traits/10.5814/j.issn.1674-764x.2021.03.003.full
+
 # To harness traits for ecology, let’s abandon ‘functionality’
 https://www.sciencedirect.com/science/article/pii/S0169534722002890
 
