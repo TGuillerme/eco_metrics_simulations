@@ -44,6 +44,27 @@ Three key aspects:
 # Assessing functional diversity: the influence of the number of the functional traits
 https://link.springer.com/article/10.1007/s12080-019-00433-x
 
+Checking what the metrics capture (moms style). But maybe no link with mechanism?
+Effect of traits on pattern recovery:
+With a Euclidean approach:
+Functional richness (FRic- TOP - HYPE) increases with the number of traits
+Functional evenness (FEve - Ru) is constant
+Functional divergence is variable (FDiv is constant; FDis, FSpe and Q are increasing with the number of traits)
+With a Gower approach:
+Functional richness (FRic- TOP - HYPE) decreases with the number of traits
+Functional evenness (FEve - Ru) is constant
+Functional divergence is variable (FDiv is constant; FDis, FSpe and Q are decreasing with the number of traits)
+
+FRic =  Convex Hull Volume. Amount of functional space filled by the community. 
+TOP= TOP index (Fontana et al. 2015):  Sum of successive convex hull area. Density of functional space filled by the community. 
+HYPE = n-hypervolume index (Blonder 2014):  Level of functional space filled by the community 
+FEve =  Sum of MST branch length (l) weighted by relative abundance. 
+Ru = Ru (Ricotta et al. 2014): Regularity with which species are distributed along the tree, together with the evenness in their abundances
+FDiv =  Species deviance from the mean distance to the centre of gravity weighted by relative abundance. 
+Fdis =  FDis (Laliberté and Legendre 2010):  Mean distance of individual species to the centroid of all species to the community. 
+Q = (quadratic entropy of Rao, Botta-Dukát 2005):  Sum of pairwise distances between species weighted by relative abundance. 
+FSpe (Villéger et al. 2010):  Euclidean distance of species to the centre of gravity of all the species weighted by relative abundance. 
+
 # Reconciling trait based perspectives along a trait-integration continuum
 https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.3472
 
