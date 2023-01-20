@@ -29,6 +29,9 @@ Discussing what traits should (could) or should not be.
 # HOW DO DIFFERENT MEASURES OF FUNCTIONAL DIVERSITY PERFORM?
 https://esajournals.onlinelibrary.wiley.com/doi/10.1890/03-0226
 
+Looking with field experiement the difference between two metrics: FAD = (`c(sum,pairwise.dit)`) sum of the distances between species in trait space; FD = (`c(sum, span.tree.length)`ish) total branch length of the functional dendrogram that results from clustering the species in trait space.
+Different metrics, different results.
+
 # The dimensionality and structure of species trait spaces
 https://onlinelibrary.wiley.com/doi/10.1111/ele.13778
 
