@@ -35,6 +35,12 @@ Different metrics, different results.
 # The dimensionality and structure of species trait spaces
 https://onlinelibrary.wiley.com/doi/10.1111/ele.13778
 
+Great work on assessing the quality of the trait space
+Three key aspects:
+- dimensionality issue: how many dimensions?
+- choice of traits: which traits?
+- species distribution in trait space: where are things?
+
 # Assessing functional diversity: the influence of the number of the functional traits
 https://link.springer.com/article/10.1007/s12080-019-00433-x
 
