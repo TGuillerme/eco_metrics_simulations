@@ -68,20 +68,52 @@ FSpe (Villéger et al. 2010):  Euclidean distance of species to the centre of gr
 # Reconciling trait based perspectives along a trait-integration continuum
 https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.3472
 
+Some thoughts about trait based approaches at different scales. Could be linked to thoughts from PATTERN, PROCESS AND MECHANISM - THE FUNDAMENTALS OF SCIENTIFIC INQUIRY APPLIED TO VEGETATION SCIENCE
+
 # Beyond the single index: Investigating ecological mechanisms underpinning ecosystem multifunctionality with network analysis
 https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.7987
+
+Using multiple metrics for networks.
 
 # Predictability of Functional Diversity Depends on the Number of Traits
 https://bioone.org/journals/journal-of-resources-and-ecology/volume-12/issue-3/j.issn.1674-764x.2021.03.003/Predictability-of-Functional-Diversity-Depends-on-the-Number-of-Traits/10.5814/j.issn.1674-764x.2021.03.003.full
 
+Number of traits: linking to Assessing functional diversity: the influence of the number of the functional traits
+
 # To harness traits for ecology, let’s abandon ‘functionality’
 https://www.sciencedirect.com/science/article/pii/S0169534722002890
+
+Focusing on traits that are "Functional" can be narrowing the field and is probably subjective. Traits can be more than functional or not functional at all and still useful for understanding stuff. We need a broader definition of traits? Or no definition at all. Like make the definition question based.
+
+In a way that makes me think of the "niche" or "species" concept. I think it's rather precise and clear in some cases (e.g. clear/specific niche = photosynthesis type + nitrogen use in plants; clear specific species = a flamingo and a darwin finch used for comparative data). But it other cases they are not clear (and it's OK; e.g. scavenger niche; a tree distribution with n taxa and different topologies for comparative analyses).
 
 # How to improve scaling from traits to ecosystem processes
 https://www.sciencedirect.com/science/article/pii/S0169534722002749
 
+This one is kind of the opposite of the above paper: we need to have a narrower and more precise definition of functional ecology and stuff to understand how to link patterns > processes > mechanisms
+
 # Animal functional traits: Towards a trait-based ecology for whole ecosystems
 https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2435.14246
 
- * We need more traits based on animals than plants - bof... 
+ * We need more traits based on animals than plants - sure... 
 
+
+
+
+
+
+
+
+
+
+
+> In its simplest definition, a trait is a surrogate of organismal performance, and this meaning of the term has been used by evolutionists for a long time.
+> Biodiversity can influence ecosystem functioning through changes in the amount of resource use complementary among species
+> Trait-based ecology aims to understand the processes that generate the overarching diversity of organismal traits and their influence on ecosystem functioning. 
+> The impact of the variation of the number of functional traits on functional diversity assessment is still poorly known
+> Trait based ecology has developed fast in the last decades, aiming to both explain mechanisms of community assembly, and predict patterns in nature, such as the effects of biodiversity shifts on key ecosystem processes.
+> Ecosystems simultaneously deliver multiple functions that relate to both the activities of resident species and environmental conditions. 
+> Analysis of functional diversity, based on plant traits and community structure, provides a promising approach for exploration of the adaptive strategies of plants and the relationship between plant traits and ecosystem functioning.
+> Functional traits and associated trait-based concepts have driven rapid innovation in ecology over recent years, with most progress based on insights from plants. 
+
+These are the first lines of 8 different abstracts and they all more or less say "Functional diversity is a thing - go check wikipedia"
