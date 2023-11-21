@@ -17,12 +17,13 @@ In order to run the simulations (on your machine, cluster, etc...) you'll need t
 ```{r, eval = FALSE}
 ## Getting the non-CRAN (yet) libraries
 library(devtools)
-devtools::install_github("TGuillerme/dads")
+devtools::install_github("TGuillerme/treats")
+install.packages(c("dispRity", "BAT", "FD", "ks", "TPD"))
 ```
 
 ```{r}
 ## Libraries
-require(dads)
+require(treats)
 require(dispRity)
 require(BAT)
 require(FD)

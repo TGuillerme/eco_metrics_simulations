@@ -16,13 +16,13 @@ Later, we can use the `dispRity::reduce.space` package to apply stressors to the
 
 ```{r, eval = FALSE}
 library(devtools)
-devtools::install_github("TGuillerme/dads")
+devtools::install_github("TGuillerme/treats")
 devtools::install_github("TGuillerme/dispRity")
 ```
 
 ```{r}
 set.seed(1)
-library(dads)     # needs to be version >= 0.1.4
+library(treats)     # needs to be version >= 0.1.4
 library(dispRity) # needs to be version >= 1.5.7
 ```
 
@@ -41,9 +41,9 @@ bd_params <- list(speciation = 1)
 stop_rule <- list(max.living = 200)
 
 ## Simulating the data
-simulated_data <- dads(bd.params = bd_params,
-                       stop.rule = stop_rule,
-                       traits    = my_trait)
+simulated_data <- treats(bd.params = bd_params,
+                         stop.rule = stop_rule,
+                         traits    = my_trait)
 
 ## We can then visualise the simulated data (just two show the process)
 par(mfrow = c(2, 1))
@@ -114,25 +114,8 @@ plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, m
 plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D filtering mechanism")
 ```
 
-## Competitive exclusion
 
-For simulating the competitive exclusion, we could use the `dispRity::reduce.space` `"evenness"` algorithm that basically "flattens" the curve (i.e. displacing things from the highest density regions to the sides).
 
-```{r}
-## Removing 50% to flatten the curve
-competitive_exclusion <- reduce.space(trait_space,
-                                    type = "evenness",
-                                    remove = 0.5,
-                                    parameters = list(power = 3))
-```
-
-```{r, fig.height = 12, fig.width = 6}
-
-## Visualising the results
-par(mfrow = c(2, 1))
-plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D excluding mechanism")
-plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D excluding mechanism")
-```
 
 
 ## Equalising fitness processes
@@ -154,13 +137,31 @@ plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, ma
 plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D equalising mechanism")
 ```
 
+
+
+## Competitive exclusion
+
+For simulating the competitive exclusion, we could use the `dispRity::reduce.space` `"evenness"` algorithm that basically "flattens" the curve (i.e. displacing things from the highest density regions to the sides).
+
+```{r}
+## Removing 50% to flatten the curve
+competitive_exclusion <- reduce.space(trait_space,
+                                    type = "evenness",
+                                    remove = 0.5,
+                                    parameters = list(power = 3))
+```
+
+```{r, fig.height = 12, fig.width = 6}
+
+## Visualising the results
+par(mfrow = c(2, 1))
+plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D excluding mechanism")
+plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D excluding mechanism")
+```
+
 ## Facilitation
 
-This one might be a bit trickier (though doable).
-One way to do it (as suggested in our last meeting) could be to simply add a number of data points to places that already have data. 
-However, this will result in non-comparable number of elements in each simulations.
-
-One alternative (at least for now) would be to use the `"density"` algorithm from `dispRity::reduce.space` that will reduce the nearest neighbours distance between elements (basically making clumps of two elements close to each other).
+Using the `"density"` algorithm from `dispRity::reduce.space` that to reduce the nearest neighbours distance between elements (basically making clumps of two elements close to each other).
 
 ```{r}
 ## Removing 50% to change the trait space size
@@ -194,23 +195,23 @@ plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (1D)"
 plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (2D)", col = c("lightgrey", "blue"), trait = c(1,2), xlab = "Trait 1", ylab = "Trait 2")
 
 ## Stressors
-plot.text.box("Resampling\nwith stressor:\nnull mechanism", cex = 2)
+plot.text.box("1) Resampling\nwith stressor:\nnull mechanism", cex = 2)
 plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Resample (100sp)"))
 plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
 
-plot.text.box("Resampling\nwith stressor:\nfiltering\nmechanism", cex = 2)
-plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D filtering mechanism")
+plot.text.box("2) Resampling\nwith stressor:\nfiltering\nmechanism", cex = 2)
+plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D filtering mechanism", legend = c("Random resampling (100sp)", "Biased resampling (100sp)"))
 plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D filtering mechanism")
 
-plot.text.box("Reseampling\nwith stressor:\nequalizing\nmechanism", cex = 2)
+plot.text.box("12) Resampling\nwith stressor:\nequalizing\nmechanism", cex = 2)
 plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D equalising mechanism")
 plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D equalising mechanism")
 
-plot.text.box("Reseampling\nwith stressor:\nexcluding\nmechanism", cex = 2)
+plot.text.box("4) Resampling\nwith stressor:\nexcluding\nmechanism", cex = 2)
 plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D excluding mechanism")
 plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D excluding mechanism")
 
-plot.text.box("Reseampling\nwith stressor:\nfacilitating\nmechanism", cex = 2)
+plot.text.box("5) Resampling\nwith stressor:\nfacilitating\nmechanism", cex = 2)
 plot.1D(trait_space, reduction = facilitation, null = random_reduction, main = "1D facilitation mechanism")
 plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "2D facilitation mechanism")
 dev.off()
