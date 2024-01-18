@@ -1,0 +1,133 @@
+---
+title: "Empirical pipeline"
+author: "Thomas Guillerme"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    fig_width: 12
+    fig_height: 6
+---
+
+This script is the repeatable script for measuring changes in the different diversity metrics and how they are affected by the empirical data. 
+
+## Requirements for the simulations
+
+In order to run the simulations (on your machine, cluster, etc...) you'll need to load the following in your current environment:
+
+```{r, eval = FALSE}
+## Getting the non-CRAN (yet) libraries
+library(devtools)
+devtools::install_github("TGuillerme/treats")
+install.packages(c("dispRity", "BAT", "FD", "ks", "TPD"))
+```
+
+```{r}
+## Libraries
+require(treats)
+require(dispRity)
+require(BAT)
+require(FD)
+require(ks)
+require(TPD)
+```
+
+> Note that the libraries do not need to be loaded (i.e. no need for `library()`) but needs to exist.
+
+You'll also need the following custom functions (located in [here on github](https://github.com/TGuillerme/eco_metrics_simulations/tree/master/Functions))
+
+```{r}
+## Loading the functions
+source("../Functions/melodic.rao.R")
+source("../Functions/make.simulation.pipeline.R")
+source("../Functions/simulation.pipeline.R")
+```
+
+## Setting up the empirical data
+
+You can run the pipeline on the empirical data if you have the following elements ready:
+
+ * A trait space (a `"matrix"`) with the rows as species and the columns as dimensions (make sure it has rownames for avoiding any problems down the line).
+ * A list of species to remove for each sub-sampling the list should be list of named `logical` vectors (where for example species that should be excluded - e.g. fossils are marked as `FALSE` and the ones to include as `TRUE`).
+
+Here are two dummy examples but you can replace them with your empirical data:
+
+```{r}
+## Making a dummy trait space for 200 species (3D)
+my_traitspace <- dispRity::space.maker(elements = 200, dimensions = 3,
+                                       distribution = rnorm,
+                                       elements.names = 1:200)
+## This is what it looks like
+head(my_traitspace)
+
+## Making a dummy set of sub-sampling
+my_subsamples <- list(sample(c(TRUE, FALSE), 200, replace = TRUE),
+                      sample(c(TRUE, FALSE), 200, replace = TRUE, prob = c(0.75, 0.25)),
+                      sample(c(TRUE, FALSE), 200, replace = TRUE, prob = c(0.90, 0.10)))
+## Adding the elements names
+my_subsamples <- lapply(my_subsamples, function(x) {names(x) <- 1:200 ; return(x)})
+
+## This is what it looks like
+str(my_subsamples)
+```
+
+You can then use the function `make.simulation.pipeline` to set up the pipeline by specifying the input data and stressor (the list of species to remove):
+
+```{r}
+## Creating the function for running the empirical pipeline
+empirical.pipeline <- make.simulation.pipeline(sim.data = my_traitspace,
+                                               remove   = my_subsamples)
+```
+
+And then you can just run the pipeline by calling this pipeline function:
+
+```{r, eval = FALSE}
+## Running the empirical pipeline
+empirical.pipeline()
+```
+
+## Replicating the empirical pipeline
+
+The pipeline also automatically generates a null model for each level of data removal.
+To get enough variance on the null model we will replicate the pipeline $n$ times until adding 5% more replicates does not increase the overall variance by more than 5% for any metric.
+In other words, we replicated each simulation $n$ times where $n$ is estimated so that $var(n + 0.05 \times n) < 0.05 \times var(n)$.
+
+For that we will use the custom `optim.replicate()` function which comes with one diagnosis function (checking if the variance for each metric is < 0.05) and one summarising (summarising the output of `empirical.pipeline()` for diagnosis) function
+
+```{r}
+## Loading the optimisation functions
+source("../Functions/optim.replicate.R")
+source("../Functions/optim.helpers.R")
+source("../Functions/analyse.replicates.R")
+```
+
+You can then run this replicate function that will start by running 20 replicates (`mimimum`) and will increase the number of replicates by 5% until reaching 170 replicates (`maximum`) or until the addition 5% increase does not increase the variance for each metric with each different level of removal by less than 5% (120 parameters!).
+
+There are options to 
+
+```{r, eval = TRUE}
+## Running the full optimisation
+results <- optim.replicate(input.fun = empirical.pipeline,
+                           diagnose = var,
+                           summarise = optim.summarise,
+                           minimum = 20, maximum = 170,
+                           stop.variance = 0.0001,
+                           verbose = TRUE,
+                           bkp.path = "../Data/Processed/",
+                           bkp.name = "empirical_data.rda")
+```
+
+> Note that you can use the parallel version by adding the argument `parallel = TRUE` that is automatised using the package `future` and `future.apply` which makes the whole process run on all your available cores but is way less verbose. Without using the parallel version, it takes roughly 10 hours (overnight) to run the analyses on an old 2.2Ghz 8GB core.
+
+## Checking the results
+
+We can then visualise the "convergence" of the results using the `analyse.replicate` function:
+
+```{r, eval = FALSE}
+source("../Functions/analyse.replicates.R")
+## Check the change in variance for all 120 parameters
+analyse.replicates("../Data/Processed/sim_filtering.rda") #140 -> #170
+analyse.replicates("../Data/Processed/sim_equalizing.rda") #155
+analyse.replicates("../Data/Processed/sim_competition.rda") #126
+analyse.replicates("../Data/Processed/sim_facilitation.rda") #163
+analyse.replicates("../Data/Processed/empirical_data.rda") #163
+```
