@@ -14,7 +14,7 @@
 #' @author Thomas Guillerme
 #' @export
 
-make.simulation.pipeline <- function(type,
+make.simulation.pipeline <- function(type = NULL,
                                      sim.data = list(n.traits   = 2,
                                                      speciation = 1,
                                                      n.taxa     = 200),

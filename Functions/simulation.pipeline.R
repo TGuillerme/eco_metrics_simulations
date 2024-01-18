@@ -2,9 +2,9 @@
 #'
 #' @description One simulation pipeline
 #'
-#' @param sim.data A named list of parameters for the data simulation (default is \code{list{n.traits = 2, speciation = 1, n.taxa = 200}})
+#' @param sim.data A named list of parameters for the data simulation (default is \code{list{n.traits = 2, speciation = 1, n.taxa = 200}}) or a traitspace
 #' @param type Which removal type (either \code{"facilitation"}, \code{"equalizing"}, \code{"competition"} or \code{"filtering"})}) to be paired with \code{"random"}.
-#' @param remove How much data to remove (can be a vector of multiple percentages)
+#' @param remove How much data to remove (can be a vector of multiple percentages) or a list of elements to remove.
 #' @param verbose whether to be verbose (\code{TRUE}, default) or not (\code{FALSE})
 #' @param record.timer whether to record the timer for each step of the simulations
 #' 
@@ -18,17 +18,23 @@
 # sim.data = list(n.traits = 2, speciation = 1, n.taxa = 200)
 # type = "facilitation"
 # remove = c(0.2,.4, 0.6 ,0.8)
-# library(dads)
+# library(treats)
 # library(dispRity)
 # library(BAT)
 # source("melodic.rao.R")
 
 
 # test <- simulation.pipeline(sim.data = sim.data, type = "facilitation", remove = remove, verbose = TRUE, record.timer = TRUE)
-
-## SOLVED: Errors: Error in hclust(as.dist(thisTree)) : must have n >= 2 objects to cluster
 # set.seed(4)
 # test <- simulation.pipeline(sim.data, type = "facilitation", remove = remove, verbose = TRUE)
+
+
+## Random 3D dataset with 200 taxa
+# sim.data <- dispRity::space.maker(elements = 200, dimensions = 3, distribution = rnorm)
+# rownames(sim.data) <- 1:200 
+# remove <- list(sample(c(TRUE, FALSE), 200, replace = TRUE),
+#                sample(c(TRUE, FALSE), 200, replace = TRUE, prob = c(0.75, 0.25)),
+#                sample(c(TRUE, FALSE), 200, replace = TRUE, prob = c(0.90, 0.10)))
 simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.timer = FALSE) {
 
     if(record.timer) {
@@ -39,53 +45,90 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
         message("\nSimulating the trait space:", appendLF = FALSE)
     }
 
-    ## Make empty reductions (all FALSE) for checking if the reduction worked
-    target_reductions <- replicate(length(remove), FALSE, simplify = FALSE)
-    while(any(!unlist(lapply(target_reductions[which(!(remove == 0 & remove == 1))], check.reduction)))) {
-
-        if(verbose) {
-            message(".", appendLF = FALSE)
+    if(is(sim.data, c("matrix")) || is(sim.data, c("data.frame"))) {
+        ## Sim.data is an input traitspace
+        is_empirical <- TRUE
+        ## Check if remove is the correct list
+        if(!is(remove, "list") || !is(unlist(remove), "logical")) {
+            stop("If providing a empirical traitspace, you must provide a list of logicals for remove.")
         }
-
-        ## Simulating the brownian birth death data
-        simulated_data <- dads::dads(
-                bd.params = list(speciation = sim.data$speciation),
-                stop.rule = list(max.living = sim.data$n.taxa),
-                traits    = dads::make.traits(process = dads::BM.process, n = sim.data$n.traits))
-        trait_space <- simulated_data$data[rownames(simulated_data$data) %in% simulated_data$tree$tip.label, ]
-
-        if(verbose) {
-            message(".", appendLF = FALSE)
-        }
-
-        ## Applying the stressors
-        random_reductions <- sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "random", remove = remove)), trait_space, simplify = FALSE)
-
-        if(verbose) {
-            message(".", appendLF = FALSE)
-        }
-
-        ## Run the reductions
-        target_reductions <- switch(type,
-            "facilitation" = sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "density", remove = remove)), trait_space, simplify = FALSE),
-            "equalizing"   =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "size", remove = remove)), trait_space, simplify = FALSE),
-            "competition"  =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "evenness", remove = remove, parameters = list(power = 3))), trait_space, simplify = FALSE),
-            "filtering"    =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "position", remove = remove)), trait_space, simplify = FALSE)
-            )
+    } else {
+        is_empirical <- FALSE
     }
 
-    ## Wrapping up the data
-    presences <- mapply(function(random, stressor) return(cbind(random, stressor)), random = random_reductions, stressor = target_reductions, SIMPLIFY = FALSE)
+    timer <- NULL
 
-    if(record.timer) {
-        time_end <- Sys.time()
-        timer <- c("Data simulation" = time_end - time_start)
+    ## Make empty reductions (all FALSE) for checking if the reduction worked
+    if(!is_empirical) {
+        target_reductions <- replicate(length(remove), FALSE, simplify = FALSE)
         time_start <- Sys.time()
+        while(any(!unlist(lapply(target_reductions[which(!(remove == 0 & remove == 1))], check.reduction)))) {
+
+            if(verbose) {
+                message(".", appendLF = FALSE)
+            }
+
+            ## Simulating the brownian birth death data
+            simulated_data <- treats::treats(
+                    bd.params = list(speciation = sim.data$speciation),
+                    stop.rule = list(max.living = sim.data$n.taxa),
+                    traits    = treats::make.traits(process = treats::BM.process, n = sim.data$n.traits))
+            trait_space <- simulated_data$data[rownames(simulated_data$data) %in% simulated_data$tree$tip.label, ]
+
+            if(verbose) {
+                message(".", appendLF = FALSE)
+            }
+
+            ## Applying the stressors
+            random_reductions <- sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "random", remove = remove)), trait_space, simplify = FALSE)
+
+            if(verbose) {
+                message(".", appendLF = FALSE)
+            }
+
+            ## Run the reductions
+            target_reductions <- switch(type,
+                "facilitation" = sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "density", remove = remove)), trait_space, simplify = FALSE),
+                "equalizing"   =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "size", remove = remove)), trait_space, simplify = FALSE),
+                "competition"  =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "evenness", remove = remove, parameters = list(power = 3))), trait_space, simplify = FALSE),
+                "filtering"    =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "position", remove = remove)), trait_space, simplify = FALSE)
+                )
+        }
+
+        ## Wrapping up the data
+        presences <- mapply(function(random, stressor) return(cbind(random, stressor)), random = random_reductions, stressor = target_reductions, SIMPLIFY = FALSE)
+        
+        if(record.timer) {
+            time_end <- Sys.time()
+            timer <- c("Data simulation" = time_end - time_start)
+        }
+
+        if(verbose) message("Done.\n", appendLF = FALSE)
+
+    } else {
+        ## Get trait_space
+        trait_space <- sim.data
+        if(is.null(rownames(trait_space))) {
+            rownames(trait_space) <- 1:200
+        }
+        ## Create the presences list
+        make.presences <- function(one_remove) {
+            ## Create the random variable (null)
+            random <- rep(FALSE, length(one_remove))
+            random[sample(1:200, size = sum(one_remove))] <- TRUE
+            ## Get the dimnames
+            if(is.null(names(one_remove))) {
+                rownames <- 1:length(one_remove)
+            } else {
+                rownames <- names(one_remove)
+            }
+            return(matrix(c(random, one_remove), ncol = 2, byrow = FALSE, dimnames = list(c(rownames), c("random", "stressor"))))
+        }
+        presences <- lapply(remove, make.presences)
     }
 
     ## Calculating the functional dendrograms
     if(verbose) {
-        message("Done.\n", appendLF = FALSE)
         message("Calculating functional dendrogram:", appendLF = FALSE)
     }
 
@@ -228,7 +271,7 @@ fun.kernel <- function(presence, traits, verbose) {
     }
 
     ## Get the hypervolume (remove messages)
-    suppressMessages(silent <- capture.output(hypervolume <- kernel.build(comm = t(presence), trait = traits)))
+    suppressMessages(silent <- capture.output(hypervolume <- BAT::kernel.build(comm = t(presence), trait = traits)))
     
     ## Get the values (remove messages)
     suppressMessages(silent <- capture.output(richness <- BAT::kernel.alpha(comm=hypervolume )))
@@ -248,7 +291,7 @@ fun.convex.hull <- function(presence, traits, verbose) {
     }
 
     ## get the hull
-    suppressMessages(silent <- capture.output(hull <- hull.build(comm = t(presence), trait = traits)))
+    suppressMessages(silent <- capture.output(hull <- BAT::hull.build(comm = t(presence), trait = traits)))
     
     # run the volume
     suppressMessages(silent <- capture.output(results <- BAT::hull.alpha(hull)))
@@ -269,7 +312,7 @@ fun.proba.den <- function(presence, traits, verbose) {
         data = rep(sqrt(diag(ks::Hpi.diag(traits))), nrow(presence)),
         nrow = nrow(presence),
         byrow = TRUE,
-        dimnames = list(rownames(presence), c("sdA1", "sdA2")))
+        dimnames = list(rownames(presence), paste0("sdA", 1:ncol(traits))))
 
     ## Measure probability density metrics 
     suppressMessages(TPD_species <- TPD::TPDsMean(species = rownames(presence),
