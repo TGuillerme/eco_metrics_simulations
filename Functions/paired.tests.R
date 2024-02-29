@@ -32,7 +32,7 @@ paired.tests <- function(one_stressor) {
     test_list <- split.metric(t(test_table))
     merge.results <- function(one_metric) {
         out <- c(one_metric)
-        names(out) <- c(t(sapply(paste0(rownames(one_metric), "_rm"), function(X) paste0(X, 1:4))))
+        names(out) <- c(t(sapply(paste0(rownames(one_metric), "_rm"), function(X) paste0(X, 1:ncol(one_metric)))))
         return(out)
     }
     return(t(do.call(cbind, lapply(test_list, merge.results))))

@@ -14,14 +14,35 @@ In this section we are going to analyse the results from the `optim.replicates` 
 ```{r, echo = FALSE}
 library(knitr)
 ## Loading the results
-load("../Data/Processed/sim_equalizing.rda")
-equalizing <- bkp
-load("../Data/Processed/sim_facilitation.rda")
-facilitation <- bkp
-load("../Data/Processed/sim_filtering.rda")
-filtering <- bkp
-load("../Data/Processed/sim_competition.rda")
-competition <- bkp
+load("../Data/Processed/sim_equalizing_2d.rda")
+equalizing_2d <- bkp
+load("../Data/Processed/sim_facilitation_2d.rda")
+facilitation_2d <- bkp
+load("../Data/Processed/sim_filtering_2d.rda")
+filtering_2d <- bkp
+load("../Data/Processed/sim_competition_2d.rda")
+competition_2d <- bkp
+
+## Loading the results
+load("../Data/Processed/sim_equalizing_3d.rda")
+equalizing_3d <- bkp
+load("../Data/Processed/sim_facilitation_3d.rda")
+facilitation_3d <- bkp
+load("../Data/Processed/sim_filtering_3d.rda")
+filtering_3d <- bkp
+load("../Data/Processed/sim_competition_3d.rda")
+competition_3d <- bkp
+
+## Loading empirical results
+load("../Data/Processed/empirical_data-hist-present-native.rda")
+empirical_hist <- bkp
+load("../Data/Processed/empirical_data-prehist-present-native.rda")
+empirical_prehist <- bkp
+
+hist_table <- empirical_hist$results_table
+colnames(hist_table) <- gsub("_rm1", "_rm2", colnames(hist_table))
+combined_empirical <- list()
+combined_empirical$results_table <- cbind(empirical_prehist$results_table, hist_table)
 
 ## Loading the functions
 source("../Functions/extract.table.R")
@@ -48,11 +69,15 @@ For each metric displayed here:
 
 ```{r, echo = FALSE}
 ## Creating the list of results
-all_results <- list(equalizing   = equalizing,
-                    facilitation = facilitation,
-                    filtering    = filtering,
-                    competition  = competition)
-
+all_results_2d <- list(equalizing   = equalizing_2d,
+                       facilitation = facilitation_2d,
+                       filtering    = filtering_2d,
+                       competition  = competition_2d)
+all_results_3d <- list(equalizing   = equalizing_3d,
+                       facilitation = facilitation_3d,
+                       filtering    = filtering_3d,
+                       competition  = competition_3d)
+empirical_results <- list(combined_empirical)
 
 ## Sort the results per name
 sort.metrics <- function(one_results, order) {
@@ -86,7 +111,9 @@ new_order <- c(14, 12, 3, 6,
                15, 11, 2, 8,
                7, 4, 5, 13,
                10, 9, 1)
-all_results <- lapply(all_results, sort.metrics, order = new_order)
+all_results_2d <- lapply(all_results_2d, sort.metrics, order = new_order)
+all_results_3d <- lapply(all_results_3d, sort.metrics, order = new_order)
+empirical_results <- lapply(empirical_results, sort.metrics, order = new_order)
 
 ## The different removal level names
 removals <- c("20%", "40%", "60%", "80%")
@@ -118,8 +145,12 @@ We then scale the centred metric by dividing it by it's maximum absolute centred
 
 ```{r, echo = FALSE}
 ## Extracting all the scaled results
-scaled_results <- extract.table(all_results, scale.method = "between")
-scaled_within <- extract.table(all_results, scale.method = "within")
+scaled_results_2d <- extract.table(all_results_2d, scale.method = "between")
+scaled_within_2d  <- extract.table(all_results_2d, scale.method = "within")
+scaled_results_3d <- extract.table(all_results_3d, scale.method = "between")
+scaled_within_3d  <- extract.table(all_results_3d, scale.method = "within")
+scaled_results_emp<- extract.table(empirical_results, scale.method = "between")
+scaled_within_emp <- extract.table(empirical_results, scale.method = "within")
 ```
 
 ## Measuring the statistics for each metric
@@ -130,49 +161,112 @@ To check the trend in the different level of data removals (20, 40, 60 and 80%) 
 
 ```{r, echo = FALSE}
 ## Slope and R2 for each model
-model_fits <- lapply(scaled_results, fit.model.rm)
+model_fits_2d  <- lapply(scaled_results_2d, fit.model.rm)
+model_fits_3d  <- lapply(scaled_results_3d, fit.model.rm)
+model_fits_emp <- lapply(scaled_results_emp, fit.model.rm)
+
 ## Differences between stressor and random
-null_differences <- lapply(all_results, paired.tests)
+null_differences_2d  <- lapply(all_results_2d, paired.tests)
+null_differences_3d  <- lapply(all_results_3d, paired.tests)
+null_differences_emp <- lapply(empirical_results, paired.tests)
 
 ## Making the fancy tables
-model_table <- fancy.table(model_fits, columns = list(c(3,4), 5))
-null_table <- fancy.table(null_differences, columns = list(c(1,3), c(4, 6), c(7, 9)))
+model_table_2d  <- fancy.table(model_fits_2d, columns = list(c(3,4), 5))
+model_table_3d  <- fancy.table(model_fits_3d, columns = list(c(3,4), 5))
+model_table_emp <- fancy.table(model_fits_emp, columns = list(c(3,4), 5))
+null_table_2d   <- fancy.table(null_differences_2d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
+null_table_3d   <- fancy.table(null_differences_3d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
+null_table_emp  <- fancy.table(null_differences_emp, columns = list(c(1,3), c(4, 6)))
 ```
 
 ```{r, echo = FALSE}
-rownames(model_table) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-kable(model_table, caption = "Results of the model scaled metric ~ removal level per stressor", align = "c")
+rownames(model_table_2d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
+kable(model_table_2d, caption = "Results of the model scaled metric ~ removal level per stressor (2D)", align = "c")
 ```
-
 ```{r, echo = FALSE}
-rownames(null_table) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
+rownames(model_table_3d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
+kable(model_table_3d, caption = "Results of the model scaled metric ~ removal level per stressor (3D)", align = "c")
+```
+```{r, echo = FALSE}
+rownames(model_table_emp) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
+kable(model_table_emp, caption = "Results of the model scaled metric ~ removal level for the empirical data (3D)", align = "c")
+```
+```{r, echo = FALSE}
+rownames(null_table_2d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
 ## Even fancier column names
-colnames(null_table) <- gsub(".d_rm", ".rm", colnames(null_table))
-colnames(null_table) <- gsub("equalizing", "equa", colnames(null_table))
-colnames(null_table) <- gsub("facilitation", "faci", colnames(null_table))
-colnames(null_table) <- gsub("filtering", "filt", colnames(null_table))
-colnames(null_table) <- gsub("competition", "comp", colnames(null_table))
-kable(null_table, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor", align = "c")
+colnames(null_table_2d) <- gsub(".d_rm", ".rm", colnames(null_table_2d))
+colnames(null_table_2d) <- gsub("equalizing", "equa", colnames(null_table_2d))
+colnames(null_table_2d) <- gsub("facilitation", "faci", colnames(null_table_2d))
+colnames(null_table_2d) <- gsub("filtering", "filt", colnames(null_table_2d))
+colnames(null_table_2d) <- gsub("competition", "comp", colnames(null_table_2d))
+kable(null_table_2d, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2d)", align = "c")
+```
+
+```{r, echo = FALSE}
+rownames(null_table_3d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
+## Even fancier column names
+colnames(null_table_3d) <- gsub(".d_rm", ".rm", colnames(null_table_3d))
+colnames(null_table_3d) <- gsub("equalizing", "equa", colnames(null_table_3d))
+colnames(null_table_3d) <- gsub("facilitation", "faci", colnames(null_table_3d))
+colnames(null_table_3d) <- gsub("filtering", "filt", colnames(null_table_3d))
+colnames(null_table_3d) <- gsub("competition", "comp", colnames(null_table_3d))
+kable(null_table_3d, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (3d)", align = "c")
+```
+
+```{r, echo = FALSE}
+rownames(null_table_emp) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
+## Even fancier column names
+colnames(null_table_emp) <- gsub(".d_rm", ".rm", colnames(null_table_emp))
+colnames(null_table_emp) <- gsub("equalizing", "equa", colnames(null_table_emp))
+colnames(null_table_emp) <- gsub("facilitation", "faci", colnames(null_table_emp))
+colnames(null_table_emp) <- gsub("filtering", "filt", colnames(null_table_emp))
+colnames(null_table_emp) <- gsub("competition", "comp", colnames(null_table_emp))
+kable(null_table_emp, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal for the empirical data (pre-history and history)", align = "c")
 ```
 
 # Plots per stressor
-
 
 ```{r, fig.width = 8, fig.height = 10, echo = FALSE}
 col_vector <- c(rep("blue", 4), # The richness ones
                 rep("orange", 7), # The divergence ones
                 rep("darkgreen", 4)) # The regularity ones
 ## The plot
-fancy.plot(scaled_results, col = col_vector, lm = model_fits, null = null_differences, metric.names = fancy_names)
+fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names)
 
 ## Pdf version
-pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor.pdf", height = 9, width = 9)
-fancy.plot(scaled_results, col = col_vector, lm = model_fits, null = null_differences, metric.names = fancy_names)
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_2d.pdf", height = 9, width = 9)
+fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names)
 dev.off()
-
 ```
 
 Figure 1: Simulation results: the y axes represent the different metrics tested (sorted by categories). The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors. Negative and positive values signify a decrease/increase in the metric score. The dots represent the median metric value, the full line their 50% confidence interval (CI) and the dashed line their 95% CI. The colours are just here to visually separate the metrics rows but the colour gradient within each row corresponds to a removal of respectively 80%, 60%, 40% and 20% of the data (from top to bottom). Grey lines in the background are a fitted linear model on the scaled metric score function of removal amount and the value displayed is the adjusted R^2 from each of these models. Dashed grey lines represent non-significant models (slope or/and intercept). The grey line plots represent distribution of metrics scores not clearly different from the random metric scores (paired t-test p value > 0.05).
+
+
+```{r}
+## The plot
+fancy.plot(scaled_results_3d, col = col_vector, lm = model_fits_3d, null = null_differences_3d, metric.names = fancy_names)
+
+## Pdf version
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_3d.pdf", height = 9, width = 9)
+fancy.plot(scaled_results_3d, col = col_vector, lm = model_fits_3d, null = null_differences_3d, metric.names = fancy_names)
+dev.off()
+```
+
+
+
+```{r}
+## The plot
+fancy.plot(scaled_results_emp, col = col_vector, lm = model_fits_emp, null = null_differences_emp, metric.names = fancy_names)
+
+## Pdf version
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 9, width = 9)
+fancy.plot(scaled_results_emp, col = col_vector, lm = model_fits_emp, null = null_differences_emp, metric.names = fancy_names)
+dev.off()
+```
+
+
+
+
 
 # Results interpretations in the light of our expectation table
 
