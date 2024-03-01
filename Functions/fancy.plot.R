@@ -28,43 +28,67 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
         plot_params$lwd = 1
     }
 
-    ## Setting up the main plotting window
-    par(mfrow = c(1, length(results)+1))
-    ## Plotting each stressor
-    for(one_stressor in 0:length(results)) {
-        
-        if(one_stressor == 0) {
-            ## Making the labels plot
-            par(mar = c(5, 10, 4, 0), bty = "n")
-            empty.plot(results[[1]],
-                       plot.main = "",
-                       add.x = FALSE,
-                       add.y = TRUE,
-                       grid  = FALSE,
-                       metric.names = metric.names)
+    if(length(results) > 1) {
+        ## Setting up the main plotting window
+        par(mfrow = c(1, length(results)+1))
+        ## Plotting each stressor
+        for(one_stressor in 0:length(results)) {
+            
+            if(one_stressor == 0) {
+                ## Making the labels plot
+                par(mar = c(5, 10, 4, 0), bty = "n")
+                empty.plot(results[[1]],
+                           plot.main = "",
+                           add.x = FALSE,
+                           add.y = TRUE,
+                           grid  = FALSE,
+                           metric.names = metric.names)
 
-        } else {
-            par(mar = c(5, 0, 4, 1))
-            ## Making the empty plot
-            empty.plot(results[[one_stressor]],
-                       plot.main = names(results)[one_stressor],
-                       add.x = TRUE,
-                       add.y = FALSE)
+            } else {
+                par(mar = c(5, 0, 4, 1))
+                ## Making the empty plot
+                empty.plot(results[[one_stressor]],
+                           plot.main = names(results)[one_stressor],
+                           add.x = TRUE,
+                           add.y = FALSE)
 
-            ## Adding the data
-            if(!missing(lm)) {
-                model_data <- lm[[one_stressor]]
-            } else {
-                model_data <- NULL
+                ## Adding the data
+                if(!missing(lm)) {
+                    model_data <- lm[[one_stressor]]
+                } else {
+                    model_data <- NULL
+                }
+                if(!missing(null)) {
+                    null_data <- null[[one_stressor]]
+                } else {
+                    null_data <- NULL
+                }
+                ## Plot the data
+                add.one.stressor(results[[one_stressor]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data)
             }
-            if(!missing(null)) {
-                null_data <- null[[one_stressor]]
-            } else {
-                null_data <- NULL
-            }
-            ## Plot the data
-            add.one.stressor(results[[one_stressor]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data)
         }
+    } else {
+        par(mfrow = c(1,1), mar = c(5, 10, 4, 1))
+        ## Making the empty plot
+        empty.plot(results[[1]],
+                   plot.main = names(results)[1],
+                   add.x = TRUE,
+                   add.y = TRUE,
+                   metric.names = metric.names)
+
+        ## Adding the data
+        if(!missing(lm)) {
+            model_data <- lm[[1]]
+        } else {
+            model_data <- NULL
+        }
+        if(!missing(null)) {
+            null_data <- null[[1]]
+        } else {
+            null_data <- NULL
+        }
+        ## Plot the data
+        add.one.stressor(results[[1]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data)
     }
 }
 
@@ -115,12 +139,12 @@ add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col, lm_da
         ## Select the line significance
         lty <- ifelse(all(lm_data[c(2,4)] < 0.05), 1, 3)
         ## Set the coordinates of the lm
-        y = c((1-0.2),(4+0.2))
+        y = c((1-0.2),(levels+0.2))
         ## Calculate the x coordinates (normally y = ax+b but flipped)
         x <- c(lm_data["Slope"]*y[2] + lm_data["Intercept"],
                lm_data["Slope"]*y[1] + lm_data["Intercept"])
         ## Adjust the y coordinates
-        y = y+(base-4)
+        y = y+(base-levels)
         ## Add the model line
         lines(x, y, lty = lty, col = "darkgrey")
 
@@ -188,11 +212,11 @@ add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col, lm
 }
 
 ## Creating an empty plot
-empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE, plot.main, metric.names = NULL) {
+empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE,  plot.main, metric.names = NULL) {
     
     ## Number of metrics
     y_lim <- c(1,ncol(one_results))
-    
+
     ## Scale values
     if(scaled) {
         x_lim <- c(-1, 1)
@@ -213,10 +237,11 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
     } else {
         metric_names <- metric.names
     }
+    n_levels <- ncol(one_results)/length(metric_names)
+
 
     ## Add the y labels
     if(add.y) {
-        n_levels <- ncol(one_results)/length(metric_names)
         axis(2, at = 1:length(metric_names)*n_levels-median(1:n_levels)+1, labels = metric_names, las = 2)
     }
 
@@ -227,6 +252,6 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
             abline(v = 0, col = "lightgrey")
         }
         ## Horizontal metric lines
-        abline(h = 0:length(metric_names)*4+0.5, col = "lightgrey", lty = 2)
+        abline(h = 0:length(metric_names)*n_levels+0.5, col = "lightgrey", lty = 2)
     }
 }
