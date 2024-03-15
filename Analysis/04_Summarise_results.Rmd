@@ -11,6 +11,14 @@ output:
 This script is the repeatable script for measuring changes in the different diversity metrics and how they are affected by the different stressors. 
 In this section we are going to analyse the results from the `optim.replicates` chain
 
+TODO:
+ - [ ] remove R2 on plots
+ - [ ] finalise empirical plot
+ - [ ] run simulations for 4D and 8D
+
+
+
+
 ```{r, echo = FALSE}
 library(knitr)
 ## Loading the results

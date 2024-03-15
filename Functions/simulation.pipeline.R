@@ -252,7 +252,7 @@ fun.dissimilarity <- function(presence, traits, verbose) {
     ## Only keep columns data have data in common
     keep_rows <- rowSums(presence) > 0
     ## Get the distance based metrics
-    distance_FD <- FD::dbFD(x = traits[keep_rows, ], a = t(presence[keep_rows, ]), print.pco = FALSE, calc.FGR = FALSE, messages = FALSE)
+    distance_FD <- dbFD_novert(x = traits[keep_rows, ], a = t(presence[keep_rows, ]), print.pco = FALSE, calc.FGR = FALSE, messages = TRUE)
 
     ## Get the melodic rao
     melo_rao <- melodic.rao(samp = t(presence[keep_rows, ]), dis = as.matrix(FD::gowdis(traits[keep_rows, ])))
