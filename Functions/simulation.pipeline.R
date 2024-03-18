@@ -314,9 +314,14 @@ fun.proba.den <- function(presence, traits, verbose) {
         byrow = TRUE,
         dimnames = list(rownames(presence), paste0("sdA", 1:ncol(traits))))
 
-    ## Measure probability density metrics 
+    ## Measure probability density metrics
+    if(ncol(traits) <= 4) {
+        traits_4dmax <- traits
+    } else {
+        traits_4dmax <- traits[, c(1:4)]
+    }
     suppressMessages(TPD_species <- TPD::TPDsMean(species = rownames(presence),
-                                 means = traits,
+                                 means = traits_4dmax,
                                  sds = standard_deviations,
                                  alpha = 0.99))
     TPD_cases   <- TPD::TPDc(TPDs = TPD_species, sampUnit = t(presence))
