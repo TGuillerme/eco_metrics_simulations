@@ -149,7 +149,7 @@ add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col, lm_da
         lines(x, y, lty = lty, col = "darkgrey")
 
         ## Add the R^2
-        text(paste(names(lm_data[5]), round(lm_data[5], 3), sep = "\n") , y = base-0.4, x = 0.6, cex = 1)
+        # text(paste(names(lm_data[5]), round(lm_data[5], 3), sep = "\n") , y = base-0.4, x = 0.6, cex = 1)
     }
 
     ## Plot each level
