@@ -196,11 +196,11 @@ plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (2D)"
 
 ## Stressors
 plot.text.box("1) Resampling\nwith stressor:\nnull mechanism", cex = 2)
-plot.1D(trait_space, reduction = random_reduction, null = rep(TRUE, 200), main = "1D null mechanism", legend = c("Full distribution (200sp)", "Resample (100sp)"))
+plot.1D(trait_space, reduction = random_reduction, null = !random_reduction, main = "1D null mechanism")
 plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
 
 plot.text.box("2) Resampling\nwith stressor:\nfiltering\nmechanism", cex = 2)
-plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D filtering mechanism", legend = c("Random resampling (100sp)", "Biased resampling (100sp)"))
+plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D filtering mechanism")
 plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D filtering mechanism")
 
 plot.text.box("12) Resampling\nwith stressor:\nequalizing\nmechanism", cex = 2)
