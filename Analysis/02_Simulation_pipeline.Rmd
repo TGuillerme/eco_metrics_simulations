@@ -40,6 +40,7 @@ You'll also need the following custom functions (located in [here on github](htt
 source("../Functions/melodic.rao.R")
 source("../Functions/make.simulation.pipeline.R")
 source("../Functions/simulation.pipeline.R")
+source("../Functions/dbFD.R")
 ```
 
 ## Setting up the simulations
