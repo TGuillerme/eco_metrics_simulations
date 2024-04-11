@@ -310,19 +310,20 @@ fun.proba.den <- function(presence, traits, verbose) {
         message(".", appendLF = FALSE)
     }
 
-    ## Get the sds matrix
-    standard_deviations <- matrix(
-        data = rep(sqrt(diag(ks::Hpi.diag(traits))), nrow(presence)),
-        nrow = nrow(presence),
-        byrow = TRUE,
-        dimnames = list(rownames(presence), paste0("sdA", 1:ncol(traits))))
-
     ## Measure probability density metrics
     if(ncol(traits) <= 4) {
         traits_4dmax <- traits
     } else {
         traits_4dmax <- traits[, c(1:4)]
     }
+
+    ## Get the sds matrix
+    standard_deviations <- matrix(
+        data = rep(sqrt(diag(ks::Hpi.diag(traits_4dmax))), nrow(presence)), # Hpo.diag was originally: traits
+        nrow = nrow(presence),
+        byrow = TRUE,
+        dimnames = list(rownames(presence), paste0("sdA", 1:ncol(traits_4dmax)))) # ncol argument was origninally: traits
+
     suppressMessages(TPD_species <- TPD::TPDsMean(species = rownames(presence),
                                  means = traits_4dmax,
                                  sds = standard_deviations,
