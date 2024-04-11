@@ -270,9 +270,12 @@ fun.kernel <- function(presence, traits, verbose) {
         message(".", appendLF = FALSE)
     }
 
+    ## estimate the bandwidth (now formally done on the whole traitspace in nD)
+    suppressMessages(silent <- capture.output(estimated_bw <- hypervolume::estimate_bandwidth(traits, method = "silverman")))
+
     ## Get the hypervolume (remove messages)
-    suppressMessages(silent <- capture.output(hypervolume <- BAT::kernel.build(comm = t(presence), trait = traits)))
-    
+    suppressMessages(silent <- capture.output(hypervolume <- BAT::kernel.build(comm = t(presence), trait = traits, kde.bandwidth = estimated_bw)))
+
     ## Get the values (remove messages)
     suppressMessages(silent <- capture.output(richness <- BAT::kernel.alpha(comm=hypervolume )))
     suppressMessages(silent <- capture.output(dispersion <- BAT::kernel.dispersion(comm = hypervolume)))
