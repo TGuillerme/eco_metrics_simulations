@@ -108,14 +108,15 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
     } else {
         ## Get trait_space
         trait_space <- sim.data
+        n_taxa <- nrow(trait_space) # number of taxa automatically detected (Maria's suggestion)
         if(is.null(rownames(trait_space))) {
-            rownames(trait_space) <- 1:200
+            rownames(trait_space) <- 1:n_taxa
         }
         ## Create the presences list
         make.presences <- function(one_remove) {
             ## Create the random variable (null)
             random <- rep(FALSE, length(one_remove))
-            random[sample(1:200, size = sum(one_remove))] <- TRUE
+            random[sample(1:n_taxa, size = sum(one_remove))] <- TRUE
             ## Get the dimnames
             if(is.null(names(one_remove))) {
                 rownames <- 1:length(one_remove)
