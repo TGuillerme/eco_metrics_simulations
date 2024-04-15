@@ -294,13 +294,27 @@ fun.convex.hull <- function(presence, traits, verbose) {
         message(".", appendLF = FALSE)
     }
 
+
+    ## Make sure presence has correct dimnames
+    comm_names <- dimnames(presence)
+    if(length(comm_names) != 2) {
+        ## Add the stressor names
+        colnames(presence) <- c("random", "stressor")
+        comm_names <- dimnames(presence)
+    } else {
+        ## Has two stressors names
+        if(length(comm_names[[2]]) != 2) {
+            comm_names[[2]] <- c("random", "stressor")
+        }
+    }
+
     ## get the hull
     suppressMessages(silent <- capture.output(hull <- BAT::hull.build(comm = t(presence), trait = traits)))
     
     # run the volume
     suppressMessages(silent <- capture.output(results <- BAT::hull.alpha(hull)))
     results <- t(t(results))
-    rownames(results) <- colnames(presence)
+    rownames(results) <- comm_names[[2]]
     colnames(results) <- "convex.hull"
     return(results)
 }
