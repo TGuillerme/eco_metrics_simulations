@@ -15,8 +15,8 @@
 #' @author Thomas Guillerme
 #' @export
 
-# sim.data = list(n.traits = 2, speciation = 1, n.taxa = 200)
-# type = "facilitation"
+# sim.data = list(n.traits = 8, speciation = 1, n.taxa = 200)
+# type = "filtering"
 # remove = c(0.2,.4, 0.6 ,0.8)
 # library(treats)
 # library(dispRity)
@@ -93,6 +93,20 @@ simulation.pipeline <- function(sim.data, type, remove, verbose = FALSE, record.
                 "competition"  =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "evenness", remove = remove, parameters = list(power = 3))), trait_space, simplify = FALSE),
                 "filtering"    =  sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "position", remove = remove)), trait_space, simplify = FALSE)
                 )
+            ## Redo if filtering didn't work
+            if(type == "filtering") {
+                ## checking if it roughly worked
+                test_targets <- as.list(unlist(lapply(target_reductions, sum))/sim.data$n.taxa)
+                check.targets <- function(one_test, one_remove, tolerance = 0.1) {
+                    one_test >= (one_remove-tolerance) && one_test <= (one_remove+tolerance)
+                }
+                while(!all(mapply(check.targets, test_targets, as.list(remove)))) {
+                    ## Re run the reduction until it works
+                    target_reductions <- sapply(remove, function(remove, trait_space) return(dispRity::reduce.space(trait_space, type = "density", remove = remove)), trait_space, simplify = FALSE)
+                    test_targets <- as.list(unlist(lapply(target_reductions, sum))/sim.data$n.taxa)
+                    if(verbose) message(".", appendLF = FALSE)
+                }
+            }
         }
 
         ## Wrapping up the data
