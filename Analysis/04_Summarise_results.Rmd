@@ -43,8 +43,11 @@ competition_3d <- bkp
 
 ## Loading empirical results
 load("../Data/Processed/empirical_data-hist-present-native.rda")
+#empirical_data-hist-extant
+
 empirical_hist <- bkp
 load("../Data/Processed/empirical_data-prehist-present-native.rda")
+#empirical_data-prehist-hist-prehist-extant
 empirical_prehist <- bkp
 
 hist_table <- empirical_hist$results_table
