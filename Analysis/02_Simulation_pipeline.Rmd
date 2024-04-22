@@ -101,6 +101,8 @@ results <- optim.replicate(input.fun = simulate.facilitation,
 ```
 > Note that you can use the parallel version by adding the argument `parallel = TRUE` that is automatised using the package `future` and `future.apply` which makes the whole process run on all your available cores but is way less verbose. Without using the parallel version, it takes roughly 10 hours (overnight) to run the analyses on an old 2.2Ghz 8GB core.
 
+
+<!-- 
 ## Checking the results
 
 We can then visualise the "convergence" of the results using the `analyse.replicate` function:
@@ -112,4 +114,4 @@ analyse.replicates("../Data/Processed/sim_filtering.rda") #140 -> #170
 analyse.replicates("../Data/Processed/sim_equalizing.rda") #155
 analyse.replicates("../Data/Processed/sim_competition.rda") #126
 analyse.replicates("../Data/Processed/sim_facilitation.rda") #163
-```
+``` -->
