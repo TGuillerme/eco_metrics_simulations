@@ -11,50 +11,8 @@ output:
 This script is the repeatable script for measuring changes in the different diversity metrics and how they are affected by the different stressors. 
 In this section we are going to analyse the results from the `optim.replicates` chain
 
-TODO:
- - [ ] remove R2 on plots
- - [ ] finalise empirical plot
- - [ ] run simulations for 4D and 8D
-
-
-
-
 ```{r, echo = FALSE}
 library(knitr)
-## Loading the results
-load("../Data/Processed/sim_equalizing_2d.rda")
-equalizing_2d <- bkp
-load("../Data/Processed/sim_facilitation_2d.rda")
-facilitation_2d <- bkp
-load("../Data/Processed/sim_filtering_2d.rda")
-filtering_2d <- bkp
-load("../Data/Processed/sim_competition_2d.rda")
-competition_2d <- bkp
-
-## Loading the results
-load("../Data/Processed/sim_equalizing_3d.rda")
-equalizing_3d <- bkp
-load("../Data/Processed/sim_facilitation_3d.rda")
-facilitation_3d <- bkp
-load("../Data/Processed/sim_filtering_3d.rda")
-filtering_3d <- bkp
-load("../Data/Processed/sim_competition_3d.rda")
-competition_3d <- bkp
-
-## Loading empirical results
-load("../Data/Processed/empirical_data-hist-present-native.rda")
-#empirical_data-hist-extant
-
-empirical_hist <- bkp
-load("../Data/Processed/empirical_data-prehist-present-native.rda")
-#empirical_data-prehist-hist-prehist-extant
-empirical_prehist <- bkp
-
-hist_table <- empirical_hist$results_table
-colnames(hist_table) <- gsub("_rm1", "_rm2", colnames(hist_table))
-combined_empirical <- list()
-combined_empirical$results_table <- cbind(empirical_prehist$results_table, hist_table)
-
 ## Loading the functions
 source("../Functions/extract.table.R")
 source("../Functions/plot.metric.results.R")
@@ -64,6 +22,58 @@ source("../Functions/fit.model.rm.R")
 source("../Functions/fancy.table.R")
 source("../Functions/fancy.plot.R")
 source("../Functions/fancy.names.R")
+```
+
+```{r, echo = FALSE}
+## Loading all results per dimensions
+
+## Simulated results:
+read.results <- function(nd, stressors = c("equalizing", "facilitation", "filtering", "competition")) {
+  list_load <- list()
+  for(one_stressor in stressors) {
+    load(paste0("../Data/Processed/sim_", one_stressor, "_", nd, ".rda"))
+    list_load[[length(list_load)+1]] <- bkp
+    names(list_load)[length(list_load)] <- one_stressor
+  }
+  return(list_load)
+}
+
+## 2d
+all_results_2d <- read.results("2d")
+
+## 3d
+all_results_3d <- read.results("3d")
+## placeholders
+all_results_4d <- read.results("3d")
+all_results_5d <- read.results("3d")
+all_results_8d <- read.results("3d")
+
+## 4d
+# all_results_4d <- read.results("4d")
+
+# 5d
+# all_results_5d <- read.results("5d")
+
+## 8d
+# all_results_8d <- read.results("8d")
+
+## Empirical
+
+
+## Loading empirical results
+load("../Data/Processed/empirical_data-hist-extant.rda")
+#empirical_data-hist-extant
+empirical_hist_extant <- bkp
+
+load("../Data/Processed/empirical_data-prehist-hist-prehist-extant.rda")
+#empirical_data-prehist-hist-prehist-extant
+empirical_prehist_hist_prehist_extant <- bkp
+
+hist_table <- empirical_hist$results_table
+colnames(hist_table) <- gsub("_rm1", "_rm2", colnames(hist_table))
+combined_empirical <- list()
+combined_empirical$results_table <- cbind(empirical_prehist$results_table, hist_table)
+empirical_results <- list(empirical = combined_empirical)
 ```
 
 # Results per metrics
@@ -79,17 +89,6 @@ For each metric displayed here:
  * All the centred metric values are then scaled to the absolute maximum change (`centred scores/max(abs(centred scores))`).
 
 ```{r, echo = FALSE}
-## Creating the list of results
-all_results_2d <- list(equalizing   = equalizing_2d,
-                       facilitation = facilitation_2d,
-                       filtering    = filtering_2d,
-                       competition  = competition_2d)
-all_results_3d <- list(equalizing   = equalizing_3d,
-                       facilitation = facilitation_3d,
-                       filtering    = filtering_3d,
-                       competition  = competition_3d)
-empirical_results <- list(empirical = combined_empirical)
-
 ## Sort the results per name
 sort.metrics <- function(one_results, order) {
 
@@ -274,6 +273,100 @@ pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", heig
 fancy.plot(scaled_results_emp, col = col_vector, lm = model_fits_emp, null = null_differences_emp, metric.names = rev(fancy_names))
 dev.off()
 ```
+
+
+
+
+
+## Get the computation time per metric type
+
+
+```{r}
+#@ combine logical, whether to combine the results per stressor (TRUE) or not (FALSE)
+get.time.per.type <- function(all_results, combine = TRUE) {
+  ## Get the timers per stressor
+  get.time.per.stressors <- function(one_stressor_results) {
+    return(do.call(rbind, lapply(one_stressor_results$output_save, function(x) return(log(as.numeric(as.difftime(x$timer, units = "secs")))))))
+  }
+
+  ## Get all the timers
+  metrics_times <- lapply(all_results, get.time.per.stressors)
+
+  ## Combine it
+  if(combine) {
+    metric_times <- do.call(rbind, metrics_times)
+  }
+}
+
+## times per dimensions
+times_2d <- apply(get.time.per.type(all_results_2d), 2, quantile, probs = c(0.025, 0.5, 0.975))
+times_3d <- apply(get.time.per.type(all_results_3d), 2, quantile, probs = c(0.025, 0.5, 0.975))
+times_4d <- apply(get.time.per.type(all_results_4d), 2, quantile, probs = c(0.025, 0.5, 0.975))
+times_5d <- apply(get.time.per.type(all_results_5d), 2, quantile, probs = c(0.025, 0.5, 0.975))
+times_8d <- apply(get.time.per.type(all_results_8d), 2, quantile, probs = c(0.025, 0.5, 0.975))
+
+times_tree <- cbind(times_2d[,2], times_3d[,2], times_4d[,2], times_5d[,2], times_8d[,2])
+times_dissimilarity <- cbind(times_2d[,3], times_3d[,3], times_4d[,3], times_5d[,3], times_8d[,3])
+times_hull <- cbind(times_2d[,4], times_3d[,4], times_4d[,4], times_5d[,4], times_8d[,4])
+times_hypervolume <- cbind(times_2d[,5], times_3d[,5], times_4d[,5], times_5d[,5], times_8d[,5])
+times_probabilities <-  cbind(times_2d[,6], times_3d[,6], times_4d[,6], times_5d[,6], times_8d[,6])
+
+## Plot times per dimensions
+ylim <- range(c(times_tree, times_dissimilarity, times_hull, times_hypervolume, times_probabilities))
+## Plot colours
+metric_cols <- c("#d55e00", "#cc79a7", "#0072b2", "#f0e442", "#009e73")
+
+## Empty plot
+plot(NULL, ylim = range(pretty(ylim)), xlim = c(2, 8), ylab = "Time (log(s))", xlab = "dimensions")
+
+## Medians
+points(x = c(2,3,4,5,8)+0.00, c(times_tree[2,]), pch = 19, col = metric_cols[1])
+points(x = c(2,3,4,5,8)+0.04, c(times_dissimilarity[2,]), pch = 19, col = metric_cols[2])
+points(x = c(2,3,4,5,8)+0.08, c(times_hull[2,]), pch = 19, col = metric_cols[3])
+points(x = c(2,3,4,5,8)+0.12, c(times_hypervolume[2,]), pch = 19, col = metric_cols[4])
+points(x = c(2,3,4,5,8)+0.16, c(times_probabilities[2,]), pch = 19, col = metric_cols[5])
+## Linkings
+lines(x = c(2,3,4,5,8)+0.00, c(times_tree[2,]), pch = 19, col = metric_cols[1])
+lines(x = c(2,3,4,5,8)+0.04, c(times_dissimilarity[2,]), pch = 19, col = metric_cols[2])
+lines(x = c(2,3,4,5,8)+0.08, c(times_hull[2,]), pch = 19, col = metric_cols[3])
+lines(x = c(2,3,4,5,8)+0.12, c(times_hypervolume[2,]), pch = 19, col = metric_cols[4])
+lines(x = c(2,3,4,5,8)+0.16, c(times_probabilities[2,]), pch = 19, col = metric_cols[5])
+## 95% CI
+dimensions <- c(2,3,4,5,8)
+for(one_ci in 1:5) {
+  lines(y = c(times_tree[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.00, col = metric_cols[1])
+}
+for(one_ci in 1:5) {
+  lines(y = c(times_dissimilarity[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.04, col = metric_cols[2])
+}
+for(one_ci in 1:5) {
+  lines(y = c(times_hull[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.08, col = metric_cols[3])
+}
+for(one_ci in 1:5) {
+  lines(y = c(times_hypervolume[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.12, col = metric_cols[4])
+}
+for(one_ci in 1:5) {
+  lines(y = c(times_probabilities[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.16, col = metric_cols[5])
+}
+## legend
+legend("topleft", col = metric_cols, pch = 19, legend = c("tree", "dissimilarity", "convex hull", "hypervolume", "probability density"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
