@@ -263,6 +263,39 @@ dev.off()
 ```
 
 
+```{r}
+## The plot
+fancy.plot(scaled_results_4d, col = col_vector, lm = model_fits_4d, null = null_differences_4d, metric.names = fancy_names)
+
+## Pdf version
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_4d.pdf", height = 9, width = 9)
+fancy.plot(scaled_results_4d, col = col_vector, lm = model_fits_4d, null = null_differences_4d, metric.names = fancy_names)
+dev.off()
+```
+
+
+```{r}
+## The plot
+fancy.plot(scaled_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names)
+
+## Pdf version
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_5d.pdf", height = 9, width = 9)
+fancy.plot(scaled_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names)
+dev.off()
+```
+
+
+```{r}
+## The plot
+fancy.plot(scaled_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names)
+
+## Pdf version
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_8d.pdf", height = 9, width = 9)
+fancy.plot(scaled_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names)
+dev.off()
+```
+
+
 
 ```{r}
 ## The plot
