@@ -38,42 +38,16 @@ read.results <- function(nd, stressors = c("equalizing", "facilitation", "filter
   return(list_load)
 }
 
-## 2d
 all_results_2d <- read.results("2d")
-
-## 3d
 all_results_3d <- read.results("3d")
-## placeholders
-all_results_4d <- read.results("3d")
-all_results_5d <- read.results("3d")
-all_results_8d <- read.results("3d")
+all_results_4d <- read.results("4d")
+all_results_5d <- read.results("5d")
+all_results_8d <- read.results("8d")
 
-## 4d
-# all_results_4d <- read.results("4d")
-
-# 5d
-# all_results_5d <- read.results("5d")
-
-## 8d
-# all_results_8d <- read.results("8d")
 
 ## Empirical
-
-
-## Loading empirical results
-load("../Data/Processed/empirical_data-hist-extant.rda")
-#empirical_data-hist-extant
-empirical_hist_extant <- bkp
-
-load("../Data/Processed/empirical_data-prehist-hist-prehist-extant.rda")
-#empirical_data-prehist-hist-prehist-extant
-empirical_prehist_hist_prehist_extant <- bkp
-
-hist_table <- empirical_hist$results_table
-colnames(hist_table) <- gsub("_rm1", "_rm2", colnames(hist_table))
-combined_empirical <- list()
-combined_empirical$results_table <- cbind(empirical_prehist$results_table, hist_table)
-empirical_results <- list(empirical = combined_empirical)
+load("../Data/Processed/empirical_data.rda")
+empirical_results <- list("empirical" = bkp)
 ```
 
 # Results per metrics
@@ -119,10 +93,14 @@ sort.metrics <- function(one_results, order) {
 ## Re-ordering results for fancyness
 new_order <- c(14, 12, 3, 6,
                15, 11, 2, 8,
-               7, 4, 5, 13,
+               7, 4, #5,
+               13,
                10, 9, 1)
 all_results_2d <- lapply(all_results_2d, sort.metrics, order = new_order)
 all_results_3d <- lapply(all_results_3d, sort.metrics, order = new_order)
+all_results_4d <- lapply(all_results_4d, sort.metrics, order = new_order)
+all_results_5d <- lapply(all_results_5d, sort.metrics, order = new_order)
+all_results_8d <- lapply(all_results_8d, sort.metrics, order = new_order)
 empirical_results <- lapply(empirical_results, sort.metrics, order = new_order)
 
 ## The different removal level names
@@ -141,7 +119,7 @@ fancy_names <- c("TPD[TPD]\nregularity",
                  "dissimilarity[melodicMPD]\ndivergence(MPD)",
                  "dissimilarity[melodicRao]\ndivergence(Rao)",
                  "dissimilarity[FD]\ndivergence(Rao)",
-                 "dissimilarity[FD]\ndivergence",
+                 #"dissimilarity[FD]\ndivergence",
                  "TPD[TPD]\nrichness",
                  "hypervolume[BAT]\nrichness",
                  "convex hull[BAT]\nrichness",
@@ -159,6 +137,12 @@ scaled_results_2d <- extract.table(all_results_2d, scale.method = "between")
 scaled_within_2d  <- extract.table(all_results_2d, scale.method = "within")
 scaled_results_3d <- extract.table(all_results_3d, scale.method = "between")
 scaled_within_3d  <- extract.table(all_results_3d, scale.method = "within")
+scaled_results_4d <- extract.table(all_results_4d, scale.method = "between")
+scaled_within_4d  <- extract.table(all_results_4d, scale.method = "within")
+scaled_results_5d <- extract.table(all_results_5d, scale.method = "between")
+scaled_within_5d  <- extract.table(all_results_5d, scale.method = "within")
+scaled_results_8d <- extract.table(all_results_8d, scale.method = "between")
+scaled_within_8d  <- extract.table(all_results_8d, scale.method = "within")
 scaled_results_emp<- extract.table(empirical_results, scale.method = "between")
 scaled_within_emp <- extract.table(empirical_results, scale.method = "within")
 ```
@@ -173,19 +157,31 @@ To check the trend in the different level of data removals (20, 40, 60 and 80%) 
 ## Slope and R2 for each model
 model_fits_2d  <- lapply(scaled_results_2d, fit.model.rm)
 model_fits_3d  <- lapply(scaled_results_3d, fit.model.rm)
+model_fits_4d  <- lapply(scaled_results_4d, fit.model.rm)
+model_fits_5d  <- lapply(scaled_results_5d, fit.model.rm)
+model_fits_8d  <- lapply(scaled_results_8d, fit.model.rm)
 model_fits_emp <- lapply(scaled_results_emp, fit.model.rm)
 
 ## Differences between stressor and random
 null_differences_2d  <- lapply(all_results_2d, paired.tests)
 null_differences_3d  <- lapply(all_results_3d, paired.tests)
+null_differences_4d  <- lapply(all_results_4d, paired.tests)
+null_differences_5d  <- lapply(all_results_5d, paired.tests)
+null_differences_8d  <- lapply(all_results_8d, paired.tests)
 null_differences_emp <- lapply(empirical_results, paired.tests)
 
 ## Making the fancy tables
 model_table_2d  <- fancy.table(model_fits_2d, columns = list(c(3,4), 5))
 model_table_3d  <- fancy.table(model_fits_3d, columns = list(c(3,4), 5))
+model_table_4d  <- fancy.table(model_fits_4d, columns = list(c(3,4), 5))
+model_table_5d  <- fancy.table(model_fits_5d, columns = list(c(3,4), 5))
+model_table_8d  <- fancy.table(model_fits_8d, columns = list(c(3,4), 5))
 model_table_emp <- fancy.table(model_fits_emp, columns = list(c(3,4), 5))
 null_table_2d   <- fancy.table(null_differences_2d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
 null_table_3d   <- fancy.table(null_differences_3d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
+null_table_4d   <- fancy.table(null_differences_4d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
+null_table_5d   <- fancy.table(null_differences_5d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
+null_table_8d   <- fancy.table(null_differences_8d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
 null_table_emp  <- fancy.table(null_differences_emp, columns = list(c(1,3), c(4, 6)))
 ```
 
@@ -383,6 +379,10 @@ for(one_ci in 1:5) {
 }
 ## legend
 legend("topleft", col = metric_cols, pch = 19, legend = c("tree", "dissimilarity", "convex hull", "hypervolume", "probability density"))
+
+## Ti me
+axis(4, at = c(1, 4.1, 7, 8.189), labels = c("1 sec", "1 min", "30 min", "1 hour"), las = 2)
+
 ```
 
 
