@@ -48,6 +48,10 @@ all_results_8d <- read.results("8d")
 ## Empirical
 load("../Data/Processed/empirical_data.rda")
 empirical_results <- list("empirical" = bkp)
+#rm1 = "extant", rm2 = "historic", rm3 = "prehistoric"
+
+#TODO: reorder so to have rm2, rm3, rm1
+
 ```
 
 # Results per metrics
@@ -295,15 +299,16 @@ dev.off()
 
 ```{r}
 ## The plot
-fancy.plot(scaled_results_emp, col = col_vector, lm = model_fits_emp, null = null_differences_emp, metric.names = fancy_names)
+fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17))
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 9, width = 4)
-fancy.plot(scaled_results_emp, col = col_vector, lm = model_fits_emp, null = null_differences_emp, metric.names = rev(fancy_names))
+fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = rev(fancy_names), , pch = c(19,15,17))
 dev.off()
 ```
 
-
+Figure 3: Empirical data. Plain circles represents the metric for historic data (53 % - 63/118 species), lightly fainted squares for prehistoric data (46% - 55/118 species), and fainted triangles for extant data (31% - 37/118 species).
+<!-- TODO: this caption is for the empirical data re-arranged as rm2, rm3, rm1 -->
 
 
 
@@ -477,7 +482,7 @@ And finally below are all the correlations per stressor between each metric per 
 > TODO: do the PCA plots as suggested by Carlos to see things clearlier.
 
 
-```{r, eval = TRUE, echo = FALSE, message = FALSE}
+```{r, eval = FALSE, echo = FALSE, message = FALSE}
 require(psych)
 
 ## Split the results per stressor and per metric
