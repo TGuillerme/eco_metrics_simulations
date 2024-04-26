@@ -9,6 +9,7 @@
 #' @param lm optional, lm results to add to the plot
 #' @param null optional, paired t-tests to add to the plot
 #' @param metric.names optional, a vector of fancy names for the results (rows)
+#' @param empirical optional, whether to plot empirical data or not
 #' @param ... plot options
 #' 
 #' @examples
@@ -17,7 +18,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, ...) {
+fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, empirical = FALSE, ...) {
 
     ## Get the plot parameters
     plot_params <- list(...)
@@ -155,12 +156,16 @@ add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col, lm_da
     ## Plot each level
     for(one_level in 1:levels) {
         ## Setting the plot params
-        plot_params$col <- colours[one_level]
-        plot_params$y   <- rev(((base-levels)+1):base)[one_level]
+        plotting_params <- plot_params
+        plotting_params$col <- colours[one_level]
+        plotting_params$y   <- rev(((base-levels)+1):base)[one_level]
+        if(length(plot_params$pch == levels)) {
+            plotting_params$pch <- plot_params$pch[one_level]
+        }
         ## Setting the pch param
         if(!is.null(null_data)) {
             if(null_data[3*one_level] > 0.05) {
-                plot_params$col <- "grey"
+                plotting_params$col <- "grey"
             }
             # plot_params$pch <- 1
             # if(null_data[3*one_level] < 0.05) {
@@ -170,7 +175,7 @@ add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col, lm_da
             #     }
             # }
         }
-        add.one.line(one_metric[, one_level], plot_params = plot_params, probs = probs, cent.tend = cent.tend)
+        add.one.line(one_metric[, one_level], plot_params = plotting_params, probs = probs, cent.tend = cent.tend)
     }
 }
 
