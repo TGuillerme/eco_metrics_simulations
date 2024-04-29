@@ -49,9 +49,11 @@ all_results_8d <- read.results("8d")
 load("../Data/Processed/empirical_data.rda")
 empirical_results <- list("empirical" = bkp)
 #rm1 = "extant", rm2 = "historic", rm3 = "prehistoric"
-
-#TODO: reorder so to have rm2, rm3, rm1
-
+extants <- grep("rm1", colnames(empirical_results$empirical$results_table))
+historics <- grep("rm2", colnames(empirical_results$empirical$results_table))
+prehistorics <- grep("rm3", colnames(empirical_results$empirical$results_table))
+## Reorder by percentage removed (historics > prehistorics > extants)
+empirical_results$empirical$results_table <- empirical_results$empirical$results_table[, c(historics, prehistorics, extants)]
 ```
 
 # Results per metrics
@@ -241,11 +243,11 @@ col_vector <- c(rep("blue", 4), # The richness ones
                 rep("orange", 7), # The divergence ones
                 rep("darkgreen", 4)) # The regularity ones
 ## The plot
-fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names)
+fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names, pch = rep(19,4))
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_2d.pdf", height = 9, width = 9)
-fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names)
+fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names, pch = rep(19,4))
 dev.off()
 ```
 
@@ -254,44 +256,44 @@ Figure 1: Simulation results: the y axes represent the different metrics tested 
 
 ```{r}
 ## The plot
-fancy.plot(scaled_results_3d, col = col_vector, lm = model_fits_3d, null = null_differences_3d, metric.names = fancy_names)
+fancy.plot(scaled_results_3d, col = col_vector, lm = model_fits_3d, null = null_differences_3d, metric.names = fancy_names, pch = rep(19,4))
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_3d.pdf", height = 9, width = 9)
-fancy.plot(scaled_results_3d, col = col_vector, lm = model_fits_3d, null = null_differences_3d, metric.names = fancy_names)
+fancy.plot(scaled_results_3d, col = col_vector, lm = model_fits_3d, null = null_differences_3d, metric.names = fancy_names, pch = rep(19,4))
 dev.off()
 ```
 
 
 ```{r}
 ## The plot
-fancy.plot(scaled_results_4d, col = col_vector, lm = model_fits_4d, null = null_differences_4d, metric.names = fancy_names)
+fancy.plot(scaled_results_4d, col = col_vector, lm = model_fits_4d, null = null_differences_4d, metric.names = fancy_names, pch = rep(19,4))
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_4d.pdf", height = 9, width = 9)
-fancy.plot(scaled_results_4d, col = col_vector, lm = model_fits_4d, null = null_differences_4d, metric.names = fancy_names)
+fancy.plot(scaled_results_4d, col = col_vector, lm = model_fits_4d, null = null_differences_4d, metric.names = fancy_names, pch = rep(19,4))
 dev.off()
 ```
 
 
 ```{r}
 ## The plot
-fancy.plot(scaled_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names)
+fancy.plot(scaled_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names, pch = rep(19,4))
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_5d.pdf", height = 9, width = 9)
-fancy.plot(scaled_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names)
+fancy.plot(scaled_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names, pch = rep(19,4))
 dev.off()
 ```
 
 
 ```{r}
 ## The plot
-fancy.plot(scaled_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names)
+fancy.plot(scaled_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names, pch = rep(19,4))
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_8d.pdf", height = 9, width = 9)
-fancy.plot(scaled_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names)
+fancy.plot(scaled_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names, pch = rep(19,4))
 dev.off()
 ```
 
@@ -302,13 +304,12 @@ dev.off()
 fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17))
 
 ## Pdf version
-pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 9, width = 4)
-fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = rev(fancy_names), , pch = c(19,15,17))
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 9, width = 4.5)
+fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = rev(fancy_names), pch = c(19,15,17))
 dev.off()
 ```
 
 Figure 3: Empirical data. Plain circles represents the metric for historic data (53 % - 63/118 species), lightly fainted squares for prehistoric data (46% - 55/118 species), and fainted triangles for extant data (31% - 37/118 species).
-<!-- TODO: this caption is for the empirical data re-arranged as rm2, rm3, rm1 -->
 
 
 
@@ -350,8 +351,11 @@ ylim <- range(c(times_tree, times_dissimilarity, times_hull, times_hypervolume, 
 ## Plot colours
 metric_cols <- c("#d55e00", "#cc79a7", "#0072b2", "#f0e442", "#009e73")
 
+pdf(file = "../Manuscript/Figures/time_per_metric.pdf", height = 6, width = 7)
+par(mar =c(5, 4, 4, 4) + 0.1)
 ## Empty plot
 plot(NULL, ylim = range(pretty(ylim)), xlim = c(2, 8), ylab = "Time (log(s))", xlab = "dimensions")
+abline(h = c(1, 4.1, 7, 8.189), col = "grey")
 
 ## Medians
 points(x = c(2,3,4,5,8)+0.00, c(times_tree[2,]), pch = 19, col = metric_cols[1])
@@ -385,8 +389,9 @@ for(one_ci in 1:5) {
 ## legend
 legend("topleft", col = metric_cols, pch = 19, legend = c("tree", "dissimilarity", "convex hull", "hypervolume", "probability density"))
 
-## Ti me
+## Time
 axis(4, at = c(1, 4.1, 7, 8.189), labels = c("1 sec", "1 min", "30 min", "1 hour"), las = 2)
+dev.off()
 
 ```
 
