@@ -51,9 +51,9 @@ empirical_results <- list("empirical" = bkp)
 #rm1 = "extant", rm2 = "historic", rm3 = "prehistoric"
 extants <- grep("rm1", colnames(empirical_results$empirical$results_table))
 historics <- grep("rm2", colnames(empirical_results$empirical$results_table))
-prehistorics <- grep("rm3", colnames(empirical_results$empirical$results_table))
+# prehistorics <- grep("rm3", colnames(empirical_results$empirical$results_table))
 ## Reorder by percentage removed (historics > prehistorics > extants)
-empirical_results$empirical$results_table <- empirical_results$empirical$results_table[, c(historics, prehistorics, extants)]
+empirical_results$empirical$results_table <- empirical_results$empirical$results_table[, c(historics, extants)]
 ```
 
 # Results per metrics
@@ -115,21 +115,22 @@ removals <- c("20%", "40%", "60%", "80%")
 cols <- c("blue", "orange", "red", "green")
 
 ## Fancier names
-fancy_names <- c("TPD[TPD]\nregularity",
-                 "hypervolume[BAT]\nregularity",
-                 "dendrogram[BAT]\nregularity",
-                 "dissimilarity[FD]\nregularity",
-                 "TPD[TPD]\ndivergence",
-                 "hypervolume[BAT]\ndivergence",
-                 "dendrogram[BAT]\ndivergence",
-                 "dissimilarity[melodicMPD]\ndivergence(MPD)",
-                 "dissimilarity[melodicRao]\ndivergence(Rao)",
-                 "dissimilarity[FD]\ndivergence(Rao)",
+fancy_names <- rev(
+               c("Functional evenness\nprobability density\nTPD::REND",
+                 "Functional evenness\nhypervolume\nBAT::kernel.evenness",
+                 "Functional evenness\ndendrogram\nBAT::evenness",
+                 "Functional evenness\ndistances\nFD::dbFD()$FEve",
+                 "Divergence\nprobability density\nTPD::REND",             
+                 "Functional dispersion\nhypervolume\nBAT::kernel.dispersion",
+                 "Functional dispersion\ndendrogram\nBAT::dispersion",
+                 "Melodic Mean Pairwise Distance\ndistances\nmelodic.rao",
+                 "Melodic Rao\ndistances\nmelodic.rao",
+                 "Rao's quadratic entropy\ndistances\nFD::dbFD()$RaoQ",
                  #"dissimilarity[FD]\ndivergence",
-                 "TPD[TPD]\nrichness",
-                 "hypervolume[BAT]\nrichness",
-                 "convex hull[BAT]\nrichness",
-                 "dendrogram[BAT]\nrichness")
+                 "Functional richness\nprobability density\nTPD::REND",
+                 "Functional richness\nhypervolume\nBAT::kernel.alpha",
+                 "Functional richness\nconvex hull\nBAT::hull.alpha",
+                 "Alpha diversity\ndendrogram\nBAT::alpha"))
 ```
 
 ## Scaling and centring the results
@@ -240,7 +241,7 @@ kable(null_table_emp, caption = "Average difference between the null metric and 
 
 ```{r, fig.width = 8, fig.height = 10, echo = FALSE}
 col_vector <- c(rep("blue", 4), # The richness ones
-                rep("orange", 7), # The divergence ones
+                rep("orange", 6), # The divergence ones
                 rep("darkgreen", 4)) # The regularity ones
 ## The plot
 fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names, pch = rep(19,4))
@@ -304,8 +305,8 @@ dev.off()
 fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17))
 
 ## Pdf version
-pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 9, width = 4.5)
-fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = rev(fancy_names), pch = c(19,15,17))
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 11, width = 4.5)
+fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17))
 dev.off()
 ```
 
@@ -387,7 +388,7 @@ for(one_ci in 1:5) {
   lines(y = c(times_probabilities[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.16, col = metric_cols[5])
 }
 ## legend
-legend("topleft", col = metric_cols, pch = 19, legend = c("tree", "dissimilarity", "convex hull", "hypervolume", "probability density"))
+legend("topleft", col = metric_cols, pch = 19, legend = c("dendrogram", "dissimilarity", "convex hull", "hypervolume", "probability density"))
 
 ## Time
 axis(4, at = c(1, 4.1, 7, 8.189), labels = c("1 sec", "1 min", "30 min", "1 hour"), las = 2)
