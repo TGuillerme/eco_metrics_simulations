@@ -19,17 +19,14 @@ source("../Functions/dbFD.R")
 empirical_traitspace <- read.csv('../Data/Raw/trait-space-5d-prehistoric-community.csv', row.names = 1) 
 
 ## Species lists
-prehistoric_species <- rownames(read.csv("../Data/Raw/prehistoric-species-list.csv"))
+# prehistoric_species <- rownames(read.csv("../Data/Raw/prehistoric-species-list.csv"))
 historic_species <- rownames(read.csv('../Data/Raw/historic-species-list-minus-a-flammeus.csv', row.names = 1))
 extant_species <- rownames(read.csv('../Data/Raw/present-species-list-minus-a-flammeus.csv', row.names = 1))
 
 ## Traitspace groups
 extant_group <- rownames(empirical_traitspace) %in% extant_species ## 37 species present
 historic_group <- rownames(empirical_traitspace) %in% historic_species ## 63 species present
-prehistoric_group <- !(rownames(empirical_traitspace) %in% c(extant_species, historic_species)) ## 55 species present
-names(extant_group) <- names(historic_group) <- names(prehistoric_group) <- rownames(empirical_traitspace)
-
-groups <- list("extant" = extant_group, "historic" = historic_group, "prehistoric" = prehistoric_group)
+groups <- list("extant" = extant_group, "historic" = historic_group)
 
 ## Set simulation type
 simulate <- make.simulation.pipeline(sim.data = empirical_traitspace, remove = groups)
