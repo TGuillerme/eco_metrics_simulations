@@ -1,0 +1,104 @@
+\documentclass[12pt,letterpaper]{article}
+
+%Packages
+% \usepackage{textcomp}
+% \usepackage{latexsym}
+% \usepackage{url}
+% \usepackage{amssymb}
+% \usepackage{amsmath}
+% \usepackage{mathtools}
+% \usepackage{bm}
+% \usepackage{array}
+% \usepackage[version=3]{mhchem}
+% \usepackage{ifthen}
+% \usepackage{amsthm}
+% \usepackage{amstext}
+% \usepackage{enumerate}
+% \usepackage{dcolumn}
+
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{lineno}
+\usepackage{pdflscape}
+\usepackage{mathtools}
+\usepackage[osf]{mathpazo}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{xr} %linking to supplementaries
+\externaldocument{supplementaries}
+
+\pagenumbering{arabic}
+
+
+%---------------------------------------------
+%
+%       START
+%
+%---------------------------------------------
+
+\begin{document}
+%Running head
+\begin{flushright}
+Version dated: \today
+\end{flushright}
+
+\bigskip
+\bigskip
+\begin{center}
+
+\noindent{\Large \bf The what, how, and why of trait-based analyses in ecology}
+\bigskip
+
+\noindent {\normalsize \sc
+Thomas Guillerme$^{1,*}$, 
+Pedro Cardoso$^{2,3}$,
+Carlos P. Carmona$^{4}$,
+Maria Wagner J\o rgensen$^{5}$,
+Stefano Mammola$^{3,6,7}$,
+Thomas J. Matthews$^{5,8}$}\\
+\noindent {\small \it 
+$^1$School of Biosciences, The University of Sheffield, Sheffield, S10 2TN, United Kingdom.\\
+$^2$CE3C—Centre for Ecology, Evolution and Environmental Changes, CHANGE – Global Change and Sustainability Institute, Faculty of Sciences, University of Lisbon, Lisbon, Portugal\\
+$^3$Laboratory for Integrative Biodiversity Research (LIBRe), Finnish Museum of Natural History (Luomus), University of Helsinki, Helsinki, Finland\\
+$^4$Institute of Ecology and Earth Sciences, University of Tartu, Tartu, Estonia\\
+$^5$School of Geography, Earth and Environmental Sciences and Birmingham Institute of Forest Research, University of Birmingham, Birmingham B15 2TT, UK\\
+$^6$Molecular Ecology Group (MEG), Water Research Institute, National Research Council (CNR-IRSA), Verbania Pallanza, Italy\\
+$^7$National Biodiversity Future Center, Piazza Marina 61, 90133 Palermo, Italy\\
+$^8$Centre for Ecology, Evolution and Environmental Changes/Azorean Biodiversity Group / CHANGE – Global Change and Sustainability Institute and Universidade dos Açores – Faculty of Agricultural Sciences and Environment; PT-9700-042, Angra do Hero\'ismo, A\c ores, Portugal.\\}
+
+\end{center}
+\bigskip
+\noindent{*\bf Corresponding author.} \textit{t.guillerme@sheffield.ac.uk}\\ 
+\vspace{1in}
+
+%Line numbering
+\modulolinenumbers[1]
+\linenumbers
+
+%---------------------------------------------
+%
+%       ABSTRACT
+%
+%---------------------------------------------
+
+
+\noindent (Keywords: )\\
+
+\section{Abstract}
+Objective: Showing which patterns are recovered by different functional diversity metrics under different frameworks, and how different metrics recover different signals from different processes linked to common mechanisms in ecology.
+
+Approach: We simulate some one dimensional datasets using neutral evolutionary models (pure birth tree with brownian motion traits) then perturb the resulting dataset with some common ecological stressor mechanisms (environmental filtering, competitive exclusion, equalising fitness and facilitation).
+We then measure different space occupancy metrics on the perturbed and unperturbed simulations, and check how the different metrics capture the resultant changes.
+
+\section{Acknowledgements}
+Thanks to Andrew Beckerman, Natalie Cooper, Alain Danet, Thomas Johnson and Gavin Thomas for comments on early versions of this manuscripts.\\
+Cite grants
+
+
+% \bibliographystyle{Science}
+\bibliography{references}
+
+
+\end{document}
