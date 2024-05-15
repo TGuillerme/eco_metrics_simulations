@@ -97,11 +97,15 @@ sort.metrics <- function(one_results, order) {
 }
 
 ## Re-ordering results for fancyness
-new_order <- c(14, 12, 3, 6,
-               15, 11, 2, 8,
-               7, 4, #5,
-               13,
-               10, 9, 1)
+new_order <- c(# Richness
+               13, 10, 9, 1,
+               # Divergence
+               15, 11, 2, #8,
+               #7,
+               4, #5,
+               # Regularity
+               14, 12, 3, 6)
+
 all_results_2d <- lapply(all_results_2d, sort.metrics, order = new_order)
 all_results_3d <- lapply(all_results_3d, sort.metrics, order = new_order)
 all_results_4d <- lapply(all_results_4d, sort.metrics, order = new_order)
@@ -116,21 +120,25 @@ cols <- c("blue", "orange", "red", "green")
 
 ## Fancier names
 fancy_names <- rev(
-               c("Functional evenness\nprobability density\nTPD::REND",
-                 "Functional evenness\nhypervolume\nBAT::kernel.evenness",
-                 "Functional evenness\ndendrogram\nBAT::evenness",
-                 "Functional evenness\ndistances\nFD::dbFD()$FEve",
-                 "Divergence\nprobability density\nTPD::REND",             
-                 "Functional dispersion\nhypervolume\nBAT::kernel.dispersion",
-                 "Functional dispersion\ndendrogram\nBAT::dispersion",
-                 "Melodic Mean Pairwise Distance\ndistances\nmelodic.rao",
-                 "Melodic Rao\ndistances\nmelodic.rao",
-                 "Rao's quadratic entropy\ndistances\nFD::dbFD()$RaoQ",
-                 #"dissimilarity[FD]\ndivergence",
+               c(
                  "Functional richness\nprobability density\nTPD::REND",
                  "Functional richness\nhypervolume\nBAT::kernel.alpha",
                  "Functional richness\nconvex hull\nBAT::hull.alpha",
-                 "Alpha diversity\ndendrogram\nBAT::alpha"))
+                 "Alpha diversity\ndendrogram\nBAT::alpha",
+
+                 "Divergence\nprobability density\nTPD::REND",             
+                 "Functional dispersion\nhypervolume\nBAT::kernel.dispersion",
+                 "Functional dispersion\ndendrogram\nBAT::dispersion",
+                 #"Melodic Mean Pairwise Distance\ndistances\nmelodic.rao",
+                 #"Melodic Rao\ndistances\nmelodic.rao",
+                 "Rao's quadratic entropy\ndistances\nFD::dbFD()$RaoQ",
+                 #"dissimilarity[FD]\ndivergence",
+
+                 "Functional evenness\nprobability density\nTPD::REND",
+                 "Functional evenness\nhypervolume\nBAT::kernel.evenness",
+                 "Functional evenness\ndendrogram\nBAT::evenness",
+                 "Functional evenness\ndistances\nFD::dbFD()$FEve"
+               ))
 ```
 
 ## Scaling and centring the results
@@ -240,9 +248,9 @@ kable(null_table_emp, caption = "Average difference between the null metric and 
 # Plots per stressor
 
 ```{r, fig.width = 8, fig.height = 10, echo = FALSE}
-col_vector <- c(rep("blue", 4), # The richness ones
-                rep("orange", 6), # The divergence ones
-                rep("darkgreen", 4)) # The regularity ones
+col_vector <- c(rep("darkgreen", 4), # The regularity ones
+                rep("orange", 4), # The divergence ones
+                rep("blue", 4)) # The richness ones
 ## The plot
 fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names, pch = rep(19,4))
 
