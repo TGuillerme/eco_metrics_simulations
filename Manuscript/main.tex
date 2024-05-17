@@ -98,7 +98,7 @@ We then measure different space occupancy metrics on the perturbed and unperturb
 In the last two decades, there has been a progressive shift in ecology and evolution from  taxonomic-oriented approaches, with species as the focal point of studies, to functional approaches that place species-specific characteristics (traits) at the centre of analyses \citep{mammola2021concepts, palacio2022protocol}.
 Although numerous definitions exist \citep{dawson2021traits}, we here consider a trait to be any observable characteristic (e.g. morphological, anatomical, ecological, physiological, behavioural, phenological, etc.) measured on individual organisms at any level, from genes to whole organisms.
 A trait-based approach has two advantages for answering core questions in ecology and evolution.
-First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms’ traits at the centre of natural selection rather than organisms themselves.
+First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms' traits at the centre of natural selection rather than organisms themselves.
 Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualization of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}).
 Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this new trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}).
 This is because trait-based approaches closely align with the general analytical framework proposed by \cite{anand1994pattern} to answer three consequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism) (see Box 1).
@@ -145,7 +145,7 @@ Using an inappropriate metric for describing a pattern can lead to biased conclu
 For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home two both populations and another one home to only one of the population (the process - ``how?'').
 In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations.
 In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate.
-See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin’s finches share resources depending on the existence or not of competition.
+See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
 
 Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations}).
 We also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism).
@@ -167,7 +167,7 @@ In removing the data, we applied these five specific algorithms (Figure \ref{Fig
 \begin{itemize}
 \item Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data. This approximates our \textbf{null mechanism}.
 
-\item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius)  $\rho$ of the centre of the trait-space.
+\item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius)  $\rho$ of the centre of the trait space.
 This approximates our \textbf{equalising mechanism}.
 
 \item Increasing density: by removing the required amount of pairs of points with a pair distance of at least $D$ (i.e. removing the $n$ pairs of points that are at least $D$ distance away from each other).
@@ -216,7 +216,7 @@ This is often not the case in empirical cases (e.g. see our empirical example) w
   Competitive exclusion & Evenness change (``evenness'') & When functionally similar species compete more intensively with one another than with functionally dissimilar species (``competitive exclusion principle''; \citealt{hardin1960competitive}). At the extreme, it implies that only dissimilar individuals will coexist (``limiting similarity principle''; \citealt{macarthur1967limiting})\\
 
     \end{tabular}
-    \caption{\scriptsize{\textbf{Description of the stressors applied to the simulated data and the mechanism each approximated.} Here we distinguish between the biological mechanism we are trying to simulate and the algorithmic one we used to simulate it. We also provide a more detailed description of the stressor. Note that in biological data, we don’t expect any of the mechanisms to be applied to the data alone (e.g. equalising fitness and facilitation can both act on the distribution of species traits). Nor do we expect their effects to be unidirectional (for example, equalising fitness can happen both by removing the edges or changing the position of a trait distribution). These mechanisms serve as a simplified description of reality for the narrative purpose of this paper.}
+    \caption{\scriptsize{\textbf{Description of the stressors applied to the simulated data and the mechanism each approximated.} Here we distinguish between the biological mechanism we are trying to simulate and the algorithmic one we used to simulate it. We also provide a more detailed description of the stressor. Note that in biological data, we don't expect any of the mechanisms to be applied to the data alone (e.g. equalising fitness and facilitation can both act on the distribution of species traits). Nor do we expect their effects to be unidirectional (for example, equalising fitness can happen both by removing the edges or changing the position of a trait distribution). These mechanisms serve as a simplified description of reality for the narrative purpose of this paper.}
 }
     \label{Tab:mechanisms}
 \end{table}
@@ -243,18 +243,6 @@ We structured our simulations based on three aspects of diversity commonly captu
 2) Divergence, encompassing metrics reflecting the average differences among observations (4 metrics); and
 3) Regularity, encompassing metrics reflecting how regular the differences among observations are (4 metrics, equivalent to density metrics in \citealt{guillerme2020shifting}).
 Note that we focused here on three packages fully devoted to functional diversity analyses (\texttt{BAT} \citealt{cardoso2015bat} \texttt{FD} \citealt{Laliberte2010FD} and \texttt{TPD} \citealt{carmona2019trait}) in the \texttt{R} statistical environments (see \citealt{mammola2021concepts}).
-
-
-
-
-
-
-%  STOPPED HERE
-
-
-
-
-
 
 \begin{table}
 \center
@@ -296,34 +284,70 @@ Richness & Trait Probability Density & Functional richness & Sum of cells where 
 
 \subsubsection{Scaling the results to be proportional to the random removals (null)}
 
-To ease interpretation of the results, w e centred the results for the 14 metrics for the 4 non null stressors by the results for the null stressor and then scaled them.
+To ease interpretation of the results, we centred the results for the 12 metrics for the 4 non null stressors by the results for the null stressor and then scaled them.
 Effectively, for each metric and each single simulation, we subtracted the results under the null stressor to the ones under the other stressors and divided the resulting centred metrics by the maximum value for each metric between each simulation.
 This resulted in each metric being scaled between –1 and 1 where 0 corresponds to no change compared to the null and 1 and –1 the maximum positive and negative deviations relative to the null.
-In parallel, we also compared the distribution of the 200 scores for each metric with each reduction level for each non-null stressor to the null stressor (with no scaling or centering) using pairwise t-tests.
-The results of these tests are displayed in supplementary tables 1 to 3 and in figure \ref{Fig:simulation_results} (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).
+In parallel, we also compared the distribution of the 171 scores for each metric with each reduction level for each non-null stressor to the null stressor (with no scaling or centering) using pairwise t-tests.
+The results of these tests are displayed in figure \ref{Fig:simulation_results} (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).
 
 \subsubsection{Measuring the effect of the strength of the stressor}
 
 Finally, we measured the effect of the different levels of data removal (20\%, 40\%, 60\% and 80\%) by fitting a linear regression using the model centred and scaled metric score ~ amount of data removed.
-For each of these models, we reported the model fit (adjusted R2) and whether the slope was clearly distinguishable from 0 (p-values). See figure 2.
+For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables 1 to 3 and whether the slope was clearly distinguishable from 0 (Figure \ref{Fig:simulation_results}).
 
 \subsection{Empirical data}
 
-We applied all metrics to an empirical dataset of bird extinctions on six Hawaiian Islands (Hawaii, Kauai, Lanai, Maui, Molokai, Oahu), an archipelago which has suffered large numbers of anthropogenic extinctions due to a range of extinction drivers \citep{Walther2022}.
-A prehistoric species list (avifauna known to be present prior to human colonisation of the islands), historic species list (avifauna known to be present at 1500 CE) and extant species list of the native community for each island was taken from \cite{matthews2023global} along with trait values for the extinct species (Asio flammeus was removed from the historic and extant species lists as its colonisation status is uncertain).
-We also added two marine species to the prehistoric species list; we compiled missing trait data for these two extinct species from \cite{sayol2021loss} data.
-We extracted traits for extant species from the AVONET database \citep{tobias2022avonet}
-We used 9 morphological traits associated with dietary/foraging preference and dispersal ability \citep{pigot2020macroevolutionary,sheard2020ecological} to represent the functional diversity of the communities: mass; beak length (culmen); beak length (nares); beak width; beak depth; tarsus length; wing length; kipp’s distance (length from the first secondary feather to the tip of the longest primary feather; \citealt{tobias2022avonet}); and tail length
+We applied all metrics to an empirical dataset of bird extinctions on six Hawaiian islands (Hawaii, Kauai, Lanai, Maui, Molokai, Oahu), an archipelago which has suffered large numbers of anthropogenic extinctions due to a range of extinction drivers \citep{Walther2022}.
+A prehistoric species list (avifauna known to be present prior to human colonisation of the islands), historic species list (avifauna known to be present at 1500 CE) and extant species list of the native community for each island was taken from \cite{matthews2023global} along with trait values for the extinct species (\textit{Asio flammeus} was removed from the historic and extant species lists as its colonisation status is uncertain).
+We also added two marine species to the prehistoric species list; we compiled missing trait data for these two extinct species from \cite{sayol2021loss}.
+We extracted traits for extant species from the AVONET database \citep{tobias2022avonet}.
+We used 9 morphological traits associated with dietary/foraging preference and dispersal ability \citep{pigot2020macroevolutionary,sheard2020ecological} to represent the functional diversity of the communities: mass; beak length (culmen); beak length (nares); beak width; beak depth; tarsus length; wing length; the length from the first secondary feather to the tip of the longest primary feather (Kipp's distance); and tail length.
 Traits were log transformed and standardised to a mean of 0 and standard deviation of 1, prior to analyses.
 
 The full trait dataset comprised 118 bird species, all native species known to have existed on these islands over the last 125,000 years.
-Fifty-five species are known to have gone extinct prior to 1500 CE and 26 after 1500 CE.
+55 species are known to have gone extinct prior to 1500 CE and 26 after 1500 CE.
 For our analyses here, we focused on two time periods: (i) the avifauna present in 1500 CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
 We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-1500 CE extinctions (i.e., $118-55$ species; a trait space richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a trait space richness reduction of 69\%).
 
-To build the community trait-space, we undertook a PCA including all 118 species, which we then subsetted to calculate the trait-space for the historic and extant datasets.
-We selected the first 5 axes to represent the trait-spaces that explained at least 97.5\% of the variance in each specific group (all, historic and extant species)
+To build the community trait space, we undertook a PCA including all 118 species, which we then subset to calculate the trait space for the historic and extant datasets.
+We selected the first 5 axes to represent the trait spaces that explained at least 97.5\% of the variance in each specific group (all, historic and extant species)
 We applied the same procedure as for the simulated data by simulating a null mechanism to compare to the observed ones by randomly removing 55 and 81 species for each stressor and scaling the results proportionally to this null mechanism (as described above).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%  STOPPED HERE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{Results}
 
@@ -377,7 +401,7 @@ In contrast, avian malaria, which is known to be an important extinction pressur
 
 \section{Discussion}
 
-We tested 14 trait space occupancy metrics on simulated and empirical datasets to assess how each metric captures patterns of trait space changes based on stressors approximating ecological and evolutionary mechanisms.
+We tested 12 trait space occupancy metrics on simulated and empirical datasets to assess how each metric captures patterns of trait space changes based on stressors approximating ecological and evolutionary mechanisms.
 Our results show that, unexpectedly, different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
 Therefore, the choice of traits space occupancy metric is essential to accurately describing a pattern of interest.
 
