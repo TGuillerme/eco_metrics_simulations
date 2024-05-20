@@ -94,7 +94,7 @@ results <- optim.replicate(input.fun = simulate.facilitation,
                            diagnose = var,
                            summarise = optim.summarise,
                            minimum = 20, maximum = 170,
-                           stop.variance = 0.0001,
+                           stop.variance = 0.01,
                            verbose = TRUE,
                            bkp.path = "../Data/Processed/",
                            bkp.name = "sim_facilitation.rda")
