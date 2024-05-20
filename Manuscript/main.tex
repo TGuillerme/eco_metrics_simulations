@@ -309,44 +309,10 @@ The full trait dataset comprised 118 bird species, all native species known to h
 For our analyses here, we focused on two time periods: (i) the avifauna present in 1500 CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
 We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-1500 CE extinctions (i.e., $118-55$ species; a trait space richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a trait space richness reduction of 69\%).
 
+
 To build the community trait space, we undertook a PCA including all 118 species, which we then subset to calculate the trait space for the historic and extant datasets.
 We selected the first 5 axes to represent the trait spaces that explained at least 97.5\% of the variance in each specific group (all, historic and extant species)
 We applied the same procedure as for the simulated data by simulating a null mechanism to compare to the observed ones by randomly removing 55 and 81 species for each stressor and scaling the results proportionally to this null mechanism (as described above).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%  STOPPED HERE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 \section{Results}
@@ -359,10 +325,10 @@ We applied the same procedure as for the simulated data by simulating a null mec
 The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors.
 Negative and positive values signify a decrease/increase in the metric score.
 The dots represent the median metric value, the full line their 50\% confidence interval (CI) and the dashed line their 95\% CI.
-The colours are here to visually separate the metrics by categories (blue = regularity, yellow = divergence, green = richness); the colour gradient within each row corresponds to a removal of respectively 80\%, 60\%, 40\% and 20\% of the data (from top to bottom).
-The grey line plots represent distributions of metric scores not clearly distinguishable from the random metric scores (paired t-test p value > 0.05).
+The colours are here to visually separate the metrics by categories (green = richness, yellow = divergence, blue = regularity); the colour gradient within each row corresponds to a removal of respectively 80\%, 60\%, 40\% and 20\% of the data (from top to bottom).
+The grey line plots represent distributions of metric scores not clearly distinguishable from the random metric scores (paired t-test $p$ value $> 0.05$).
 Grey lines in the background across the distributions of different removal amounts represent the fitted linear model centred and scaled metric score $\sim$ amount of data removed and the value displayed is the adjusted $R^2$ from each of these models.
-Dashed thin grey lines represent non-significant models (p value of slope or/and intercept $> 0.05$).
+Dashed thin grey lines represent non-significant models ($p$ value of slope or/and intercept $> 0.05$).
 Similar figures are available in the supplementary materials for 2 and 8 dimensions.}}
 \label{Fig:simulation_results}
 \end{figure}
@@ -370,14 +336,14 @@ Similar figures are available in the supplementary materials for 2 and 8 dimensi
 
 The ability of different metrics to capture the different patterns (and thus approximate the processes) was highly variable.
 It ranged from metrics capturing no clear pattern (e.g. the Functional evenness based on the dendrogram method for competition) to metrics clearly capturing one specific pattern (e.g. Divergence based on probability density for the equalizing mechanism for a decrease in space occupancy).
-Some metrics even captured an opposite pattern to what was expected: for all metrics, we expected a relative decrease in trait space occupancy following different levels of species removals but some metrics captured an \textit{increase} of trait space occupancy (e.g. the functional evenness based on hypervolume for and increase) or non-linear ones (e.g. Alpha diversity based on dendrogram for the equalizing mechanism).
+Some metrics even captured an opposite pattern to what was expected: for all metrics, we naively expected a relative decrease in trait space occupancy following different levels of species removals but some metrics captured an \textit{increase} of trait space occupancy (e.g. the functional evenness based on hypervolume for the equalizing mechanism) or non-linear ones (e.g. Alpha diversity based on dendrogram for the equalizing mechanism).
 This raises an interesting point: the naive expectation that removing 80 to 20\% of the data would result in a reduction of trait space occupancy metric score (negative values) is often true but by no means always true.
 Some cases resulted in an increase in metric score relative to random removals (positive values in Figure \ref{Fig:simulation_results})!
 
 \begin{figure}[!htbp]
 \centering
    \includegraphics[width=0.4\textwidth]{Figures/results_per_metric_per_stressor_emp.pdf}
-\caption{\scriptsize{\textbf{Empirical results:} the metrics and the scaled changes are measured in the same way as in figure 2 (blue = regularity, yellow = divergence, green = richness).
+\caption{\scriptsize{\textbf{Empirical results:} the metrics and the scaled changes are measured in the same way as in figure 2 (green = richness, yellow = divergence, blue = regularity).
 Plain circles represent the metrics for the historic dataset (46\% removal) and fainted squares for the extant dataset (69\% removal).
 }}
 \label{Fig:empirical_results}
@@ -385,17 +351,14 @@ Plain circles represent the metrics for the historic dataset (46\% removal) and 
 \bigskip
 
 For the empirical data, we see again a range of different possible interpretations depending on the metric describing the pattern.
-For example, all richness metrics (green; Figure 3) pick up a similar relative increase (i.e., relative to the null stressor) in richness for both the historic and extant datasets.
-However, the results are occasionally contrasting between the historical and extant datasets, with a respective decrease and increase with some divergence metrics (e.g.
-Function dispersion based on dendrograms or hypervolumes).
-Finally, some metrics pick up a decrease for both datasets (e.g.
-Functional evenness based on hypervolumes).
-Note that this apparent global increase in most metric values may appear counterintuitive given that 46\% and 69\% of species went extinct over the two time periods.
+For example, all richness metrics (green; Figure \ref{Fig:empirical_results}) pick up a similar relative increase (i.e., relative to the null stressor) in richness for both the historic and extant datasets.
+However, the results are occasionally contrasting between the historical and extant datasets, with a respective decrease and increase with some divergence metrics (e.g. functional dispersion based on dendrograms or hypervolumes).
+Finally, some metrics pick up a decrease for both datasets (e.g. functional evenness based on hypervolumes - although the 95\% confidence intervals overlapped with 0).
+Note that this apparent global increase in most metric values may appear counter intuitive given that 46\% and 69\% of species went extinct over the two time periods.
 This is due to the scaling of the metrics compared to random equivalent extinctions.
-That is, Figure 3 is not displaying absolute changes in trait space occupancy but rather changes in trait space occupancy relative to a crude neutral model where all species are equally likely to go extinct.
+That is, Figure \ref{Fig:empirical_results} is not displaying absolute changes in trait space occupancy but rather changes in trait space occupancy relative to a crude neutral model where all species are equally likely to go extinct.
 
-
-More broadly, as can be seen from the Hawaiian case study, patterns are likely to be much less clear with empirical data due to multiple stressors acting simultaneously.
+More broadly, as can be seen from this empirical case, patterns are likely to be much less clear than with simulated data due to multiple stressors acting simultaneously.
 For instance, extensive hunting is likely to present equalising and/or filtering pressure due to the selective hunting of larger bodied species.
 In contrast, avian malaria, which is known to be an important extinction pressure of native Hawaiian birds \cite{samuel2011dynamics}, could show signals of a null mechanism since susceptibility to the disease is not trait-dependent (at least not in relation to the traits we have considered here), but rather genetic susceptibility (it mainly affects passerines, but there is considerable variation in susceptibility within passerines) and distributional range \citep{jessup2023wildlife}.
 
@@ -405,12 +368,10 @@ We tested 12 trait space occupancy metrics on simulated and empirical datasets t
 Our results show that, unexpectedly, different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
 Therefore, the choice of traits space occupancy metric is essential to accurately describing a pattern of interest.
 
-Our results may be influenced by our choice of space occupancy metrics – specifically, we focused on metrics available in three statistical packages in R, the most common statistical language currently used in ecology \citep{lai2019evaluating}, but many other ones could have been used.
+Our results may be influenced by our choice of space occupancy metrics - specifically, we focused on metrics available in three statistical packages in \texttt{R}, the most common statistical language currently used in ecology \citep{lai2019evaluating}, but many other ones could have been used (e.g. \citealt{guillerme2020shifting}).
 Also, our results are likely affected by the use of simplified algorithms designed to approximate very complex ecological and evolutionary mechanisms by simply removing a percentage of elements in trait spaces in a non-random manner.
 Note also that the simulated trait spaces here did not always share common characteristics with empirical trait spaces.
-The simulated trait spaces in 2, 3, 4, 5 or 8 dimensions had the same variance on all dimensions (i.e.
-we used the same trait simulation process for all dimensions) whereas in empirical trait spaces, commonly generated using ordination techniques (e.g.
-PCA or PCO), the dimensions have by definition a decreasing variance.
+The simulated trait spaces in 2, 4 or 8 dimensions had the same variance on all dimensions (i.e. we used the same trait simulation process for all dimensions) whereas in empirical trait spaces, commonly generated using ordination techniques (e.g. PCA or PCO), the dimensions have by definition a decreasing variance.
 
 Furthermore, we only presented results based on a relatively small number of dimensions (up to 8), while it is not uncommon to have a much greater number of dimensions, especially in paleontology (e.g. in \citealt{van2023should}).
 In a higher number of dimensions (usually >10 but this is highly variable depending on the system under study), metrics results are harder to scale linearly.
@@ -423,35 +384,34 @@ Another cautionary note could be made about our choice of scaling the metrics re
 This choice allowed us to simulate a null model designed to test whether the mechanisms of interest were causing the observed change in pattern \cite{bausman2018modeling}.
 For example, if removing 80\% of the edges of a distribution (equalising mechanism) was distinguishable or not from removing 80\% of a distribution randomly (null mechanism).
 Some metrics (e.g. Functional evenness using the dendrogram method) were not able to distinguish between the null mechanism and the mechanism of interest (here the mechanism simulating competition).
-In other words, our statistical question was ``Does metric X distinguish between removing N \% of data in a biassed way (the mechanism) and removing N\% of data randomly (the null)?''.
+In other words, our statistical question was ``Does metric X distinguish between removing N\% of data in a biassed way (the mechanism) and removing N\% of data randomly (the null)?''.
 This definition of null hypothesis is also appropriate for the empirical data if the question is the same.
 However, it is very likely that workers will ask a more exciting or intriguing question based on these data.
 For example, an interesting one could be ``Are the extinctions uniform across all birds in Hawaii?".
-This legitimate question would thus require first a trait space (the pattern - what) and maybe some contrasting groups of interest like extinctions through time (the process - how) to answer the question (the mechanism - why).
-Here instead we asked the more colloquial question of  ``Does metric X distinguish between removing N \% of data in a biassed way (the observed extinctions) and removing N \% of data randomly (the null)?'' which we will argue is only a prerequisite question for answering the more interesting one highlighted above: identifying the metric(s) X that can capture the mechanism of interest.
+This legitimate question would thus require first a trait space (the pattern - what) and maybe some contrasting groups of interest like extinctions through time (the process - how) to answer the question (the mechanism - why). %@@@ TODO: add supplementary
 
 The empirical results are also intriguing, as it indicates that, at least for certain metrics, the loss of Hawaiian bird functional diversity is less than expected than if extinctions were random with respect to traits (Figure \ref{Fig:empirical_results}).
-This contrasts with studies that have shown that species with certain traits (e.g., larger species) are more likely to have gone extinct and thus that functional diversity loss is larger than through random extinctions (e.g., \citealt{sayol2021loss,Matthews2022}).
+This contrasts with studies that have shown that species with certain traits (e.g., larger species) are more likely to have gone extinct and thus that functional diversity loss is larger than through random extinctions (e.g. \citealt{sayol2021loss,Matthews2022}).
 This could partly be due to the proportion of passerine extinctions in Hawaii.
 Although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines ($\sim$58\%), the majority of global known anthropogenic extinctions ($\sim$75\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
 However, in Hawaii, where the same proportion of known species were passerines ($\sim$58\%), the opposite is true: the majority of extinctions ($\sim$60\%) have been of passerine species.
 It is important to note that we are not implying that there existed little morphological variation within extinct Hawaiian passerines - indeed, many of these extinctions involved the honeycreepers, a famous adaptive radiation involving substantial evolution of beak morphology \citep{Walther2022} - but simply that this morphological variation is less than that observed across all birds.
-But these results, given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines,  also indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e.
-relative to random extinctions).
+But these results, given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines,  also indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
 In addition, it is worth stressing that these analyses included marine species (which constitutes less than 4\% of  known extinctions in Hawaii, while making up 11\% of the prehistoric assemblage) and different results may have been found if focusing exclusively on terrestrial birds.
 
-
 Following our results and these thoughts, we would like to encourage workers in ecology and evolution to test whether their metrics are capable of capturing a pattern of interest before discussing the process and/or mechanism inferred by it.
-We encourage workers to test their metrics using simplified example datasets to see if it has the ability to capture at least crude changes as exemplified in this work (e.g. using simulations \citealt{guillerme2024treats} or the \texttt{moms} interactive package) \citealt{guillerme2020shifting}.
+We encourage workers to test their metrics using simplified example datasets to see if it has the ability to capture at least crude changes as exemplified in this work (e.g. using simulations \citealt{guillerme2024treats} or the \texttt{moms} interactive package \citealt{guillerme2020shifting}).
 Importantly, it should always be borne in mind that empirical mechanisms ought of course to be more complex in real world scenarios.
 For example, evolutionary mechanisms can vary through time or per clades (and so patterns are often the results of multiple processes); or ecological mechanisms are often intertwined and work together to generate a pattern (e.g. facilitation + competition; \citealt{danet2024species}), or counteract each others by operating on the trait space in opposite directions (e.g., competition + filtering; \citealt{mammola2024functional})
 
 \section{Conclusion}
-Different ecological and evolutionary processes or mechanisms do not always lead to different patterns.
-Different observed patterns can originate from the same processes and mechanisms.
-Our results based on simulations and empirical data suggest that the same data can be interpreted differently depending on the choice of trait space occupancy metric (disparity, dissimilarity or functional diversity metrics).
-Different metrics are designed to capture different aspects \citep{guillerme2020shifting,mammola2021concepts} but also perform better or worse at their designed task depending on the mechanism or process of interest.
-Using space occupancy metrics for describing functional diversity is tricky. This is because the metrics have properties that can be counterintuitive based on the data at hand. And also because functions of ecosystems or organisms and niches within it are hard to capture/understand/define. This means that measuring functional diversity is based on both the definition of the metric and the function of interest and thus cannot be served by a one-fits-all metric.
+Different ecological and evolutionary processes or mechanisms do not always results in different patterns.
+Our results based on simulations and empirical data suggest that the same data can be interpreted differently depending on the choice of trait space occupancy metric (\textit{aka} disparity, dissimilarity or functional diversity metrics).
+Different metrics are designed to capture different aspects \citep{guillerme2020shifting,mammola2021concepts} but also perform better or worse at their designed task depending on the data, the mechanism or/and process of interest.
+Using space occupancy metrics for describing functional diversity is tricky.
+This is because the metrics have properties that can be counter intuitive based on the data at hand.
+And also because functions of ecosystems or organisms and niches within it are hard to capture/understand/define.
+This means that measuring functional diversity is based on both the definition of the metric and the function of interest and thus cannot be served by a one-fits-all metric.
 In other words, it is important to choose a disparity/dissimilarity/functional diversity metric depending on the question and the data at hand rather than as a default option or solely based on a previous inspiring publication.
 
 
