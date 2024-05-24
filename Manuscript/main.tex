@@ -55,19 +55,19 @@ Version dated: \today
 \noindent {\normalsize \sc
 Thomas Guillerme$^{1,*}$, 
 Pedro Cardoso$^{2,3}$,
-Carlos P. Carmona$^{4}$,
-Maria Wagner J\o rgensen$^{5}$,
-Stefano Mammola$^{3,6,7}$,
-Thomas J. Matthews$^{5,8}$}\\
+% Carlos P. Carmona$^{4}$,
+Maria Wagner J\o rgensen$^{4}$,
+Stefano Mammola$^{3,5,6}$,
+Thomas J. Matthews$^{4,7}$}\\
 \noindent {\small \it 
 $^1$School of Biosciences, The University of Sheffield, Sheffield, S10 2TN, United Kingdom.\\
 $^2$CE3C—Centre for Ecology, Evolution and Environmental Changes, CHANGE – Global Change and Sustainability Institute, Faculty of Sciences, University of Lisbon, Lisbon, Portugal\\
 $^3$Laboratory for Integrative Biodiversity Research (LIBRe), Finnish Museum of Natural History (Luomus), University of Helsinki, Helsinki, Finland\\
-$^4$Institute of Ecology and Earth Sciences, University of Tartu, Tartu, Estonia\\
-$^5$School of Geography, Earth and Environmental Sciences and Birmingham Institute of Forest Research, University of Birmingham, Birmingham B15 2TT, UK\\
-$^6$Molecular Ecology Group (MEG), Water Research Institute, National Research Council (CNR-IRSA), Verbania Pallanza, Italy\\
-$^7$National Biodiversity Future Center, Piazza Marina 61, 90133 Palermo, Italy\\
-$^8$Centre for Ecology, Evolution and Environmental Changes/Azorean Biodiversity Group / CHANGE – Global Change and Sustainability Institute and Universidade dos Açores – Faculty of Agricultural Sciences and Environment; PT-9700-042, Angra do Hero\'ismo, A\c ores, Portugal.\\}
+% $^4$Institute of Ecology and Earth Sciences, University of Tartu, Tartu, Estonia\\
+$^4$School of Geography, Earth and Environmental Sciences and Birmingham Institute of Forest Research, University of Birmingham, Birmingham B15 2TT, UK\\
+$^5$Molecular Ecology Group (MEG), Water Research Institute, National Research Council (CNR-IRSA), Verbania Pallanza, Italy\\
+$^6$National Biodiversity Future Center, Piazza Marina 61, 90133 Palermo, Italy\\
+$^7$Centre for Ecology, Evolution and Environmental Changes/Azorean Biodiversity Group / CHANGE – Global Change and Sustainability Institute and Universidade dos Açores – Faculty of Agricultural Sciences and Environment; PT-9700-042, Angra do Hero\'ismo, A\c ores, Portugal.\\}
 
 \end{center}
 \bigskip
@@ -142,7 +142,7 @@ While the first part of this framework (``what?'') has been studied extensively 
 Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why.
 The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism.
 Using an inappropriate metric for describing a pattern can lead to biased conclusions.
-For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home two both populations and another one home to only one of the population (the process - ``how?'').
+For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?'').
 In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations.
 In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate.
 See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
@@ -183,7 +183,7 @@ This approximates our \textbf{competition mechanism}.
 
 For the position, size and density algorithms, we estimated the parameters $\rho$ and $D$ recursively with the \texttt{dispRity} package to obtain the required amount of data to be removed (\texttt{dispRity::reduce.space}, \citealt{guillerme2018disprity,guillerme2020shifting}).
 These steps resulted in 3420 simulated trait spaces (171 simulated spaces $\times$ 5 stressors $\times$ 4 amounts of data removed).
-We used 171 replicates per simulation because that was empirically the smallest number of simulation required to reach a variance between simulation lower than 1\% across all metrics (i.e. any additional simulation added less that 1\% extra variance).
+We used 171 replicates per simulation because that was empirically the smallest number of simulations required to reach a variance between simulations lower than 1\% across all metrics (i.e. any additional simulation added less that 1\% extra variance).
 See Table \ref{Tab:mechanisms} for a biological description of these stressors and Figure \ref{Fig:simulations} for a visual description of them.
 
 Note that in empirical data, depending on the distribution of the data, some mechanisms can lead to similar or dissimilar patterns.
@@ -292,7 +292,7 @@ The results of these tests are displayed in figure \ref{Fig:simulation_results} 
 
 \subsubsection{Measuring the effect of the strength of the stressor}
 
-Finally, we measured the effect of the different levels of data removal (20\%, 40\%, 60\% and 80\%) by fitting a linear regression using the model centred and scaled metric score ~ amount of data removed.
+Finally, we measured the effect of the different levels of data removal (20\%, 40\%, 60\% and 80\%) by fitting a linear regression using the model centred and scaled metric score $\sim$ amount of data removed.
 For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables 1 to 3 and whether the slope was clearly distinguishable from 0 (Figure \ref{Fig:simulation_results}).
 
 \subsection{Empirical data}
@@ -307,7 +307,7 @@ Traits were log transformed and standardised to a mean of 0 and standard deviati
 The full trait dataset comprised 118 bird species, all native species known to have existed on these islands over the last 125,000 years.
 55 species are known to have gone extinct prior to 1500 CE and 26 after 1500 CE.
 For our analyses here, we focused on two time periods: (i) the avifauna present in 1500 CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
-We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-1500 CE extinctions (i.e., $118-55$ species; a trait space richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a trait space richness reduction of 69\%).
+We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-1500 CE extinctions (i.e., $118-55$ species; a species richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a species richness reduction of 69\%).
 
 
 To build the community trait space, we undertook a PCA including all 118 species, which we then subset to calculate the trait space for the historic and extant datasets.
@@ -360,7 +360,7 @@ That is, Figure \ref{Fig:empirical_results} is not displaying absolute changes i
 
 More broadly, as can be seen from this empirical case, patterns are likely to be much less clear than with simulated data due to multiple stressors acting simultaneously.
 For instance, extensive hunting is likely to present equalising and/or filtering pressure due to the selective hunting of larger bodied species.
-In contrast, avian malaria, which is known to be an important extinction pressure of native Hawaiian birds \cite{samuel2011dynamics}, could show signals of a null mechanism since susceptibility to the disease is not trait-dependent (at least not in relation to the traits we have considered here), but rather genetic susceptibility (it mainly affects passerines, but there is considerable variation in susceptibility within passerines) and distributional range \citep{jessup2023wildlife}.
+In contrast, avian malaria, which is known to be an important extinction pressure of native Hawaiian birds \citep{samuel2011dynamics}, could show signals of a null mechanism since susceptibility to the disease is not trait-dependent (at least not in relation to the traits we have considered here), but is related to genetics (it mainly affects passerines, but there is considerable variation in susceptibility within passerines) and distributional range \citep{jessup2023wildlife}.
 
 \section{Discussion}
 
@@ -374,14 +374,13 @@ Note also that the simulated trait spaces here did not always share common chara
 The simulated trait spaces in 2, 4 or 8 dimensions had the same variance on all dimensions (i.e. we used the same trait simulation process for all dimensions) whereas in empirical trait spaces, commonly generated using ordination techniques (e.g. PCA or PCO), the dimensions have by definition a decreasing variance.
 
 Furthermore, we only presented results based on a relatively small number of dimensions (up to 8), while it is not uncommon to have a much greater number of dimensions, especially in paleontology (e.g. in \citealt{van2023should}).
-In a higher number of dimensions (usually >10 but this is highly variable depending on the system under study), metrics results are harder to scale linearly.
+In a higher number of dimensions (usually $>$10 but this is highly variable depending on the system under study), metrics results are harder to scale linearly.
 This sometimes makes metric interpretation more chaotic \cite{bellman1957dynamic} in the sense that there is no direct relationship between the number of observations and dimensions that can be used to extrapolate results in higher dimensional datasets.
 In fact, the relationship between observations has an important effect on how our results scale with higher dimensionality (e.g. the volume of an evenly occupied space scales differently in high dimensions compared to the same space but with normally distributed observations).
 Therefore we advise workers to test assumptions specifically about their trait space and ``play'' around with it before choosing their functional diversity/disparity framework and metric of interest.
 
-
 Another cautionary note could be made about our choice of scaling the metrics relative to a random trait space reduction (with the same percentage of reduction).
-This choice allowed us to simulate a null model designed to test whether the mechanisms of interest were causing the observed change in pattern \cite{bausman2018modeling}.
+This choice allowed us to simulate a null model designed to test whether the mechanisms of interest were causing the observed change in pattern \citep{bausman2018modeling}.
 For example, if removing 80\% of the edges of a distribution (equalising mechanism) was distinguishable or not from removing 80\% of a distribution randomly (null mechanism).
 Some metrics (e.g. Functional evenness using the dendrogram method) were not able to distinguish between the null mechanism and the mechanism of interest (here the mechanism simulating competition).
 In other words, our statistical question was ``Does metric X distinguish between removing N\% of data in a biassed way (the mechanism) and removing N\% of data randomly (the null)?''.
@@ -390,6 +389,11 @@ However, it is very likely that workers will ask a more exciting or intriguing q
 For example, an interesting one could be ``Are the extinctions uniform across all birds in Hawaii?".
 This legitimate question would thus require first a trait space (the pattern - what) and maybe some contrasting groups of interest like extinctions through time (the process - how) to answer the question (the mechanism - why). %@@@ TODO: add supplementary
 
+% TODO: also add the section suggested by Tom:
+% For the discussion with Pedro (you haven't attached the picture - but I think I know what you mean): yes, there is a weird behaviour with 60% vs. 80% throughout most of the tests, I've tried to look into it whether it was a bug or not but could not find any bugged bits. I never thought of it in terms of null but yeah you folks reasoning actually makes a lot of sense. If you remove 100% of the data in a random way and then 100% in a biased way and then correct the results by the null (random), you should end up with no decrease at all. So I assume if you add data a little by little, the biased removal is at first not that different from the null one (e.g. same results wit 99% removed, 95, 90, etc...) and maybe only up until a certain threshold (maybe around 60% then?) do you see a clear effect of the bias (i.e. removing the data in a biased way is clearly different than randomly). This is actually totally worth adding somewhere in the manuscript!
+
+
+
 The empirical results are also intriguing, as it indicates that, at least for certain metrics, the loss of Hawaiian bird functional diversity is less than expected than if extinctions were random with respect to traits (Figure \ref{Fig:empirical_results}).
 This contrasts with studies that have shown that species with certain traits (e.g., larger species) are more likely to have gone extinct and thus that functional diversity loss is larger than through random extinctions (e.g. \citealt{sayol2021loss,Matthews2022}).
 This could partly be due to the proportion of passerine extinctions in Hawaii.
@@ -397,7 +401,7 @@ Although most global bird species are (or were, if accounting for anthropogenic 
 However, in Hawaii, where the same proportion of known species were passerines ($\sim$58\%), the opposite is true: the majority of extinctions ($\sim$60\%) have been of passerine species.
 It is important to note that we are not implying that there existed little morphological variation within extinct Hawaiian passerines - indeed, many of these extinctions involved the honeycreepers, a famous adaptive radiation involving substantial evolution of beak morphology \citep{Walther2022} - but simply that this morphological variation is less than that observed across all birds.
 But these results, given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines,  also indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
-In addition, it is worth stressing that these analyses included marine species (which constitutes less than 4\% of  known extinctions in Hawaii, while making up 11\% of the prehistoric assemblage) and different results may have been found if focusing exclusively on terrestrial birds.
+In addition, it is worth stressing that these analyses included marine species (which constitute less than 4\% of  known extinctions in Hawaii, while making up 11\% of the prehistoric assemblage) and different results may have been found if focusing exclusively on terrestrial birds.
 
 Following our results and these thoughts, we would like to encourage workers in ecology and evolution to test whether their metrics are capable of capturing a pattern of interest before discussing the process and/or mechanism inferred by it.
 We encourage workers to test their metrics using simplified example datasets to see if it has the ability to capture at least crude changes as exemplified in this work (e.g. using simulations \citealt{guillerme2024treats} or the \texttt{moms} interactive package \citealt{guillerme2020shifting}).
@@ -422,6 +426,8 @@ The results figures and tables are entirely reproducible via \url{https://github
 \section{Acknowledgements}
 Thanks to Andrew Beckerman, Natalie Cooper, Alain Danet, Thomas Johnson and Gavin Thomas for comments on early versions of this manuscripts.\\
 TG was funded by the UKRI-NERC grant NE/X016781/1.
+SM was supported by NBFC, funded by the Italian Ministry of University and Research, PNRR, Missione 4, Componente 2, ``Dalla ricerca all'impresa'', Investimento 1.4, Project CN00000033.
+
 
 
 \bibliographystyle{sysbio}
