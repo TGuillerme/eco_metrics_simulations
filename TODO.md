@@ -4,7 +4,7 @@
 
 # Manuscript
 
- * [ ] Write abstract
+ * [+] Write abstract
  * [ ] Write cover letter
  * [ ] Count things for header
  * [ ] Checks @@@ tags
