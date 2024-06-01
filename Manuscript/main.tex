@@ -50,7 +50,7 @@ Version dated: \today
 \noindent{\Large \bf The what, how and why of trait-based analyses in ecology}
 \bigskip
 
-\noindent RH: The what how and why of trait-based analyses
+\noindent RH: The what, how and why of trait-based analyses
 
 \noindent {\normalsize \sc
 Thomas Guillerme$^{1,*}$, 
@@ -105,24 +105,19 @@ All code and data required to reproduce this analysis is available on @@@
 
 \section{Abstract}
 
-Functional diversity is now a commonly used statistic to describe populations and communities in ecology beyond specific richness.
-It is a very efficient tool allowing to summarise a complex space occupancy pattern (what is changing?) that can be used to understand changes in communities and/or populations (the process; how is it changing?) in response to some stressors (the mechanism; why is it changing?). 
-However, although researchers have the choice between many different metrics (what) to study their questions of interest (how and why), it is often not directly clear which metric is more readily appropriate for which question.
-Here we show which patterns are recovered by different functional diversity metrics under different frameworks and how different metrics recover different signals from different processes linked to common mechanisms in ecology.
-Using both simulated data with different common ecological mechanisms approximations (environmental filtering, competitive exclusion, equalising fitness and facilitation) and an empirical dataset affected by more complex and nuanced mechanisms; we test the effectiveness of different space occupancy metrics to recover the simulated or empirical changes.
-We show that different metrics perform better for different tasks and discuss the importance of not using a one-fit-all metric but rather think and test whether a particular one will be good at capturing a pattern of interest.
+Functional diversity is commonly used to describe populations and communities in ecology beyond taxonomic diversity.
+It allows summarising complex space  or time-occupancy patterns (what is changing?) that can be used to understand changes in communities and/or populations (the process; how is it changing?) in response to some stressors (the mechanism; why is it changing?). 
+Although researchers have the choice between many different metrics (what) to study their questions of interest (how and why), it is often not directly clear which metric is more readily appropriate for which question.
+Here we show which patterns are recovered by multiple functional diversity metrics under different frameworks and how different metrics recover contrasting signals from different processes linked to common mechanisms in ecology.
+Using both simulated data with common ecological mechanism approximations (environmental filtering, competitive exclusion, equalising fitness and facilitation) and an empirical dataset affected by more complex and nuanced mechanisms, we test the effectiveness of different space occupancy metrics to recover the simulated or empirical changes.
+We show that metrics perform differently for many tasks and discuss the importance of not using a one-fit-all metric but rather think and test whether a particular one will be good at capturing a pattern of interest.
 
 \newpage
 
 \section{Introduction}
 
-In the last two decades, there has been a progressive shift in ecology and evolution from  taxonomic-oriented approaches, with species as the focal point of studies, to functional approaches that place species-specific characteristics (traits) at the centre of analyses \citep{mammola2021concepts, palacio2022protocol}.
-Although numerous definitions exist \citep{dawson2021traits}, we here consider a trait to be any observable characteristic (e.g. morphological, anatomical, ecological, physiological, behavioural, phenological, etc.) measured on individual organisms at any level, from genes to whole organisms.
-A trait-based approach has two advantages for answering core questions in ecology and evolution.
-First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms' traits at the centre of natural selection rather than organisms themselves.
-Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualization of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}).
-Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this new trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}).
-This is because trait-based approaches closely align with the general analytical framework proposed by \cite{anand1994pattern} to answer three consequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism) (see Box 1).
+In the last two decades, there has been a progressive expansion in ecology and evolution studies from taxonomic-oriented approaches, with species as the focal point, to functional approaches that place species-specific characteristics (traits) at the centre of analyses \citep{mammola2021concepts, palacio2022protocol}. Although numerous definitions exist \citep{dawson2021traits}, we here consider a trait to be any observable characteristic (e.g. morphological, anatomical, ecological, physiological, behavioural, phenological, etc.) measured on individual organisms at any level, from genes to whole organisms.
+A trait-based approach has two advantages for answering core questions in ecology and evolution. First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms' traits at the centre of natural selection rather than the organisms themselves. Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualization of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}). Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this new trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}). This is because trait-based approaches closely align with the general analytical framework proposed by \cite{anand1994pattern} to answer three sequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism) (see Box 1).
 
 \bigskip
 \bigskip
@@ -130,27 +125,19 @@ This is because trait-based approaches closely align with the general analytical
 \hrule
 
 \section*{Box 1}
-\cite{anand1994pattern} conceptualised a general analytical framework for answering scientific questions in ecology and evolution, based on three consequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism).
+\cite{anand1994pattern} conceptualised a general analytical framework for answering scientific questions in ecology and evolution, based on three sequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism).
 This framework can be effectively applied to trait-based analyses:
 
 \textit{What?} Pattern description corresponds to the steps needed to collect and summarise data to answer a question of interest (i.e., ``how?'' and ``why?'' as defined below).
-Usually this consists in: i) collecting target traits at the focal level (e.g., genes, individual, population, species; \citealt{violle2007let}); ii) arranging these traits into some kind of trait space \citep{guillerme2020disparities, mammola2021concepts}; and iii) using one or more unidimensional statistics to summarise properties of the trait space.
-For unidimensional spaces (i.e. distributions), these statistics can be as simple as the mean and the standard deviation (e.g. community weighted mean).
-For multidimensional spaces, these are usually named disparity metrics or indices \citep{guillerme2020disparities} or functional diversity metrics \citep{mammola2021concepts}, but all attempt to capture some pattern of interest in the trait space.
+Usually this consists in: i) collecting target traits at the focal level (e.g., genes, individual, population, species; \citealt{violle2007let}); ii) arranging these traits into some kind of trait space \citep{guillerme2020disparities, mammola2021concepts}; and iii) using one or more unidimensional or multidimensional statistics to summarise properties of the trait space. For unidimensional spaces (i.e. distributions), these statistics can be as simple as the mean and the standard deviation (e.g. community weighted mean). For multidimensional spaces, these are usually named disparity metrics or indices \citep{guillerme2020disparities} or functional diversity metrics \citep{mammola2021concepts}, but all attempt to capture some pattern of interest in the trait space.
 
 \textit{How?} Process description can be seen as linking the pattern of interest (``What?'') to some dynamic element.
 This can be a punctual change.
 For example, change of the pattern under a certain condition, such as how traits X differ between two habitats \citep{martinez2021habitat}.
-But it can also be one or more continuous or ordinal changes, such as how the pattern X changes in space, time and/or along ecological gradients \citep{belmaker2013spatial, jarzyna2018taxonomic,lamanna2014functional,bjorkman2018plant,mclean2021trait}.
-The distinction here might seem trivial but it is significant: usually, the process designates the change of the pattern, not the change of the traits.
-Although the traits are what is really changing, researchers will usually analyse some emergent property of the trait aggregation as described by the change of statistics between two or more conditions.
+But it can also be one or more continuous or ordinal changes, such as how the pattern X changes in space, time and/or along ecological gradients \citep{belmaker2013spatial, jarzyna2018taxonomic,lamanna2014functional,bjorkman2018plant,mclean2021trait}. The distinction here might seem trivial but it is significant: usually, the process designates the change of the pattern, not the change of the traits. Although the traits are what is really changing, researchers will usually analyse some emergent property of the trait aggregation as described by the change of statistics between two or more conditions.
 
-\textit{Why?} Mechanism description is then at the core of answering the biological question at hand.
-In most cases, this is what researchers are actually trying to understand.
-For example, one might be interested in understanding the effect of climate change on some trait \citep{boonman2022trait}.
-In fact, most researchers work on understanding the causal link between variables (i.e. ``why'' are ``what'' and ``how'' linked).
-This can be very useful, for example, to provide predictions about the past or the future.
-Ultimately, studying the mechanisms (``why'') is often the reason why researchers get funded (or not).
+\textit{Why?} Mechanism description is then at the core of answering the biological question at hand. In most cases, this is what researchers are actually trying to understand.
+For example, one might be interested in understanding the effect of climate change on some trait \citep{boonman2022trait}. In fact, most researchers work on understanding the causal link between variables (i.e. ``why'' are ``what'' and ``how'' linked). This can be very useful, for example, to provide predictions about the past or the future. Ultimately, studying the mechanisms (``why'') is often the reason why researchers get funded (or not).
 
 Note that the distinction between what, how and why is not categorical in its nature and is often nuanced, with patterns and process or process and mechanisms sometimes being used interchangeably to describe the same questions.
 
@@ -159,19 +146,10 @@ Note that the distinction between what, how and why is not categorical in its na
 \hrule
 \bigskip
 
-While the first part of this framework (``what?'') has been studied extensively in the last decade this was often undertaken outside of the ``what, how and why'' framework.
-Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why.
-The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism.
-Using an inappropriate metric for describing a pattern can lead to biased conclusions.
-For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?'').
-In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations.
-In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate.
-See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
+While the first part of this framework (``what?'') has been studied extensively in the last decade, this was often undertaken outside of the ``what, how and why'' framework. Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why. The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism. Using an inappropriate metric for describing a pattern can lead to biased conclusions.
+For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?''). In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations. In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate. See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
 
-Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations}).
-We also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism).
-We show that, with a fixed process and pattern, the choice of statistics used to describe the patterns (the disparity or functional diversity metrics) have a great impact on our ability to recover the process and understand the mechanism.
-We suggest caution when summarising patterns in observed data and propose tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
+Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations}). We also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism). We show that, with a fixed process and pattern, the choice of statistics used to describe the patterns (the disparity or functional diversity metrics) have a great impact on our ability to recover the process and understand the mechanism. We suggest caution when summarising patterns in observed data and propose tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
 
 \section{Methods}
 \subsection{Simulating trait space patterns}
@@ -237,7 +215,7 @@ This is often not the case in empirical cases (e.g. see our empirical example) w
   Competitive exclusion & Evenness change (``evenness'') & When functionally similar species compete more intensively with one another than with functionally dissimilar species (``competitive exclusion principle''; \citealt{hardin1960competitive}). At the extreme, it implies that only dissimilar individuals will coexist (``limiting similarity principle''; \citealt{macarthur1967limiting})\\
 
     \end{tabular}
-    \caption{\scriptsize{\textbf{Description of the stressors applied to the simulated data and the mechanism each approximated.} Here we distinguish between the biological mechanism we are trying to simulate and the algorithmic one we used to simulate it. We also provide a more detailed description of the stressor. Note that in biological data, we don't expect any of the mechanisms to be applied to the data alone (e.g. equalising fitness and facilitation can both act on the distribution of species traits). Nor do we expect their effects to be unidirectional (for example, equalising fitness can happen both by removing the edges or changing the position of a trait distribution). These mechanisms serve as a simplified description of reality for the narrative purpose of this paper.}
+    \caption{\scriptsize{\textbf{Description of the stressors applied to the simulated data and the mechanism each approximated.} Here we distinguish between the biological mechanism we are trying to simulate and the algorithmic one we used to simulate it. We also provide a more detailed description of the stressor. Note that in biological data, we don't expect any of the mechanisms to act on communities alone (e.g. equalising fitness and facilitation can both act on the distribution of species traits). Nor do we expect their effects to be unidirectional (for example, equalising fitness can happen both by removing the edges or changing the position of a trait distribution). These mechanisms serve as a simplified description of reality for the narrative purpose of this paper.}
 }
     \label{Tab:mechanisms}
 \end{table}
@@ -272,13 +250,13 @@ Note that we focused here on three packages fully devoted to functional diversit
 
 \textbf{Aspect} & \textbf{Method} & \textbf{Name} & \textbf{Description} & \textbf{\texttt{R} function} & \textbf{Reference}\\
 \hline
- & Trait Probability Density & Functional evenness & An index of the spread of the trait distribution in an even spread of the distribution (e.g. the height of bins in a histogram) & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+Richness & Trait Probability Density & Functional richness & Sum of cells where trait probability density $> 0$ & \texttt{TPD::REND} & \cite{carmona2019trait}\\
  & \cr 
- & Kernel density hypervolume & Functional evenness &  Overlap between a hypervolume and an imaginary hypervolume where traits are evenly distributed within their possible range & \texttt{BAT::kernel.evenness} & \cite{mammola2020functional}\\
- & \cr 
- & Dendrogram & Functional evenness & Regularity of abundances and distances between observations in the tree. & \texttt{BAT::evenness} & \cite{cardoso2015bat,cardoso2024calculating}\\
- & \cr 
- & Distances & Functional evenness & Regularity of abundances and distances along the minimum spanning tree linking all observations & \texttt{FD::dbFD()\$FEve} & \cite{Laliberte2010FD,villeger2008new}\\
+ & Kernel density hypervolume & Functional richness & Size (volume) of the hypervolume & \texttt{BAT::kernel.alpha} & \cite{mammola2020functional}\\
+ & \cr
+ & Convex Hull & Functional richness & Volume of the convex hull & \texttt{BAT::hull.alpha} & \cite{cornwell2006trait}\\
+ & \cr
+ & Dendrogram & Alpha diversity & Total branch length of the functional dendrogram & \texttt{BAT::alpha} & \cite{petchey2002functional,cardoso2015bat}\\
 \hline
 Divergence & Trait Probability Density & Divergence & Overlap between the TPD function of a single observation and the TPD function of the whole set of observations & \texttt{TPD::REND} & \cite{carmona2019trait}\\
  & \cr 
@@ -288,13 +266,13 @@ Divergence & Trait Probability Density & Divergence & Overlap between the TPD fu
  & \cr  
  & Distances & Rao's quadratic entropy & The mean Euclidean distance between every two random pairs of species & \texttt{FD::dbFD()\$RaoQ} & \cite{botta2005rao}\\
 \hline
-Richness & Trait Probability Density & Functional richness & Sum of cells where trait probability density $> 0$ & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+ & Trait Probability Density & Functional evenness & An index of the spread of the trait distribution in an even spread of the distribution (e.g. the height of bins in a histogram) & \texttt{TPD::REND} & \cite{carmona2019trait}\\
  & \cr 
- & Kernel density hypervolume & Functional richness & Size (volume) of the hypervolume & \texttt{BAT::kernel.alpha} & \cite{mammola2020functional}\\
- & \cr
- & Convex Hull & Functional richness & Volume of the convex hull & \texttt{BAT::hull.alpha} & \cite{cornwell2006trait}\\
- & \cr
- & Dendrogram & Alpha diversity & Total branch length of the functional dendrogram & \texttt{BAT::alpha} & \cite{petchey2002functional,cardoso2015bat}\\
+ & Kernel density hypervolume & Functional evenness &  Overlap between a hypervolume and an imaginary hypervolume where traits are evenly distributed within their possible range & \texttt{BAT::kernel.evenness} & \cite{mammola2020functional}\\
+ & \cr 
+ & Dendrogram & Functional evenness & Regularity of abundances and distances between observations in the tree. & \texttt{BAT::evenness} & \cite{cardoso2015bat,cardoso2024calculating}\\
+ & \cr 
+ & Distances & Functional evenness & Regularity of abundances and distances along the minimum spanning tree linking all observations & \texttt{FD::dbFD()\$FEve} & \cite{Laliberte2010FD,villeger2008new}\\
 \hline
 
 \end{tabular}
@@ -327,7 +305,7 @@ Traits were log transformed and standardised to a mean of 0 and standard deviati
 
 The full trait dataset comprised 118 bird species, all native species known to have existed on these islands over the last 125,000 years.
 55 species are known to have gone extinct prior to 1500 CE and 26 after 1500 CE.
-For our analyses here, we focused on two time periods: (i) the avifauna present in 1500 CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
+For our analyses, we focused on two time periods: (i) the avifauna present in 1500 CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
 We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-1500 CE extinctions (i.e., $118-55$ species; a species richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a species richness reduction of 69\%).
 
 
@@ -387,9 +365,9 @@ In contrast, avian malaria, which is known to be an important extinction pressur
 
 We tested 12 trait space occupancy metrics on simulated and empirical datasets to assess how each metric captures patterns of trait space changes based on stressors approximating ecological and evolutionary mechanisms.
 Our results show that, unexpectedly, different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
-Therefore, the choice of traits space occupancy metric is essential to accurately describing a pattern of interest.
+Therefore, the choice of trait space occupancy metric is essential to accurately describe a pattern of interest.
 
-Our results may be influenced by our choice of space occupancy metrics - specifically, we focused on metrics available in three statistical packages in \texttt{R}, the most common statistical language currently used in ecology \citep{lai2019evaluating}, but many other ones could have been used (e.g. \citealt{guillerme2020shifting}).
+Our results may be influenced by our choice of space occupancy metrics - specifically, we focused on metrics available in three statistical packages in \texttt{R}, the most common statistical language currently used in ecology \citep{lai2019evaluating}, but many others could have been used (e.g. \citealt{guillerme2020shifting}).
 Also, our results are likely affected by the use of simplified algorithms designed to approximate very complex ecological and evolutionary mechanisms by simply removing a percentage of elements in trait spaces in a non-random manner.
 Note also that the simulated trait spaces here did not always share common characteristics with empirical trait spaces.
 The simulated trait spaces in 2, 4 or 8 dimensions had the same variance on all dimensions (i.e. we used the same trait simulation process for all dimensions) whereas in empirical trait spaces, commonly generated using ordination techniques (e.g. PCA or PCO), the dimensions have by definition a decreasing variance.
@@ -424,8 +402,8 @@ It is important to note that we are not implying that there existed little morph
 But these results, given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines,  also indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
 In addition, it is worth stressing that these analyses included marine species (which constitute less than 4\% of  known extinctions in Hawaii, while making up 11\% of the prehistoric assemblage) and different results may have been found if focusing exclusively on terrestrial birds.
 
-Following our results and these thoughts, we would like to encourage workers in ecology and evolution to test whether their metrics are capable of capturing a pattern of interest before discussing the process and/or mechanism inferred by it.
-We encourage workers to test their metrics using simplified example datasets to see if it has the ability to capture at least crude changes as exemplified in this work (e.g. using simulations \citealt{guillerme2024treats} or the \texttt{moms} interactive package \citealt{guillerme2020shifting}).
+Following our results and these thoughts, we encourage workers in ecology and evolution to test whether their metrics are capable of capturing a pattern of interest before discussing the process and/or mechanism inferred by it.
+We encourage workers to test their metrics using simplified example datasets to see if they have the ability to capture at least crude changes as exemplified in this work (e.g. using simulations \citealt{guillerme2024treats} or the \texttt{moms} interactive package \citealt{guillerme2020shifting}).
 Importantly, it should always be borne in mind that empirical mechanisms ought of course to be more complex in real world scenarios.
 For example, evolutionary mechanisms can vary through time or per clades (and so patterns are often the results of multiple processes); or ecological mechanisms are often intertwined and work together to generate a pattern (e.g. facilitation + competition; \citealt{danet2024species}), or counteract each others by operating on the trait space in opposite directions (e.g., competition + filtering; \citealt{mammola2024functional})
 
