@@ -40,6 +40,7 @@ You'll also need the following custom functions (located in [here on github](htt
 source("../Functions/melodic.rao.R")
 source("../Functions/make.simulation.pipeline.R")
 source("../Functions/simulation.pipeline.R")
+source("../Functions/analyse.replicates.R")
 source("../Functions/dbFD.R")
 ```
 
@@ -86,7 +87,6 @@ source("../Functions/analyse.replicates.R")
 
 You can then run this replicate function that will start by running 20 replicates (`mimimum`) and will increase the number of replicates by 5% until reaching 1000 replicates (`maximum`) or until the addition 5% increase does not increase the variance for each metric with each different level of removal by less than 5% (120 parameters!).
 
-There are options to 
 
 ```{r, eval = TRUE}
 ## Running the full optimisation
@@ -99,7 +99,10 @@ results <- optim.replicate(input.fun = simulate.facilitation,
                            bkp.path = "../Data/Processed/",
                            bkp.name = "sim_facilitation.rda")
 ```
+
 > Note that you can use the parallel version by adding the argument `parallel = TRUE` that is automatised using the package `future` and `future.apply` which makes the whole process run on all your available cores but is way less verbose. Without using the parallel version, it takes roughly 10 hours (overnight) to run the analyses on an old 2.2Ghz 8GB core.
+
+You can run this pipeline on a cluster using/modifying the `cluster_script_example.Rscript` file in `Analysis/`.
 
 
 <!-- 

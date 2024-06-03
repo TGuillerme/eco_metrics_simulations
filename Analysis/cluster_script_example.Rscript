@@ -1,0 +1,32 @@
+## Libraries
+require(treats)
+require(dispRity)
+require(BAT)
+require(FD)
+require(ks)
+require(TPD)
+
+## Loading the functions
+source("../Functions/melodic.rao.R")
+source("../Functions/make.simulation.pipeline.R")
+source("../Functions/simulation.pipeline.R")
+source("../Functions/optim.replicate.R")
+source("../Functions/optim.helpers.R")
+source("../Functions/analyse.replicates.R")
+source("../Functions/dbFD.R")
+
+## Set simulation type
+simulate <- make.simulation.pipeline(type = "filtering",
+                                     sim.data = list(n.traits   = 8,
+                                                     speciation = 1,
+                                                     n.taxa     = 200))
+
+## Running the full optimisation
+results <- optim.replicate(input.fun = simulate,
+                           diagnose = var,
+                           summarise = optim.summarise,
+                           minimum = 20, maximum = 170,
+                           stop.variance = 0.01,
+                           verbose = TRUE,
+                           bkp.path = "../Data/Processed/",
+                           bkp.name = "sim_filtering_8d.rda")

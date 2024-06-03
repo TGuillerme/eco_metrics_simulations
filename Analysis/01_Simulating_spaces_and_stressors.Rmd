@@ -11,7 +11,7 @@ This is a demo on how to simulate the spaces and apply the different stressors t
 
 # Simulating spaces
 
-We can use the package `dads` that's in development for simulating the trait spaces (note that the package is still pretty unstable but the simple tasks here should not change).
+We can use the package `treats` that's in development for simulating the trait spaces (note that the package is still pretty unstable but the simple tasks here should not change).
 Later, we can use the `dispRity::reduce.space` package to apply stressors to the data.
 
 ```{r, eval = FALSE}
@@ -22,10 +22,9 @@ devtools::install_github("TGuillerme/dispRity")
 
 ```{r}
 set.seed(1)
-library(treats)     # needs to be version >= 0.1.4
+library(treats)   # needs to be version >= 0.1.4
 library(dispRity) # needs to be version >= 1.5.7
 ```
-
 
 We will build simulate data using a Brownian Motion (the breath of trait values just increases with time, unconstrained), a pure birth tree (no extinction) and will stop the simulation as soon as we reach 200 taxa.
 Note that I'll simulate a 2D Brownian Motion trait just for facilitating the visualisation of the stressors, however, for the paper we can stick to one dimension (one trait).
@@ -178,9 +177,9 @@ plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "
 ```
 
 
-## Paper figure
+## Paper figure 1
 
-```{r}
+```{r, eval = FALSE}
 plot.text.box <- function(my_text, ...) {
   plot(1,1, xaxt = "n", yaxt = "n", xlab = "", ylab = "", col = "white", pch = 21)
   text(c(1,1), my_text, ...)
