@@ -117,7 +117,11 @@ We show that metrics perform differently for many tasks and discuss the importan
 \section{Introduction}
 
 In the last two decades, there has been a progressive expansion in ecology and evolution studies from taxonomic-oriented approaches, with species as the focal point, to functional approaches that place species-specific characteristics (traits) at the centre of analyses \citep{mammola2021concepts, palacio2022protocol}. Although numerous definitions exist \citep{dawson2021traits}, we here consider a trait to be any observable characteristic (e.g. morphological, anatomical, ecological, physiological, behavioural, phenological, etc.) measured on individual organisms at any level, from genes to whole organisms.
-A trait-based approach has two advantages for answering core questions in ecology and evolution. First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms' traits at the centre of natural selection rather than the organisms themselves. Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualization of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}). Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this new trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}). This is because trait-based approaches closely align with the general analytical framework proposed by \cite{anand1994pattern} to answer three sequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism) (see Box 1).
+A trait-based approach has two advantages for answering core questions in ecology and evolution.
+First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms' traits at the centre of natural selection rather than the organisms themselves.
+Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualization of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}).
+Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this new trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}).
+This is because trait-based approaches closely align with the general analytical framework proposed by \cite{anand1994pattern} to answer three sequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism) (see Box 1).
 
 \bigskip
 \bigskip
@@ -129,15 +133,23 @@ A trait-based approach has two advantages for answering core questions in ecolog
 This framework can be effectively applied to trait-based analyses:
 
 \textit{What?} Pattern description corresponds to the steps needed to collect and summarise data to answer a question of interest (i.e., ``how?'' and ``why?'' as defined below).
-Usually this consists in: i) collecting target traits at the focal level (e.g., genes, individual, population, species; \citealt{violle2007let}); ii) arranging these traits into some kind of trait space \citep{guillerme2020disparities, mammola2021concepts}; and iii) using one or more unidimensional or multidimensional statistics to summarise properties of the trait space. For unidimensional spaces (i.e. distributions), these statistics can be as simple as the mean and the standard deviation (e.g. community weighted mean). For multidimensional spaces, these are usually named disparity metrics or indices \citep{guillerme2020disparities} or functional diversity metrics \citep{mammola2021concepts}, but all attempt to capture some pattern of interest in the trait space.
+Usually this consists in: i) collecting target traits at the focal level (e.g., genes, individual, population, species; \citealt{violle2007let}); ii) arranging these traits into some kind of trait space \citep{guillerme2020disparities, mammola2021concepts}; and iii) using one or more unidimensional or multidimensional statistics to summarise properties of the trait space.
+For unidimensional spaces (i.e. distributions), these statistics can be as simple as the mean and the standard deviation (e.g. community weighted mean).
+For multidimensional spaces, these are usually named disparity metrics or indices \citep{guillerme2020disparities} or functional diversity metrics \citep{mammola2021concepts}, but all attempt to capture some pattern of interest in the trait space.
 
 \textit{How?} Process description can be seen as linking the pattern of interest (``What?'') to some dynamic element.
 This can be a punctual change.
 For example, change of the pattern under a certain condition, such as how traits X differ between two habitats \citep{martinez2021habitat}.
-But it can also be one or more continuous or ordinal changes, such as how the pattern X changes in space, time and/or along ecological gradients \citep{belmaker2013spatial, jarzyna2018taxonomic,lamanna2014functional,bjorkman2018plant,mclean2021trait}. The distinction here might seem trivial but it is significant: usually, the process designates the change of the pattern, not the change of the traits. Although the traits are what is really changing, researchers will usually analyse some emergent property of the trait aggregation as described by the change of statistics between two or more conditions.
+But it can also be one or more continuous or ordinal changes, such as how the pattern X changes in space, time and/or along ecological gradients \citep{belmaker2013spatial, jarzyna2018taxonomic,lamanna2014functional,bjorkman2018plant,mclean2021trait}.
+The distinction here might seem trivial but it is significant: usually, the process designates the change of the pattern, not the change of the traits.
+Although the traits are what is really changing, researchers will usually analyse some emergent property of the trait aggregation as described by the change of statistics between two or more conditions.
 
-\textit{Why?} Mechanism description is then at the core of answering the biological question at hand. In most cases, this is what researchers are actually trying to understand.
-For example, one might be interested in understanding the effect of climate change on some trait \citep{boonman2022trait}. In fact, most researchers work on understanding the causal link between variables (i.e. ``why'' are ``what'' and ``how'' linked). This can be very useful, for example, to provide predictions about the past or the future. Ultimately, studying the mechanisms (``why'') is often the reason why researchers get funded (or not).
+\textit{Why?} Mechanism description is then at the core of answering the biological question at hand.
+In most cases, this is what researchers are actually trying to understand.
+For example, one might be interested in understanding the effect of climate change on some trait \citep{boonman2022trait}.
+In fact, most researchers work on understanding the causal link between variables (i.e. ``why'' are ``what'' and ``how'' linked).
+This can be very useful, for example, to provide predictions about the past or the future.
+Ultimately, studying the mechanisms (``why'') is often the reason why researchers get funded (or not).
 
 Note that the distinction between what, how and why is not categorical in its nature and is often nuanced, with patterns and process or process and mechanisms sometimes being used interchangeably to describe the same questions.
 
@@ -146,10 +158,18 @@ Note that the distinction between what, how and why is not categorical in its na
 \hrule
 \bigskip
 
-While the first part of this framework (``what?'') has been studied extensively in the last decade, this was often undertaken outside of the ``what, how and why'' framework. Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why. The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism. Using an inappropriate metric for describing a pattern can lead to biased conclusions.
-For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?''). In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations. In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate. See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
+While the first part of this framework (``what?'') has been studied extensively in the last decade, this was often undertaken outside of the ``what, how and why'' framework.
+Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why.
+The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism.
+Using an inappropriate metric for describing a pattern can lead to biased conclusions.
+For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?''). In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations.
+In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate.
+See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
 
-Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations}). We also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism). We show that, with a fixed process and pattern, the choice of statistics used to describe the patterns (the disparity or functional diversity metrics) have a great impact on our ability to recover the process and understand the mechanism. We suggest caution when summarising patterns in observed data and propose tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
+Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations}).
+We also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism).
+We show that, with a fixed process and pattern, the choice of statistics used to describe the patterns (the disparity or functional diversity metrics) have a great impact on our ability to recover the process and understand the mechanism.
+We suggest caution when summarising patterns in observed data and propose tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
 
 \section{Methods}
 \subsection{Simulating trait space patterns}
@@ -164,7 +184,8 @@ We then applied four different stressors to the non-stressed trait space to remo
 In removing the data, we applied these five specific algorithms (Figure \ref{Fig:simulations}; Table \ref{Tab:mechanisms}; all algorithms, except ``Evenness'', were previously described in \cite{guillerme2020shifting}):
 
 \begin{itemize}
-\item Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data. This approximates our \textbf{null mechanism}.
+\item Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data.
+This approximates our \textbf{null mechanism}.
 
 \item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius)  $\rho$ of the centre of the trait space.
 This approximates our \textbf{equalising mechanism}.
