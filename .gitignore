@@ -7,9 +7,10 @@
 
 ## Tex files
 *.aux
-*.dfb_latexmk
+*.fdb_latexmk
 *.fls
 *.log
 *.out
 *.pdf
 *.synctex.gz
+
