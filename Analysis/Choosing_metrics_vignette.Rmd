@@ -1,0 +1,218 @@
+---
+title: "Choosing a space occupancy metric"
+author: "Thomas Guillerme"
+bibliography: ../Manuscript/references.bib
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+library(dispRity)
+library(knitr)
+```
+
+This script illustrates a potential pipeline of how to choose a correct space occupancy metric (_aka_ functional diversity, dissimilarity, disparity metric) to answer a biological question.
+Our question here could be whether the functional diversity of Hawaiian endemic birds decreased more in the last 500 years than ever before?
+I.e. is the decrease in trait space occupancy greater in the present than in 1500 compared to all species that where recorded.
+
+> Note that the exercise in this vignette can be done using the [`moms`](https://tguillerme.shinyapps.io/moms/) graphical user interface (with the associate manual [here](https://raw.githack.com/TGuillerme/moms/master/inst/moms_vignette.html)).
+
+# The data
+
+Here we will use the empirical data from @guillerme2024. The trait data is compiled from @tobias2022avonet, @pigot2020macroevolutionary and @sheard2020ecological and the extinction data is compiled from @matthews2023global.
+It consists of a trait space of 118 species and 5 dimensions recorded in the last 125,000 years.
+From this trait space we have 2 subsets that corresponds to the endemic species present in Hawaii in 1500CE (the historic group of 63 species) and the species present today (37 species).
+We will group all that in a `dispRity` object to facilitate the pipeline.
+
+```{r}
+## global trait space 
+empirical_traitspace <- read.csv('../Data/Raw/trait-space-5d-prehistoric-community.csv', row.names = 1) 
+
+## Species lists
+historic_species <- rownames(read.csv('../Data/Raw/historic-species-list-minus-a-flammeus.csv', row.names = 1))
+extant_species <- rownames(read.csv('../Data/Raw/present-species-list-minus-a-flammeus.csv', row.names = 1))
+
+## Traitspace groups
+extant_group <- rownames(empirical_traitspace) %in% extant_species ## 37 species present
+historic_group <- rownames(empirical_traitspace) %in% historic_species ## 63 species present
+groups <- list("extant" = extant_group, "historic" = historic_group)
+
+## Creating a dispRity object containing all the groups
+custom_groups <- lapply(groups, which)
+custom_groups$all <- 1:nrow(empirical_traitspace)
+grouped_space <- custom.subsets(empirical_traitspace, group = custom_groups)
+```
+
+## Visualising the data
+
+```{r, fig.height = 8, fig.width = 8}
+## Visualising the group
+plot(grouped_space)
+```
+
+Note here that the groups are subsets of each other so the species that are in the group `"extant"` (red) are also in the group `"historic"` (green) and `"all"` (blue).
+From visualising the data we can first see that both PC are a fair representation of the data (around 85% of the data).
+In other words, some things might happen on the other dimensions here (e.g. all the elements of one group might be weirdly distributed on some other PC axes) but that can only affect 15% of the data.
+
+# Choosing a space occupancy metric
+
+Once we have set up the data as a `dispRity` object, we can choose a space occupancy metric to reflect changes in the dataset.
+We can do that using already implemented metrics in `dispRity` (see `?dispRity.metric`) or by making or own metrics (see details below).
+The objective here will be to have a metric that reflects changes of interest.
+Again, the question being: "the functional diversity of Hawaiian endemic birds decreased more in the last 500 years than ever before?"; we can posit that changes in functional diversity should be approximated by changes in trait space size.
+The bigger the trait space, the more functional diversity.
+
+> Note that this assumption should not be generalised. It is just what we posit for this dataset and this specific question.
+
+## A simple case: the convex hull volume
+
+We can start with a simple and rather intuitive measurement of trait space size: the volume of the convex hull of each group, that is volume of the smallest non-regular polygon that contains all points of each groups.
+
+```{r}
+## Measuring the convhull volume
+convhull_volume <- dispRity(grouped_space,
+                            metric = convhull.volume)
+```
+
+We can then summarise this in a table:
+
+```{r, eval = FALSE}
+## Printing the table
+summary(convhull_volume)
+```
+
+```{r, echo = FALSE}
+## Printing the table (for markdown fancy print)
+kable(summary(convhull_volume))
+```
+
+
+This seems satisfying with or prior knowledge on species extinctions in Hawaii: there has been a huge reduction in functional diversity since the event of globalisation (1500CE onwards): we have a reduction of `r round(((summary(convhull_volume)$obs[3] - summary(convhull_volume)$obs[2])/summary(convhull_volume)$obs[3])*100, digits = 2)`% in the last 12500 years (something like loosing 0.0002 % of the trait space per year).
+Then, we have a reduction `r round(((summary(convhull_volume)$obs[3] - summary(convhull_volume)$obs[1])/summary(convhull_volume)$obs[3])*100, digits = 2)`% in the last 500 years (something like loosing 0.14 % of the trait space per year).
+
+## Checking sample size
+
+However, we could note here that this change in volume is also closely linked to the change in the number of species, at least qualitatively (loosing `r round(((summary(convhull_volume)$n[3] - summary(convhull_volume)$n[2])/summary(convhull_volume)$n[3])*100, digits = 2)`% of species for the historic data and `r round(((summary(convhull_volume)$n[3] - summary(convhull_volume)$n[1])/summary(convhull_volume)$n[3])*100, digits = 2)`% for the extant data).
+This might not be a problem _per se_ but in our case we are interested in the loss of function diversity not just the number of species.
+So we have to first check whether the changes of functional diversity are potentially de-coupled with changes in number of species.
+One way to do that is by rarefying the data, i.e. resampling each subset so they contain the same number of species.
+We can do that easily in `dispRity` using the `boot.matrix` function:
+
+```{r}
+## Measuring the convhull volume on the rarefied subsets (to 37 elements)
+rarefied_conv_vol <- dispRity(boot.matrix(grouped_space, rarefaction = 37),
+                              metric = convhull.volume)
+```
+
+```{r, eval = FALSE}
+## Printing the table
+summary(rarefied_conv_vol)
+```
+
+```{r, echo = FALSE}
+## Printing the table (for markdown fancy print)
+kable(summary(rarefied_conv_vol))
+```
+
+Or plotting it:
+
+```{r, fig.height = 8, fig.width = 4}
+par(mfrow = c(1, 2))
+plot(rarefied_conv_vol, main = "raw data")
+plot(rarefied_conv_vol, rarefaction = 37, main = "rarefied data")
+```
+
+Note that now the differences are not that clear.
+This might suggest that there is something with specific outliers in our dataset or that the metric is actually more capturing changes in the number of elements in the trait space rather than directly the trait space occupancy (_sensu_ functional diversity).
+
+## Checking the ability of the convex hull volume to capture changes in size
+
+To check that, we can actually run some simulations to see whether the metric can actual capture changes in trait space size!
+We can do that using the `dispRity::test.metric` function from that uses the same pipeline used in @guillerme2024 and @guillerme2020shifting.
+
+```{r}
+## Testing the convex hull volume metric
+convvol_test <- test.metric(grouped_space, metric = convhull.volume, shifts = c("random", "size"), replicates = 10)
+```
+
+The results for the functional divergence tests:
+
+```{r, eval = FALSE}
+summary(convvol_test)
+```
+
+```{r, echo = FALSE}
+kable(summary(convvol_test))
+```
+
+The visualisation of the results:
+
+```{r, fig.height = 12, fig.width = 6}
+plot(convvol_test)
+```
+
+Here we can clearly see that no matter which trait reduction we applied, we would always see a change of the convex hull volume linked to the change in the number of elements: we can see that the slope are very similar whether we randomly remove elements (black), remove elements from elements on the edge of the distribution (orange) or remove elements from the inside of the distribution (blue).
+
+This should lead us to conclude that, even though the metric results make sense, they only do here because they are linked to the changes in the number of elements and we can never be sure whether it captures changes in trait space size (i.e. or proxy for functional diversity) or the number of elements (species richness).
+
+> Note that this conclusion here is not a generalisation about this trait space or this metric. It is only valid for this specific trait space, this specific metric and this specific interpretation of function diversity. 
+
+# Testing different metrics
+
+Unfortunately there is no one-size fit all recipe on how to find the correct metric for the dataset and question of interest.
+However, using tools like [`moms`](https://tguillerme.shinyapps.io/moms/) or `dispRity` we can test several ones and see which one fits our needs the best.
+Here is a series of them:
+
+## The average spanning tree length
+
+```{r, fig.height = 12, fig.width = 6}
+plot(test.metric(grouped_space, metric = c(mean, span.tree.length), shifts = c("random", "size"), replicates = 10))
+```
+
+This metric is also not suitable as it seems inversely correlated to the sample size. Furthermore, it also seem to not pick changes in size (orange) but rather in hollowness (blue).
+
+## The ratio of deviation from the centroid (functional diversity _sensu_ @villeger2008new)
+
+```{r, fig.height = 12, fig.width = 6}
+plot(test.metric(grouped_space, metric = func.div, shifts = c("random", "size"), replicates = 10))
+```
+
+This metric, is more interesting as it is not directly related to the sample size and therefore more clearly decoupled from species richness. Changes in trait space sizes are linearly and inversely related to the amount of data considered (i.e. the more volume, the lower the functional diversity) which is not a problem _per se_ but can be counterintuitive (hence the usefulness of testing it before interpreting it). However it is also interest to not the non-linear relationship with hollowness (blue) that can follow the same trend as the trait space size (blue) so it might be hard to disentangle either.
+
+## The mean distance to the centroid
+
+```{r, fig.height = 12, fig.width = 6}
+plot(test.metric(grouped_space, metric = c(mean, centroids), shifts = c("random", "size"), replicates = 10))
+```
+
+Unsurprising, this metric seem to give a similar pattern as the deviation from the centroid. However, we can note here that the metric increases with size (orange) which is a good behaviour in our case. Furthermore, the hollowness (blue) seems not to be following the changes in size making it potentially easier to distinguish between both changes in the trait space.
+
+# Results
+
+```{r}
+## Measuring the average distance from centroid on the rarefied subsets (to 37 elements)
+rarefied_mean_cen <- dispRity(boot.matrix(grouped_space, rarefaction = 37),
+                              metric =  c(mean, centroids))
+```
+
+```{r, eval = FALSE}
+## Printing the table
+summary(rarefied_mean_cen)
+```
+
+```{r, echo = FALSE}
+## Printing the table (for markdown fancy print)
+kable(summary(rarefied_mean_cen))
+```
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot(rarefied_mean_cen, main = "raw data")
+plot(rarefied_mean_cen, rarefaction = 37, main = "rarefied data")
+```
+
+Using this metric, we see a more complex picture of the changes in functional diversity (defined here as the mean distance to centroid) where it seems to not decrease through time compared to using the convex hull volume.
+This might be because of many reasons but looking at the 2D representation of the trait space at the start of this vignette, this might be because the biggest traitspace loss might actually have occurred for the historic species (the blue dots in the 2D trait space plot).
+
+# References
