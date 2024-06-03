@@ -4,3 +4,12 @@
 *.rda
 *.RData
 *.Rapp.history
+
+## Tex files
+*.aux
+*.dfb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.synctex.gz
