@@ -77,11 +77,11 @@ $^7$Centre for Ecology, Evolution and Environmental Changes/Azorean Biodiversity
 
 \begin{itemize}
    \item Article type: Letter
-   \item Number of words in the abstract: @@@
-   \item Number of words in the main text: @@@
-   \item Number of words in the text box: @@@
-   \item Number of references: @@@
-   \item 3 Figures, 2 tables 1 text box @@@
+   \item Number of words in the abstract: 189
+   \item Number of words in the main text: 3949
+   \item Number of words in the text box: 419
+   \item Number of references: 54
+   \item 3 Figures, 2 tables and 1 text box
 \end{itemize}
 
 \subsection{Statement of authorship}
@@ -105,12 +105,13 @@ All code and data required to reproduce this analysis is available on @@@
 
 \section{Abstract}
 
-Functional diversity is commonly used to describe populations and communities in ecology beyond taxonomic diversity.
-It allows summarising complex space  or time-occupancy patterns (what is changing?) that can be used to understand changes in communities and/or populations (the process; how is it changing?) in response to some stressors (the mechanism; why is it changing?). 
-Although researchers have the choice between many different metrics (what) to study their questions of interest (how and why), it is often not directly clear which metric is more readily appropriate for which question.
-Here we show which patterns are recovered by multiple functional diversity metrics under different frameworks and how different metrics recover contrasting signals from different processes linked to common mechanisms in ecology.
-Using both simulated data with common ecological mechanism approximations (environmental filtering, competitive exclusion, equalising fitness and facilitation) and an empirical dataset affected by more complex and nuanced mechanisms, we test the effectiveness of different space occupancy metrics to recover the simulated or empirical changes.
-We show that metrics perform differently for many tasks and discuss the importance of not using a one-fit-all metric but rather think and test whether a particular one will be good at capturing a pattern of interest.
+Functional diversity is increasingly used alongside taxonomic diversity to describe populations and communities in ecology.
+Indeed, functional diversity metrics allow researchers to summarize complex occupancy patterns in space and/or time (what is changing?) that lead to changes in communities and/or populations (the process; how is it changing?) in response to some stressors (the mechanism; why is it changing?).
+However, as the diversity of functional diversity metrics and methods increases, it is often not directly clear which metric is more readily appropriate for which question.
+We studied the ability of different functional diversity metrics to recover patterns and signals from different processes linked to common assembly mechanisms (environmental filtering, competitive exclusion, equalizing fitness, and facilitation) in community ecology.
+Using both simulated data and an empirical dataset affected by more complex and nuanced mechanisms, we tested the effectiveness of different space occupancy metrics to recover the simulated or empirical changes.
+We show that different metrics perform better for different tasks, emphasizing the importance of not using a one-size-fits-all metric.
+Instead, researchers should carefully consider and test whether a particular metric will be effective in capturing a pattern of interest.
 
 \newpage
 
@@ -408,9 +409,7 @@ This definition of null hypothesis is also appropriate for the empirical data if
 However, it is very likely that workers will ask a more exciting or intriguing question based on these data.
 For example, an interesting one could be ``Are the extinctions uniform across all birds in Hawaii?".
 This legitimate question would thus require first a trait space (the pattern - what) and maybe some contrasting groups of interest like extinctions through time (the process - how) to answer the question (the mechanism - why). %@@@ TODO: add supplementary
-
-% TODO: also add the section suggested by Tom:
-% For the discussion with Pedro (you haven't attached the picture - but I think I know what you mean): yes, there is a weird behaviour with 60% vs. 80% throughout most of the tests, I've tried to look into it whether it was a bug or not but could not find any bugged bits. I never thought of it in terms of null but yeah you folks reasoning actually makes a lot of sense. If you remove 100% of the data in a random way and then 100% in a biased way and then correct the results by the null (random), you should end up with no decrease at all. So I assume if you add data a little by little, the biased removal is at first not that different from the null one (e.g. same results wit 99% removed, 95, 90, etc...) and maybe only up until a certain threshold (maybe around 60% then?) do you see a clear effect of the bias (i.e. removing the data in a biased way is clearly different than randomly). This is actually totally worth adding somewhere in the manuscript!
+Furthermore, the scaling of the metrics paired with the levels of removal (80\%, 60\%, 40\% and 20\%) creates an expected artifact similarity when comparing the random removals against the other ones: when less data is available overall, the metrics are more likely to be similar (e.g. if removing 99\% of the data, we expect the random and removal metric score to be nearly identical to the non-random ones).
 
 
 
