@@ -25,7 +25,14 @@ fit.model.rm <- function(one_stressor, model.fun = lm, formula = metric ~ rm, su
     metric_data <- lapply(metric_data, table.data)
 
     ## Apply the models
-    all_models <- lapply(metric_data, function(data, fun, formula) fun(formula, data), fun = model.fun, formula = formula)
+    apply.model <- function(data, fun, formula) {
+        if(any(is.na(data))) {
+            return(NA)
+        } else {
+            return(fun(formula, data))
+        }
+    }
+    all_models <- lapply(metric_data, apply.model, fun = model.fun, formula = formula)
     
     if(!summary.out) {
         return(all_models)
@@ -43,9 +50,11 @@ fit.model.rm <- function(one_stressor, model.fun = lm, formula = metric ~ rm, su
 
 ## Extract the summary
 summarise.models <- function(one_model){
+    # if(is.na(one_model)) {
+    #     return(NA)
+    # }
     model <- summary(one_model)
     results <- c(model$coefficients[1,c(1,4)], model$coefficients[2,c(1,4)], "adj.R^2" = model$adj.r.squared)
     names(results)[c(1,3)] <- c("Intercept", "Slope")
     return(results)
-
 }
