@@ -117,7 +117,7 @@ kable(summary(rarefied_conv_vol))
 
 Or plotting it:
 
-```{r, fig.height = 8, fig.width = 4}
+```{r, fig.height = 4, fig.width = 8}
 par(mfrow = c(1, 2))
 plot(rarefied_conv_vol, main = "raw data")
 plot(rarefied_conv_vol, rarefaction = 37, main = "rarefied data")
