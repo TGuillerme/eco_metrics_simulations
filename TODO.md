@@ -11,7 +11,7 @@
 
 # Reproducibility
 
- * [ ] Format code for README
- * [ ] Write README
+ * [x] Format code for README
+ * [+] Write README
  * [ ] Push zenodo
  * [ ] Fill data statement
