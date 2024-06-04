@@ -1,6 +1,6 @@
 # The what, how and why of trait-based analyses in ecology
 
-Authors: [Thomas Guillerme](https://github/TGuillerme), [Pedro Cardoso](https://github.com/cardosopmb), [Maria Wagner Jørgensen](https://github.com/MariaWagnerJ), [Stefano Mammola](https://github.com/StefanoMammola), [Thomas J. Matthews](https://github.com/txm676).
+Authors: [Thomas Guillerme](https://github.com/TGuillerme), [Pedro Cardoso](https://github.com/cardosopmb), [Maria Wagner Jørgensen](https://github.com/MariaWagnerJ), [Stefano Mammola](https://github.com/StefanoMammola), [Thomas J. Matthews](https://github.com/txm676).
 
 This repository contains all the code and data used in [this paper](preprint).
 
