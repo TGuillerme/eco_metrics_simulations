@@ -4,7 +4,7 @@ Authors: [Thomas Guillerme](https://github.com/TGuillerme), [Pedro Cardoso](http
 
 <!-- This repository contains all the code and data used in [this paper](preprint). -->
 
-<!-- [![DOI](zenodo)](zenodo) -->
+[![DOI](https://zenodo.org/badge/333048225.svg)](https://zenodo.org/doi/10.5281/zenodo.11488415)
 
 ## Supplementary material
 
