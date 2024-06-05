@@ -2,13 +2,13 @@
 
 Authors: [Thomas Guillerme](https://github.com/TGuillerme), [Pedro Cardoso](https://github.com/cardosopmb), [Maria Wagner Jørgensen](https://github.com/MariaWagnerJ), [Stefano Mammola](https://github.com/StefanoMammola), [Thomas J. Matthews](https://github.com/txm676).
 
-This repository contains all the code and data used in [this paper](preprint).
+<!-- This repository contains all the code and data used in [this paper](preprint). -->
 
-[![DOI](zenodo)](zenodo)
+<!-- [![DOI](zenodo)](zenodo) -->
 
-<!-- ## Supplementary material -->
+## Supplementary material
 
- <!-- * The supplementary vignette is available [here]() (or [here in html]()) -->
+ <!-- * The supplementary vignette on selecting metrics is available [here]() (or [here in html]()) -->
 
 ## Data
 
