@@ -13,15 +13,15 @@ library(knitr)
 ```
 
 This script illustrates a potential pipeline of how to choose a correct space occupancy metric (_aka_ functional diversity, dissimilarity, disparity metric) to answer a biological question.
-Our question here could be whether the functional diversity of Hawaiian endemic birds decreased more in the last 500 years than ever before?
-I.e. is the decrease in trait space occupancy greater in the present than in 1500 compared to all species that where recorded.
+Our question here could be whether the functional diversity of Hawaiian native birds decreased more in the last 500 years than ever before?
+I.e. does the loss of species in the last 500 years constitute a greater decrease in trait space occupancy compared to the loss of all species recorded between 125,000 years ago and 500 years ago.
 
 > Note that the exercise in this vignette can be done using the [`moms`](https://tguillerme.shinyapps.io/moms/) graphical user interface (with the associate manual [here](https://raw.githack.com/TGuillerme/moms/master/inst/moms_vignette.html)).
 
 # The data
 
-Here we will use the empirical data from @guillerme2024. The trait data is compiled from @tobias2022avonet, @pigot2020macroevolutionary and @sheard2020ecological and the extinction data is compiled from @matthews2023global.
-It consists of a trait space of 118 species and 5 dimensions recorded in the last 125,000 years.
+Here we will use the empirical data from @guillerme2024. The trait data of extant species is compiled from @tobias2022avonet  while extinct trait data is from @sayol (in review). Species lists were compiled from @matthews2023global with the addition of two marine species.
+It consists of a trait space of 118 species in 5 dimensions recorded in the last 125,000 years.
 From this trait space we have 2 subsets that corresponds to the endemic species present in Hawaii in 1500CE (the historic group of 63 species) and the species present today (37 species).
 We will group all that in a `dispRity` object to facilitate the pipeline.
 
@@ -58,7 +58,7 @@ In other words, some things might happen on the other dimensions here (e.g. all 
 # Choosing a space occupancy metric
 
 Once we have set up the data as a `dispRity` object, we can choose a space occupancy metric to reflect changes in the dataset.
-We can do that using already implemented metrics in `dispRity` (see `?dispRity.metric`) or by making or own metrics (see details below).
+We can do that using already implemented metrics in `dispRity` (see `?dispRity.metric`) or by making our own metrics (see details below).
 The objective here will be to have a metric that reflects changes of interest.
 Again, the question being: "the functional diversity of Hawaiian endemic birds decreased more in the last 500 years than ever before?"; we can posit that changes in functional diversity should be approximated by changes in trait space size.
 The bigger the trait space, the more functional diversity.
@@ -178,7 +178,7 @@ This metric is also not suitable as it seems inversely correlated to the sample 
 plot(test.metric(grouped_space, metric = func.div, shifts = c("random", "size"), replicates = 10))
 ```
 
-This metric, is more interesting as it is not directly related to the sample size and therefore more clearly decoupled from species richness. Changes in trait space sizes are linearly and inversely related to the amount of data considered (i.e. the more volume, the lower the functional diversity) which is not a problem _per se_ but can be counterintuitive (hence the usefulness of testing it before interpreting it). However it is also interest to not the non-linear relationship with hollowness (blue) that can follow the same trend as the trait space size (blue) so it might be hard to disentangle either.
+This metric, is more interesting as it is not directly related to the sample size and therefore more clearly decoupled from species richness. Changes in trait space sizes are linearly and inversely related to the amount of data considered (i.e. the more volume, the lower the functional diversity) which is not a problem _per se_ but can be counterintuitive (hence the usefulness of testing it before interpreting it). However it is also interest to note the non-linear relationship with hollowness (blue) that can follow the same trend as the trait space size (blue) so it might be hard to disentangle either.
 
 ## The mean distance to the centroid
 
