@@ -8,7 +8,7 @@ Authors: [Thomas Guillerme](https://github.com/TGuillerme), [Pedro Cardoso](http
 
 ## Supplementary material
 
- <!-- * The supplementary vignette on selecting metrics is available [here]() (or [here in html]()) -->
+ * The supplementary vignette on selecting metrics is available [here](https://github.com/TGuillerme/eco_metrics_simulations/blob/master/Analysis/Choosing_metrics_vignette.Rmd) (or [here in html](https://githubraw.com/TGuillerme/eco_metrics_simulations/master/Analysis/Choosing_metrics_vignette.html)).
 
 ## Data
 
