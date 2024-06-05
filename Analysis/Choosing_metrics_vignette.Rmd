@@ -215,4 +215,6 @@ plot(rarefied_mean_cen, rarefaction = 37, main = "rarefied data")
 Using this metric, we see a more complex picture of the changes in functional diversity (defined here as the mean distance to centroid) where it seems to not decrease through time compared to using the convex hull volume.
 This might be because of many reasons but looking at the 2D representation of the trait space at the start of this vignette, this might be because the biggest traitspace loss might actually have occurred for the historic species (the blue dots in the 2D trait space plot).
 
+> Finally note here that we only showcased some reflection about using a single metric but it is highly recommended to use more that one (@guillerme2020shifting, @mammola2021concepts)!
+
 # References
