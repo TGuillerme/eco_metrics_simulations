@@ -2,7 +2,7 @@
 
 Authors: [Thomas Guillerme](https://github.com/TGuillerme), [Pedro Cardoso](https://github.com/cardosopmb), [Maria Wagner Jørgensen](https://github.com/MariaWagnerJ), [Stefano Mammola](https://github.com/StefanoMammola), [Thomas J. Matthews](https://github.com/txm676).
 
-<!-- This repository contains all the code and data used in [this paper](preprint). -->
+This repository contains all the code and data used in [this preprint](https://biorxiv.org/cgi/content/short/2024.06.05.597559v1).
 
 [![DOI](https://zenodo.org/badge/333048225.svg)](https://zenodo.org/doi/10.5281/zenodo.11488415)
 
