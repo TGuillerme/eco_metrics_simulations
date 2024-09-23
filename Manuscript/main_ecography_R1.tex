@@ -1,0 +1,460 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{natbib}
+
+%Packages
+% \usepackage{textcomp}
+% \usepackage{latexsym}
+% \usepackage{url}
+% \usepackage{amssymb}
+% \usepackage{amsmath}
+% \usepackage{mathtools}
+% \usepackage{bm}
+% \usepackage{array}
+% \usepackage[version=3]{mhchem}
+% \usepackage{ifthen}
+% \usepackage{amsthm}
+% \usepackage{amstext}
+% \usepackage{enumerate}
+% \usepackage{dcolumn}
+
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{lineno}
+\usepackage{pdflscape}
+\usepackage{mathtools}
+\usepackage[osf]{mathpazo}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{xr} %linking to supplementaries
+\externaldocument{supplementaries}
+
+\pagenumbering{arabic}
+
+%---------------------------------------------
+%
+%       START
+%
+%---------------------------------------------
+
+\begin{document}
+%Running head
+\begin{flushright}
+Version dated: \today
+\end{flushright}
+
+\bigskip
+\begin{center}
+
+\noindent{\Large \bf The what, how and why of trait-based analyses in ecology}
+\bigskip
+
+\noindent RH: The what, how and why of trait-based analyses
+
+% \noindent {\normalsize \sc
+% Thomas Guillerme$^{1,*}$, 
+% Pedro Cardoso$^{2,3}$, %pedro.cardoso@helsinki.fi
+% % Carlos P. Carmona$^{4}$,
+% Maria Wagner J\o rgensen$^{4}$, %mwj207@student.bham.ac.uk
+% Stefano Mammola$^{3,5,6}$, %stefanomammola@gmail.com
+% Thomas J. Matthews$^{4,7}$}\\ % txm676@gmail.com
+% \noindent {\small \it 
+% $^1$School of Biosciences, The University of Sheffield, Sheffield, S10 2TN, United Kingdom.\\
+% $^2$CE3C—Centre for Ecology, Evolution and Environmental Changes, CHANGE – Global Change and Sustainability Institute, Faculty of Sciences, University of Lisbon, Lisbon, Portugal\\
+% $^3$Laboratory for Integrative Biodiversity Research (LIBRe), Finnish Museum of Natural History (Luomus), University of Helsinki, Helsinki, Finland\\
+% % $^4$Institute of Ecology and Earth Sciences, University of Tartu, Tartu, Estonia\\
+% $^4$School of Geography, Earth and Environmental Sciences and Birmingham Institute of Forest Research, University of Birmingham, Birmingham B15 2TT, UK\\
+% $^5$Molecular Ecology Group (MEG), Water Research Institute, National Research Council (CNR-IRSA), Verbania Pallanza, Italy\\
+% $^6$National Biodiversity Future Center, Piazza Marina 61, 90133 Palermo, Italy\\
+% $^7$Centre for Ecology, Evolution and Environmental Changes/Azorean Biodiversity Group / CHANGE – Global Change and Sustainability Institute and Universidade dos Açores – Faculty of Agricultural Sciences and Environment; PT-9700-042, Angra do Hero\'ismo, A\c ores, Portugal.\\}
+
+\end{center}
+% \bigskip
+% \noindent{*\bf Corresponding author.} \textit{t.guillerme@sheffield.ac.uk}\\ 
+
+% \noindent (Keywords: Functional diversity, dissimilarity, disparity, patterns, processes, mechanisms)\\
+
+% \begin{itemize}
+%    \item Article type: Perspective
+%    \item Number of words in the abstract: 189
+%    \item Number of words in the main text: 3960
+%    \item Number of words in the text box: 419
+%    \item Number of references: 54
+%    \item 3 Figures, 2 tables and 1 text box
+% \end{itemize}
+
+% \subsection{Statement of authorship}
+
+% TG, PC, MWJ, SM and TJM designed the study, analysed the data and wrote the manuscript. TG wrote the code to analyse the data.
+
+% \subsection{Data accessibility statement}
+
+% All code and data required to reproduce this analysis is available on GitHub: \url{https://github.com/TGuillerme/eco_metrics_simulations/}.
+
+% %---------------------------------------------
+% %
+% %       ABSTRACT
+% %
+% %---------------------------------------------
+
+\newpage
+%Line numbering
+\modulolinenumbers[1]
+\linenumbers
+
+\section{Abstract}
+
+Functional diversity is increasingly used alongside taxonomic diversity to describe populations and communities in ecology.
+Indeed, functional diversity metrics allow researchers to summarize complex occupancy patterns in space and/or time (what is changing?) that lead to changes in communities and/or populations (the process; how is it changing?) in response to some stressors (the mechanism; why is it changing?).
+However, as the diversity of functional diversity metrics and methods increases, it is often not directly clear which metric is more readily appropriate for which question.
+We studied the ability of different functional diversity metrics to recover patterns and signals from different processes linked to common assembly mechanisms (environmental filtering, competitive exclusion, equalizing fitness, and facilitation) in community ecology.
+Using both simulated data and an empirical dataset affected by more complex and nuanced mechanisms, we tested the effectiveness of different space occupancy metrics to recover the simulated or empirical changes.
+We show that different metrics perform better for different tasks, emphasizing the importance of not using a one-size-fits-all metric.
+Instead, researchers should carefully consider and test whether a particular metric will be effective in capturing a pattern of interest.
+
+\noindent (Keywords: Functional diversity, dissimilarity, disparity, patterns, processes, mechanisms)\\
+
+\newpage
+
+\section{Introduction}
+
+In the last two decades, there has been a progressive expansion in ecology and evolution studies from taxonomic-oriented approaches, with species as the focal point, to functional approaches that place species-specific characteristics (traits) at the centre of analyses \citep{mammola2021concepts, palacio2022protocol}. Although numerous definitions exist \citep{dawson2021traits}, we here consider a trait to be any observable characteristic (e.g. morphological, anatomical, ecological, physiological, behavioural, phenological, etc.) measured on individual organisms at any level, from genes to whole organisms.
+A trait-based approach has two advantages for answering core questions in ecology and evolution.
+First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms' traits at the centre of natural selection rather than the organisms themselves.
+Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualization of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}).
+Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this new trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}).
+This is because trait-based approaches closely align with the general analytical framework proposed by \cite{anand1994pattern} to answer three sequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism) (see Box 1).
+
+\bigskip
+\bigskip
+\hrule
+\hrule
+
+\section*{Box 1}
+\cite{anand1994pattern} conceptualised a general analytical framework for answering scientific questions in ecology and evolution, based on three sequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism).
+This framework can be effectively applied to trait-based analyses:
+
+\textit{What?} Pattern description corresponds to the steps needed to collect and summarise data to answer a question of interest (i.e., ``how?'' and ``why?'' as defined below).
+Usually this consists in: i) collecting target traits at the focal level (e.g., genes, individual, population, species; \citealt{violle2007let}); ii) arranging these traits into some kind of trait space \citep{guillerme2020disparities, mammola2021concepts}; and iii) using one or more unidimensional or multidimensional statistics to summarise properties of the trait space.
+For unidimensional spaces (i.e. distributions), these statistics can be as simple as the mean and the standard deviation (e.g. community weighted mean).
+For multidimensional spaces, these are usually named disparity metrics or indices \citep{guillerme2020disparities} or functional diversity metrics \citep{mammola2021concepts}, but all attempt to capture some pattern of interest in the trait space.
+
+\textit{How?} Process description can be seen as linking the pattern of interest (``What?'') to some dynamic element.
+This can be a punctual change.
+For example, change of the pattern under a certain condition, such as how traits X differ between two habitats \citep{martinez2021habitat}.
+But it can also be one or more continuous or ordinal changes, such as how the pattern X changes in space, time and/or along ecological gradients \citep{belmaker2013spatial, jarzyna2018taxonomic,lamanna2014functional,bjorkman2018plant,mclean2021trait}.
+The distinction here might seem trivial but it is significant: usually, the process designates the change of the pattern, not the change of the traits.
+Although the traits are what is really changing, researchers will usually analyse some emergent property of the trait aggregation as described by the change of statistics between two or more conditions.
+
+\textit{Why?} Mechanism description is then at the core of answering the biological question at hand.
+In most cases, this is what researchers are actually trying to understand.
+For example, one might be interested in understanding the effect of climate change on some trait \citep{boonman2022trait}.
+In fact, most researchers work on understanding the causal link between variables (i.e. ``why'' are ``what'' and ``how'' linked).
+This can be very useful, for example, to provide predictions about the past or the future.
+Ultimately, studying the mechanisms (``why'') is often the reason why researchers get funded (or not).
+
+Note that the distinction between what, how and why is not categorical in its nature and is often nuanced, with patterns and process or process and mechanisms sometimes being used interchangeably to describe the same questions.
+
+\bigskip
+\hrule
+\hrule
+\bigskip
+
+While the first part of this framework (``what?'') has been studied extensively in the last decade, this was often undertaken outside of the ``what, how and why'' framework.
+Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why.
+The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism.
+Using an inappropriate metric for describing a pattern can lead to biased conclusions.
+For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?''). In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations.
+In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate.
+See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
+
+Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations}).
+We also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism).
+We show that, with a fixed process and pattern, the choice of statistics used to describe the patterns (the disparity or functional diversity metrics) have a great impact on our ability to recover the process and understand the mechanism.
+We suggest caution when summarising patterns in observed data and propose tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
+
+\section{Methods}
+\subsection{Simulating trait space patterns}
+
+First, we simulated a single Brownian Motion trait under a pure birth speciation model until reaching 200 elements (representing tips, individuals, species, OTUs, etc.) in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
+This resulted in a neutral null model of trait evolution with no effect of competition, extinction, selection or other processes (\textit{sensu} \citealt{bausman2018modeling}).
+We refer to this as the ``non-stressed trait space''.
+
+\subsubsection{Applying stressors to the trait space}
+
+We then applied four different stressors to the non-stressed trait space to remove either 20\%, 40\%, 60\% or 80\% of the data (resulting in trait spaces with, respectively, 160, 120, 80 and 40 elements).
+In removing the data, we applied these five specific algorithms (Figure \ref{Fig:simulations}; Table \ref{Tab:mechanisms}; all algorithms, except ``Evenness'', were previously described in \cite{guillerme2020shifting}):
+
+\begin{itemize}
+\item Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data.
+This approximates our \textbf{null mechanism}.
+
+\item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius)  $\rho$ of the centre of the trait space.
+This approximates our \textbf{equalising mechanism}.
+
+\item Increasing density: by removing the required amount of pairs of points with a pair distance of at least $D$ (i.e. removing the $n$ pairs of points that are at least $D$ distance away from each other).
+This approximates our \textbf{facilitation mechanism} (i.e. the points left are only ones that are close to at least another point in space).
+
+\item Shifting space: by removing the required amount of data from a distance (radius) $\rho$ of the element with the maximum value.
+This approximates our \textbf{filtering mechanism}.
+
+\item Increasing evenness: by resampling the required amount of data but with skewed resampling probabilities per bandwidth (i.e. an estimated number of categories summarising the distribution, like in a histogram).
+Each bandwidth has an observed probability of sampling of $n$ (proportional to the number of elements in that bandwidth) and is skewed to a probability of sampling of $n \times m^{p}$ where $m>0$ for the low values of $n$ and $m<0$ for high values of $n$ (respectively low and high density bandwidths) for flattening the curve (and the opposite for steepening it) and $p$ is a factor increasing the flattening/steepening (here we used $p=3$).
+This approximates our \textbf{competition mechanism}.
+\end{itemize}
+
+For the position, size and density algorithms, we estimated the parameters $\rho$ and $D$ recursively with the \texttt{dispRity} package to obtain the required amount of data to be removed (\texttt{dispRity::reduce.space}, \citealt{guillerme2018disprity,guillerme2020shifting}).
+These steps resulted in 3420 simulated trait spaces (171 simulated spaces $\times$ 5 stressors $\times$ 4 amounts of data removed).
+We used 171 replicates per simulation because that was empirically the smallest number of simulations required to reach a variance between simulations lower than 1\% across all metrics (i.e. any additional simulation added less that 1\% extra variance).
+See Table \ref{Tab:mechanisms} for a biological description of these stressors and Figure \ref{Fig:simulations} for a visual description of them.
+
+Note that in empirical data, depending on the distribution of the data, some mechanisms can lead to similar or dissimilar patterns.
+For example, if the data are normally distributed, the equalising mechanisms, by removing data on the edges of the distribution also increases the density of the trait space (because normally distributed data are denser in the centre of the distribution), similarly to the facilitation mechanism.
+However, if the data are distributed uniformly, this does not happen.
+Furthermore, in real-world scenarios, we do not expect these mechanisms to act in isolation of each other: multiple mechanisms may stress the observed data simultaneously, with cumulative or synergistic effects.
+However, this is not tackled here for both simplicity and to understand how they work in isolation. 
+
+We repeated each simulation pipeline (generate a trait space and apply the stressor) for uncorrelated 4 dimensional traits (Figure \ref{Fig:simulation_results}) and uncorrelated 2 and 8 dimensional traits (supplementary materials).
+We limited our simulations to a relatively small number of traits due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait}) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
+This curse changes the properties of space occupancy in a non-linear way depending on the element's distribution and the number of dimensions.
+For example, the volume of a trait space (or hypervolume when using more than 3 dimensions) typically tends to zero in a high number of dimensions.
+However, the rate at which it approaches zero is not linear and depends on the distribution of each element on every dimension.
+This makes it practically difficult to compare two randomly generated spaces with similar characteristics (e.g. for two spaces with 200 elements and 10 dimensions generated in the exact same way, one might have a hypervolume of nearly 0 and the other one of $10^5$).
+Note also that in our simulations, all dimensions have the same properties (i.e. same variance and distribution).
+This is often not the case in empirical cases (e.g. see our empirical example) where the dimensions have a decreased variance due to ordination techniques.
+ 
+
+
+\begin{table}
+\center
+\scriptsize
+\begin{tabular}{p{0.3\linewidth}|p{0.3\linewidth}|p{0.4\linewidth}}
+\textbf{Approximated mechanism (biological)} & \textbf{Used mechanism (algorithm in \texttt{dispRity::reduce.space})} & \textbf{Stressor description}\\
+\hline
+  Null mechanism & Random removal (``random'') & No overall change in species traits or community structure except for the reduction in the number of elements.\\
+  Equalising fitness & Size change (``size'') & When species with trait combinations that are more extreme (i.e. species located away from the centre of the trait space) are disadvantaged due to some resource concentration gradient. \\
+  Facilitation & Density change (``density'') & When species with closely shared trait combinations (i.e. located close together in the trait space) are more likely to survive the stressor. In other words, this simulates the idea that some species are more likely to be resilient if they are present in a community of species with shared traits rather than the opposite.\\
+  Environmental filtering & Position change (``position'') & When an increase in species trait similarity happens through some strong abiotic constraints \citep{cornwell2006trait}. For example, some trait combinations become more and more unlikely due to some environmental constraints (i.e. some regions of the trait space become unsuitable).\\
+  Competitive exclusion & Evenness change (``evenness'') & When functionally similar species compete more intensively with one another than with functionally dissimilar species (``competitive exclusion principle''; \citealt{hardin1960competitive}). At the extreme, it implies that only dissimilar individuals will coexist (``limiting similarity principle''; \citealt{macarthur1967limiting})\\
+
+    \end{tabular}
+    \caption{\scriptsize{\textbf{Description of the stressors applied to the simulated data and the mechanism each approximated.} Here we distinguish between the biological mechanism we are trying to simulate and the algorithmic one we used to simulate it. We also provide a more detailed description of the stressor. Note that in biological data, we don't expect any of the mechanisms to act on communities alone (e.g. equalising fitness and facilitation can both act on the distribution of species traits). Nor do we expect their effects to be unidirectional (for example, equalising fitness can happen both by removing the edges or changing the position of a trait distribution). These mechanisms serve as a simplified description of reality for the narrative purpose of this paper.}
+}
+    \label{Tab:mechanisms}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+   \includegraphics[width=0.5\textwidth]{Figures/simulation_protocol.pdf}
+\caption{\scriptsize{Illustration of the simulation protocol used in this paper.
+A) we simulated a pure birth-tree with a trait evolving under a Brownian Motion process until reaching 200 tips resulting a trait space of 2, 4, or 8 dimensions.
+We then applied different stressors to the resulting trait space using the following:
+B) \textbf{null mechanism}: randomly removing half of the species resulting in two groups of 100 tips (blue and orange - the brown colour in the histogram represents the overlap between both groups);
+C) \textbf{equalising mechanism}: removing species on the edge of the distribution;
+D) \textbf{facilitation mechanism}: removing species to reduce the distance between pairs of species (increasing local density; decreasing evenness);
+E) \textbf{filtering mechanism}: removing species on one extreme of the distribution;
+F) \textbf{competition mechanism}: proportionally removing species on the centre of the distribution (``flattening the curve'').}}
+\label{Fig:simulations}
+\end{figure}
+\bigskip
+
+\subsubsection{Metrics for measuring trait space occupancy dissimilarity/disparity:}
+
+We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics \citep{mammola2021concepts}:
+1) Richness, encompassing metrics reflecting the sum of differences among observations; (4 metrics, equivalent to size metrics in \citealt{guillerme2020shifting});
+2) Divergence, encompassing metrics reflecting the average differences among observations (4 metrics); and
+3) Regularity, encompassing metrics reflecting how regular the differences among observations are (4 metrics, equivalent to density metrics in \citealt{guillerme2020shifting}).
+Note that we focused here on three packages fully devoted to functional diversity analyses (\texttt{BAT} \citealt{cardoso2015bat} \texttt{FD} \citealt{Laliberte2010FD} and \texttt{TPD} \citealt{carmona2019trait}) in the \texttt{R} statistical environments (see \citealt{mammola2021concepts}).
+
+\begin{table}
+\center
+\scriptsize
+\begin{tabular}{p{0.1\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|p{0.2\linewidth}|p{0.15\linewidth}|p{0.1\linewidth}}
+
+\textbf{Aspect} & \textbf{Method} & \textbf{Name} & \textbf{Description} & \textbf{\texttt{R} function} & \textbf{Reference}\\
+\hline
+Richness & Trait Probability Density & Functional richness & Sum of cells where trait probability density $> 0$ & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+ & \cr 
+ & Kernel density hypervolume & Functional richness & Size (volume) of the hypervolume & \texttt{BAT::kernel.alpha} & \cite{mammola2020functional}\\
+ & \cr
+ & Convex Hull & Functional richness & Volume of the convex hull & \texttt{BAT::hull.alpha} & \cite{cornwell2006trait}\\
+ & \cr
+ & Dendrogram & Alpha diversity & Total branch length of the functional dendrogram & \texttt{BAT::alpha} & \cite{petchey2002functional,cardoso2015bat}\\
+\hline
+Divergence & Trait Probability Density & Divergence & Overlap between the TPD function of a single observation and the TPD function of the whole set of observations & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+ & \cr 
+ & Kernel density hypervolume & Functional dispersion  & Average distance between an observation and a sample of random points within and the probabilistic hypervolume & \texttt{BAT::kernel.dispersion} & \cite{mammola2020functional}\\
+ & \cr 
+ & Dendrogram & Functional dispersion & Average dissimilarity between any two observations in the dendrogram & \texttt{BAT::dispersion} & \cite{cardoso2015bat}\\
+ & \cr  
+ & Distances & Rao's quadratic entropy & The mean Euclidean distance between every two random pairs of species & \texttt{FD::dbFD()\$RaoQ} & \cite{botta2005rao}\\
+\hline
+ & Trait Probability Density & Functional evenness & An index of the spread of the trait distribution in an even spread of the distribution (e.g. the height of bins in a histogram) & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+ & \cr 
+ & Kernel density hypervolume & Functional evenness &  Overlap between a hypervolume and an imaginary hypervolume where traits are evenly distributed within their possible range & \texttt{BAT::kernel.evenness} & \cite{mammola2020functional}\\
+ & \cr 
+ & Dendrogram & Functional evenness & Regularity of abundances and distances between observations in the tree. & \texttt{BAT::evenness} & \cite{cardoso2015bat,cardoso2024calculating}\\
+ & \cr 
+ & Distances & Functional evenness & Regularity of abundances and distances along the minimum spanning tree linking all observations & \texttt{FD::dbFD()\$FEve} & \cite{Laliberte2010FD,villeger2008new}\\
+\hline
+
+\end{tabular}
+\caption{\scriptsize{\textbf{Functional diversity metrics tested in our simulations.}}
+}
+\label{Tab:metrics}
+\end{table}
+
+\subsubsection{Scaling the results to be proportional to the random removals (null)}
+
+To ease interpretation of the results, we centred the results for the 12 metrics for the 4 non null stressors by the results for the null stressor and then scaled them.
+Effectively, for each metric and each single simulation, we subtracted the results under the null stressor to the ones under the other stressors and divided the resulting centred metrics by the maximum value for each metric between each simulation.
+This resulted in each metric being scaled between –1 and 1 where 0 corresponds to no change compared to the null and 1 and –1 the maximum positive and negative deviations relative to the null.
+In parallel, we also compared the distribution of the 171 scores for each metric with each reduction level for each non-null stressor to the null stressor (with no scaling or centering) using pairwise t-tests.
+The results of these tests are displayed in figure \ref{Fig:simulation_results} (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).
+
+\subsubsection{Measuring the effect of the strength of the stressor}
+
+Finally, we measured the effect of the different levels of data removal (20\%, 40\%, 60\% and 80\%) by fitting a linear regression using the model centred and scaled metric score $\sim$ amount of data removed.
+For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables 1 to 3 and whether the slope was clearly distinguishable from 0 (Figure \ref{Fig:simulation_results}).
+
+\subsection{Empirical data}
+
+We applied all metrics to an empirical dataset of bird extinctions on six Hawaiian islands (Hawaii, Kauai, Lanai, Maui, Molokai, Oahu), an archipelago which has suffered large numbers of anthropogenic extinctions due to a range of extinction drivers \citep{Walther2022}.
+A prehistoric species list (avifauna known to be present prior to human colonisation of the islands), historic species list (avifauna known to be present at 1500 CE) and extant species list of the native community for each island was taken from \cite{matthews2023global} along with trait values for the extinct species (\textit{Asio flammeus} was removed from the historic and extant species lists as its colonisation status is uncertain).
+We also added two marine species to the prehistoric species list; we compiled missing trait data for these two extinct species from \cite{sayol2021loss}.
+We extracted traits for extant species from the AVONET database \citep{tobias2022avonet}.
+We used 9 morphological traits associated with dietary/foraging preference and dispersal ability \citep{pigot2020macroevolutionary,sheard2020ecological} to represent the functional diversity of the communities: mass; beak length (culmen); beak length (nares); beak width; beak depth; tarsus length; wing length; the length from the first secondary feather to the tip of the longest primary feather (Kipp's distance); and tail length.
+Traits were log transformed and standardised to a mean of 0 and standard deviation of 1, prior to analyses.
+
+The full trait dataset comprised 118 bird species, all native species known to have existed on these islands over the last 125,000 years.
+55 species are known to have gone extinct prior to 1500 CE and 26 after 1500 CE.
+For our analyses, we focused on two time periods: (i) the avifauna present in 1500 CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
+We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-1500 CE extinctions (i.e., $118-55$ species; a species richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a species richness reduction of 69\%).
+
+
+To build the community trait space, we undertook a PCA including all 118 species, which we then subset to calculate the trait space for the historic and extant datasets.
+We selected the first 5 axes to represent the trait spaces that explained at least 97.5\% of the variance in each specific group (all, historic and extant species)
+We applied the same procedure as for the simulated data by simulating a null mechanism to compare to the observed ones by randomly removing 55 and 81 species for each stressor and scaling the results proportionally to this null mechanism (as described above).
+
+
+\section{Results}
+
+
+\begin{figure}[!htbp]
+\centering
+   \includegraphics[width=0.8\textwidth]{Figures/results_per_metric_per_stressor_4d.pdf}
+\caption{\scriptsize{\textbf{Simulation results:} the y axes represent the different metrics tested (sorted by categories).
+The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors.
+Negative and positive values signify a decrease/increase in the metric score.
+The dots represent the median metric value, the full line their 50\% confidence interval (CI) and the dashed line their 95\% CI.
+The colours are here to visually separate the metrics by categories (green = richness, yellow = divergence, blue = regularity); the colour gradient within each row corresponds to a removal of respectively 80\%, 60\%, 40\% and 20\% of the data (from top to bottom).
+The grey line plots represent distributions of metric scores not clearly distinguishable from the random metric scores (paired t-test $p$ value $> 0.05$).
+Grey lines in the background across the distributions of different removal amounts represent the fitted linear model centred and scaled metric score $\sim$ amount of data removed and the value displayed is the adjusted $R^2$ from each of these models.
+Dashed thin grey lines represent non-significant models ($p$ value of slope or/and intercept $> 0.05$).
+Similar figures are available in the supplementary materials for 2 and 8 dimensions.}}
+\label{Fig:simulation_results}
+\end{figure}
+\bigskip
+
+The ability of different metrics to capture the different patterns (and thus approximate the processes) was highly variable.
+It ranged from metrics capturing no clear pattern (e.g. the Functional evenness based on the dendrogram method for competition) to metrics clearly capturing one specific pattern (e.g. Divergence based on probability density for the equalizing mechanism for a decrease in space occupancy).
+Some metrics even captured an opposite pattern to what was expected: for all metrics, we naively expected a relative decrease in trait space occupancy following different levels of species removals but some metrics captured an \textit{increase} of trait space occupancy (e.g. the functional evenness based on hypervolume for the equalizing mechanism) or non-linear ones (e.g. Alpha diversity based on dendrogram for the equalizing mechanism).
+This raises an interesting point: the naive expectation that removing 80 to 20\% of the data would result in a reduction of trait space occupancy metric score (negative values) is often true but by no means always true.
+Some cases resulted in an increase in metric score relative to random removals (positive values in Figure \ref{Fig:simulation_results})!
+
+\begin{figure}[!htbp]
+\centering
+   \includegraphics[width=0.4\textwidth]{Figures/results_per_metric_per_stressor_emp.pdf}
+\caption{\scriptsize{\textbf{Empirical results:} the metrics and the scaled changes are measured in the same way as in figure 2 (green = richness, yellow = divergence, blue = regularity).
+Plain circles represent the metrics for the historic dataset (46\% removal) and fainted squares for the extant dataset (69\% removal).
+}}
+\label{Fig:empirical_results}
+\end{figure}
+\bigskip
+
+For the empirical data, we see again a range of different possible interpretations depending on the metric describing the pattern.
+For example, all richness metrics (green; Figure \ref{Fig:empirical_results}) pick up a similar relative increase (i.e., relative to the null stressor) in richness for both the historic and extant datasets.
+However, the results are occasionally contrasting between the historical and extant datasets, with a respective decrease and increase with some divergence metrics (e.g. functional dispersion based on dendrograms or hypervolumes).
+Finally, some metrics pick up a decrease for both datasets (e.g. functional evenness based on hypervolumes - although the 95\% confidence intervals overlapped with 0).
+Note that this apparent global increase in most metric values may appear counter intuitive given that 46\% and 69\% of species went extinct over the two time periods.
+This is due to the scaling of the metrics compared to random equivalent extinctions.
+That is, Figure \ref{Fig:empirical_results} is not displaying absolute changes in trait space occupancy but rather changes in trait space occupancy relative to a crude neutral model where all species are equally likely to go extinct.
+
+More broadly, as can be seen from this empirical case, patterns are likely to be much less clear than with simulated data due to multiple stressors acting simultaneously.
+For instance, extensive hunting is likely to present equalising and/or filtering pressure due to the selective hunting of larger bodied species.
+In contrast, avian malaria, which is known to be an important extinction pressure of native Hawaiian birds \citep{samuel2011dynamics}, could show signals of a null mechanism since susceptibility to the disease is not trait-dependent (at least not in relation to the traits we have considered here), but is related to genetics (it mainly affects passerines, but there is considerable variation in susceptibility within passerines) and distributional range \citep{jessup2023wildlife}.
+
+\section{Discussion}
+
+We tested 12 trait space occupancy metrics on simulated and empirical datasets to assess how each metric captures patterns of trait space changes based on stressors approximating ecological and evolutionary mechanisms.
+Our results show that, unexpectedly, different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
+Therefore, the choice of trait space occupancy metric is essential to accurately describe a pattern of interest.
+
+Our results may be influenced by our choice of space occupancy metrics - specifically, we focused on metrics available in three statistical packages in \texttt{R}, the most common statistical language currently used in ecology \citep{lai2019evaluating}, but many others could have been used (e.g. \citealt{guillerme2020shifting}).
+Also, our results are likely affected by the use of simplified algorithms designed to approximate very complex ecological and evolutionary mechanisms by simply removing a percentage of elements in trait spaces in a non-random manner.
+Note also that the simulated trait spaces here did not always share common characteristics with empirical trait spaces.
+The simulated trait spaces in 2, 4 or 8 dimensions had the same variance on all dimensions (i.e. we used the same trait simulation process for all dimensions) whereas in empirical trait spaces, commonly generated using ordination techniques (e.g. PCA or PCO), the dimensions have by definition a decreasing variance.
+
+Furthermore, we only presented results based on a relatively small number of dimensions (up to 8), while it is not uncommon to have a much greater number of dimensions, especially in paleontology (e.g. in \citealt{van2023should}).
+In a higher number of dimensions (usually $>$10 but this is highly variable depending on the system under study), metrics results are harder to scale linearly.
+This sometimes makes metric interpretation more chaotic \cite{bellman1957dynamic} in the sense that there is no direct relationship between the number of observations and dimensions that can be used to extrapolate results in higher dimensional datasets.
+In fact, the relationship between observations has an important effect on how our results scale with higher dimensionality (e.g. the volume of an evenly occupied space scales differently in high dimensions compared to the same space but with normally distributed observations).
+Therefore we advise workers to test assumptions specifically about their trait space and ``play'' around with it before choosing their functional diversity/disparity framework and metric of interest.
+
+Another cautionary note could be made about our choice of scaling the metrics relative to a random trait space reduction (with the same percentage of reduction).
+This choice allowed us to simulate a null model designed to test whether the mechanisms of interest were causing the observed change in pattern \citep{bausman2018modeling}.
+For example, if removing 80\% of the edges of a distribution (equalising mechanism) was distinguishable or not from removing 80\% of a distribution randomly (null mechanism).
+Some metrics (e.g. Functional evenness using the dendrogram method) were not able to distinguish between the null mechanism and the mechanism of interest (here the mechanism simulating competition).
+In other words, our statistical question was ``Does metric X distinguish between removing N\% of data in a biassed way (the mechanism) and removing N\% of data randomly (the null)?''.
+This definition of null hypothesis is also appropriate for the empirical data if the question is the same.
+However, it is very likely that workers will ask a more exciting or intriguing question based on these data.
+For example, an interesting one could be ``Are the extinctions uniform across all birds in Hawaii?".
+This legitimate question would thus require first a trait space (the pattern - what) and maybe some contrasting groups of interest like extinctions through time (the process - how) to answer the question (the mechanism - why).
+Furthermore, the scaling of the metrics paired with the levels of removal (80\%, 60\%, 40\% and 20\%) creates an expected artifact similarity when comparing the random removals against the other ones: when less data is available overall, the metrics are more likely to be similar (e.g. if removing 99\% of the data, we expect the random and removal metric score to be nearly identical to the non-random ones).
+
+
+
+The empirical results are also intriguing, as it indicates that, at least for certain metrics, the loss of Hawaiian bird functional diversity is less than expected than if extinctions were random with respect to traits (Figure \ref{Fig:empirical_results}).
+This contrasts with studies that have shown that species with certain traits (e.g., larger species) are more likely to have gone extinct and thus that functional diversity loss is larger than through random extinctions (e.g. \citealt{sayol2021loss,Matthews2022}).
+This could partly be due to the proportion of passerine extinctions in Hawaii.
+Although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines ($\sim$58\%), the majority of global known anthropogenic extinctions ($\sim$75\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
+However, in Hawaii, where the same proportion of known species were passerines ($\sim$58\%), the opposite is true: the majority of extinctions ($\sim$60\%) have been of passerine species.
+It is important to note that we are not implying that there existed little morphological variation within extinct Hawaiian passerines - indeed, many of these extinctions involved the honeycreepers, a famous adaptive radiation involving substantial evolution of beak morphology \citep{Walther2022} - but simply that this morphological variation is less than that observed across all birds.
+But these results, given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines,  also indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
+In addition, it is worth stressing that these analyses included marine species (which constitute less than 4\% of  known extinctions in Hawaii, while making up 11\% of the prehistoric assemblage) and different results may have been found if focusing exclusively on terrestrial birds.
+
+Following our results and these thoughts, we encourage workers in ecology and evolution to test whether their metrics are capable of capturing a pattern of interest before discussing the process and/or mechanism inferred by it.
+We encourage workers to test their metrics using simplified example datasets to see if they have the ability to capture at least crude changes as exemplified in this work (e.g. using simulations \citealt{guillerme2024treats} or the \texttt{moms} interactive package \citealt{guillerme2020shifting}).
+Importantly, it should always be borne in mind that empirical mechanisms ought of course to be more complex in real world scenarios.
+For example, evolutionary mechanisms can vary through time or per clades (and so patterns are often the results of multiple processes); or ecological mechanisms are often intertwined and work together to generate a pattern (e.g. facilitation + competition; \citealt{danet2024species}), or counteract each others by operating on the trait space in opposite directions (e.g., competition + filtering; \citealt{mammola2024functional})
+
+\section{Conclusion}
+Different ecological and evolutionary processes or mechanisms do not always results in different patterns.
+Our results based on simulations and empirical data suggest that the same data can be interpreted differently depending on the choice of trait space occupancy metric (\textit{aka} disparity, dissimilarity or functional diversity metrics).
+Different metrics are designed to capture different aspects \citep{guillerme2020shifting,mammola2021concepts} but also perform better or worse at their designed task depending on the data, the mechanism or/and process of interest.
+Using space occupancy metrics for describing functional diversity is tricky.
+This is because the metrics have properties that can be counter intuitive based on the data at hand.
+And also because functions of ecosystems or organisms and niches within it are hard to capture/understand/define.
+This means that measuring functional diversity is based on both the definition of the metric and the function of interest and thus cannot be served by a one-fits-all metric.
+In other words, it is important to choose a disparity/dissimilarity/functional diversity metric depending on the question and the data at hand rather than as a default option or solely based on a previous inspiring publication.
+
+
+\section{Repeatability and reproducibility}
+The simulations, results figures and tables are entirely reproducible via \url{https://github.com/TGuillerme/eco_metrics_simulations}.
+An additional vignette on how to choose metrics is available at \url{https://github.com/TGuillerme/eco_metrics_simulations/blob/master/Analysis/Choosing_metrics_vignette.Rmd}.
+
+
+% \section{Acknowledgements}
+% Thanks to Andrew Beckerman, Natalie Cooper, Alain Danet, Thomas Johnson and Gavin Thomas for comments on early versions of this manuscripts.
+% TG was funded by the UKRI-NERC grant NE/X016781/1.
+% SM was supported by NBFC, funded by the Italian Ministry of University and Research, PNRR, Missione 4, Componente 2, ``Dalla ricerca all'impresa'', Investimento 1.4, Project CN00000033.
+% MWJ was supported by NERC CENTA2 grant NE/S007350/1 and University of Birmingham.
+
+
+
+\bibliographystyle{sysbio}
+\bibliography{references}
+
+
+\end{document}
