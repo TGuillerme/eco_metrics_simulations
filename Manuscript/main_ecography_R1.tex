@@ -120,11 +120,11 @@ Instead, researchers should carefully consider and test whether a particular met
 
 \section{Introduction}
 
-In the last two decades, there has been a progressive expansion in ecology and evolution studies from taxonomic-oriented approaches, with species as the focal point, to functional approaches that place species-specific characteristics (traits) at the centre of analyses \citep{mammola2021concepts, palacio2022protocol}. Although numerous definitions exist \citep{dawson2021traits}, we here consider a trait to be any observable characteristic (e.g. morphological, anatomical, ecological, physiological, behavioural, phenological, etc.) measured on individual organisms at any level, from genes to whole organisms.
+In the last two decades, there has been a progressive expansion in ecology and evolution studies from taxonomic-oriented approaches, with species as the focal point, to functional approaches that place species-specific characteristics (traits) at the centre of analyses \citep{violle2007let, mammola2021concepts, palacio2022protocol}. Although numerous definitions exist \citep{dawson2021traits}, we here consider a trait to be any observable characteristic (e.g. morphological, anatomical, ecological, physiological, behavioural, phenological, etc.) measured on individual organisms at any level, from genes to whole organisms.
 A trait-based approach has two advantages for answering core questions in ecology and evolution.
 First, it allows a deeper understanding of the mechanisms generating biodiversity patterns, by putting organisms' traits at the centre of natural selection rather than the organisms themselves.
-Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualization of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}).
-Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this new trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}).
+Second, it allows comparisons across subdisciplines in biology, while facilitating the conceptualisation of general principles broadly valid in space (e.g. unrelated species pools) and time (e.g. anatomical traits are comparable between palaeontology and ecology, which is not always the case with species; \citealt{luza2023going}).
+Already used routinely in palaeontology \citep{raup1961geometry, gould1991disparity, foote1995morphological, guillerme2020disparities}, this trait-focused ecology and evolution is unlocking the possibility to answer a broad range of questions in disciplines as diverse as community ecology \citep{mcgill2006rebuilding}, biogeography \citep{violle2014emergence}, conservation biology \citep{chichorro2022trait}, micro- \citep{chapin1993evolution}, macro-evolution \citep{guillerme2023innovation} and applied fields (e.g. agronomy \citealt{martin2015plant}).
 This is because trait-based approaches closely align with the general analytical framework proposed by \cite{anand1994pattern} to answer three sequential questions: \textit{``what?''} (describing the pattern), \textit{``how?''} (describing the process) and \textit{``why?''} (understanding the mechanism) (see Box 1).
 
 \bigskip
@@ -148,7 +148,7 @@ But it can also be one or more continuous or ordinal changes, such as how the pa
 The distinction here might seem trivial but it is significant: usually, the process designates the change of the pattern, not the change of the traits.
 Although the traits are what is really changing, researchers will usually analyse some emergent property of the trait aggregation as described by the change of statistics between two or more conditions.
 
-\textit{Why?} Mechanism description is then at the core of answering the biological question at hand.
+\textit{Why?} Mechanism description is then about linking the pattern and the process to some biological properties (sometimes referred to as ``rules'') and is at the core of answering the biological question at hand.
 In most cases, this is what researchers are actually trying to understand.
 For example, one might be interested in understanding the effect of climate change on some trait \citep{boonman2022trait}.
 In fact, most researchers work on understanding the causal link between variables (i.e. ``why'' are ``what'' and ``how'' linked).
@@ -166,19 +166,21 @@ While the first part of this framework (``what?'') has been studied extensively 
 Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why.
 The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism.
 Using an inappropriate metric for describing a pattern can lead to biased conclusions.
-For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?''). In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations.
+For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?'').
+In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each population on each island (a pattern - ``what?'') will not be the most appropriate way to understand the potential competition between these populations because it might not give information on whether the two populations actually interact in some way - a very likely condition for competition to take place.
 In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate.
 See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
 
-Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations}).
-We also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism).
+Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations} and \ref{Tab:mechanisms}).
+To apply our framework to a realistic context, we also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism).
 We show that, with a fixed process and pattern, the choice of statistics used to describe the patterns (the disparity or functional diversity metrics) have a great impact on our ability to recover the process and understand the mechanism.
 We suggest caution when summarising patterns in observed data and propose tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
 
 \section{Methods}
 \subsection{Simulating trait space patterns}
 
-First, we simulated a single Brownian Motion trait under a pure birth speciation model until reaching 200 elements (representing tips, individuals, species, OTUs, etc.) in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
+First, we simulated a single random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 elements in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
+These elements can represent any biological focal entities, e.g. tips in a phylogenetic tree, individuals, species, populations, OTUs, etc. 
 This resulted in a neutral null model of trait evolution with no effect of competition, extinction, selection or other processes (\textit{sensu} \citealt{bausman2018modeling}).
 We refer to this as the ``non-stressed trait space''.
 
@@ -194,14 +196,16 @@ This approximates our \textbf{null mechanism}.
 \item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius)  $\rho$ of the centre of the trait space.
 This approximates our \textbf{equalising mechanism}.
 
-\item Increasing density: by removing the required amount of pairs of points with a pair distance of at least $D$ (i.e. removing the $n$ pairs of points that are at least $D$ distance away from each other).
+\item Increasing density: by removing the required amount of pairs of points with a variable pairwise distance of at least $D$ (i.e. removing the $n$ pairs of points that are at least $D$ distance away from each other to remove the desired number of elements).
 This approximates our \textbf{facilitation mechanism} (i.e. the points left are only ones that are close to at least another point in space).
 
 \item Shifting space: by removing the required amount of data from a distance (radius) $\rho$ of the element with the maximum value.
 This approximates our \textbf{filtering mechanism}.
 
 \item Increasing evenness: by resampling the required amount of data but with skewed resampling probabilities per bandwidth (i.e. an estimated number of categories summarising the distribution, like in a histogram).
-Each bandwidth has an observed probability of sampling of $n$ (proportional to the number of elements in that bandwidth) and is skewed to a probability of sampling of $n \times m^{p}$ where $m>0$ for the low values of $n$ and $m<0$ for high values of $n$ (respectively low and high density bandwidths) for flattening the curve (and the opposite for steepening it) and $p$ is a factor increasing the flattening/steepening (here we used $p=3$).
+Each bandwidth has an observed probability of sampling of $n$ (proportional to the number of elements in that bandwidth) and is skewed to a probability of sampling of $n \times m^{p}$. 
+For bandwidths with a low density (low values of $n$) we used $m>0$ to increase their resampling probability, and the opposite for bandwidths with a high density (high values of $n$; using $m<0$ to decrease sampling property).
+This effectively flattened the normal distribution of the data by some factor $p$ (here we used $p=3$).
 This approximates our \textbf{competition mechanism}.
 \end{itemize}
 
@@ -249,20 +253,22 @@ This is often not the case in empirical cases (e.g. see our empirical example) w
 \centering
    \includegraphics[width=0.5\textwidth]{Figures/simulation_protocol.pdf}
 \caption{\scriptsize{Illustration of the simulation protocol used in this paper.
-A) we simulated a pure birth-tree with a trait evolving under a Brownian Motion process until reaching 200 tips resulting a trait space of 2, 4, or 8 dimensions.
-We then applied different stressors to the resulting trait space using the following:
-B) \textbf{null mechanism}: randomly removing half of the species resulting in two groups of 100 tips (blue and orange - the brown colour in the histogram represents the overlap between both groups);
-C) \textbf{equalising mechanism}: removing species on the edge of the distribution;
-D) \textbf{facilitation mechanism}: removing species to reduce the distance between pairs of species (increasing local density; decreasing evenness);
-E) \textbf{filtering mechanism}: removing species on one extreme of the distribution;
-F) \textbf{competition mechanism}: proportionally removing species on the centre of the distribution (``flattening the curve'').}}
+A) we simulated a pure birth-tree with a trait evolving under a Brownian Motion process until reaching 200 elements resulting a trait space of 2, 4, or 8 dimensions.
+We then applied different stressors to the resulting trait space.
+We represent the elements removed by the stressors in blue and the ones kept in the trait space in orange. The first column illustrate the distribution of the elements in one dimension with the overlap between the removed (blue) and kept (orange) elements in brown (note we did not measure any metric on 1D spaces). The second column illustrate the same distributions in 2 dimensions. We did not illustrate the distributions in 4 or 8 dimensions here.
+We used the following stressors:
+B) \textbf{null mechanism}: randomly removing half of the elements;
+C) \textbf{equalising mechanism}: removing elements on the edge of the distribution;
+D) \textbf{facilitation mechanism}: removing elements to reduce the distance between pairs of elements (increasing local density; decreasing evenness);
+E) \textbf{filtering mechanism}: removing elements on one extreme of the distribution;
+F) \textbf{competition mechanism}: proportionally removing elements on the centre of the distribution (``flattening the curve'').}}
 \label{Fig:simulations}
 \end{figure}
 \bigskip
 
 \subsubsection{Metrics for measuring trait space occupancy dissimilarity/disparity:}
 
-We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics \citep{mammola2021concepts}:
+We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics \citep{mammola2021concepts} using 12 metrics (Tab. \ref{Tab:metrics}):
 1) Richness, encompassing metrics reflecting the sum of differences among observations; (4 metrics, equivalent to size metrics in \citealt{guillerme2020shifting});
 2) Divergence, encompassing metrics reflecting the average differences among observations (4 metrics); and
 3) Regularity, encompassing metrics reflecting how regular the differences among observations are (4 metrics, equivalent to density metrics in \citealt{guillerme2020shifting}).
