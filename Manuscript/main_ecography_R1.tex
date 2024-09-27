@@ -180,6 +180,7 @@ We suggest caution when summarising patterns in observed data and propose tools 
 \subsection{Simulating trait space patterns}
 
 First, we simulated a single random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 elements in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
+This trait was simulated either as a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensions.
 These elements can represent any biological focal entities, e.g. tips in a phylogenetic tree, individuals, species, populations, OTUs, etc. 
 This resulted in a neutral null model of trait evolution with no effect of competition, extinction, selection or other processes (\textit{sensu} \citealt{bausman2018modeling}).
 We refer to this as the ``non-stressed trait space''.
@@ -434,7 +435,7 @@ For example, if removing 80\% of the edges of a distribution (equalising mechani
 Some metrics (e.g. Functional evenness using the dendrogram method) were not able to distinguish between the null mechanism and the mechanism of interest (here the mechanism simulating competition).
 In other words, our statistical question was ``Does metric X distinguish between removing N\% of data in a biassed way (the mechanism) and removing N\% of data randomly (the null)?''.
 This definition of null hypothesis is also appropriate for the empirical data if the question is the same.
-However, it is very likely that workers will ask a more exciting or intriguing question based on these data.
+However, it is very likely that researchers will ask a more exciting or intriguing question based on these data.
 For example, an interesting one could be ``Are the extinctions uniform across all birds in Hawaii?".
 This legitimate question would thus require first a trait space (the pattern - what) and maybe some contrasting groups of interest like extinctions through time (the process - how) to answer the question (the mechanism - why).
 Furthermore, the scaling of the metrics paired with the levels of removal (80\%, 60\%, 40\% and 20\%) creates an expected artifact similarity when comparing the random removals against the other ones: when less data is available overall, the metrics are more likely to be similar (e.g. if removing 99\% of the data, we expect the random and removal metric score to be nearly identical to the non-random ones).
