@@ -210,11 +210,13 @@ This is similar to the decreasing size algorithm but instead of choosing $\rho$ 
 In other words the centre of the radius $\rho'$ is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with $\rho'_{20} > \rho'_{40} > \rho'_{60} > \rho'_{80}$).
 This approximates our \textbf{filtering mechanism}.
 
-\item Increasing evenness: by resampling the proportion of data (i.e. 20\%, 40\%, 60\% or 80\%) but with skewed resampling probabilities per bandwidth (i.e. an estimated number of categories summarising the distribution, like in a histogram).
-Each bandwidth has an observed probability of sampling of $n$ (proportional to the number of observations in that bandwidth) and is skewed to a probability of sampling of $n \times m^{p}$. 
-For bandwidths with a low density (low values of $n$) we used $m>0$ to increase their resampling probability, and the opposite for bandwidths with a high density (high values of $n$; using $m<0$ to decrease sampling property).
-This effectively flattened the normal distribution of the data by some factor $p$ (here we used $p=3$).
-This approximates our \textbf{competition mechanism}.
+\item Increasing evenness: by resampling the proportion of data (i.e. 20\%, 40\%, 60\% or 80\%) but with skewed resampling probabilities.
+In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.
+This is done by selecting of $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' \citep[\texttt{bw.nrd0()} function in \texttt{R};][]{silverman1986density}.
+Each of these discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
+Where $p$ is factor increasing the scaling power of the algorithm (here we used $p=3$).
+In other words, observations in categories with a low density ($b<0.5$) were more likely to be resampled and the ones in categories with high density ($b>0.5$) were less likely to be resampled.
+This approximates our \textbf{competition mechanism}, were observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.
 \end{itemize}
 
 For the decreasing size, increasing density and shifting space stressors, we estimated the parameters $\rho$, $D$ and $\rho'$ recursively with the \texttt{dispRity} package to obtain the required amount of data to be removed (\texttt{dispRity::reduce.space}, \citealt{guillerme2018disprity,guillerme2020shifting}).
