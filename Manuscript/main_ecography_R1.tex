@@ -187,31 +187,41 @@ We refer to this as the ``non-stressed trait space''.
 
 \subsubsection{Applying stressors to the trait space}
 
-We then applied four different stressors to the non-stressed trait space to remove either 20\%, 40\%, 60\% or 80\% of the data (resulting in trait spaces with, respectively, 160, 120, 80 and 40 observations).
-In removing the data, we applied these five specific algorithms (Figure \ref{Fig:simulations}; Table \ref{Tab:mechanisms}; all algorithms, except ``Evenness'', were previously described in \cite{guillerme2020shifting}):
+We then applied five different stressors to the trait space with different intensities.
+The five different stressors are effectively five specific algorithms removing either 20\%, 40\%, 60\% or 80\% of the data (the intensities of the stressors, resulting in trait spaces with, respectively, 160, 120, 80 and 40 observations).
+We used the following specific algorithms (Figure \ref{Fig:simulations}; Table \ref{Tab:mechanisms}; all algorithms, except ``increasing evenness'', were previously described in \cite{guillerme2020shifting}):
 
 \begin{itemize}
 \item Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data.
 This approximates our \textbf{null mechanism}.
 
-\item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius)  $\rho$ of the centre of the trait space.
+\item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius) $\rho$ of the centre of the trait space.
+$\rho$ is estimated for each trait space to match the required intensity. For example, for one trait space, the algorithm estimated $\rho_{20}$ to be the minimum radius excluding 20\% of the observations, $\rho_{40}$ the one removing 40\%, etc. (with $\rho_{20} > \rho_{40} > \rho_{60} > \rho_{80}$).
 This approximates our \textbf{equalising mechanism}.
 
-\item Increasing density: by removing the required amount of pairs of points with a variable pairwise distance of at least $D$ (i.e. removing the $n$ pairs of points that are at least $D$ distance away from each other to remove the desired number of observations).
+\item Increasing density: by removing the required amount of pairs of points with a variable pairwise distance of at least $D$.
+$D$ is a distance estimated for each trait space to correspond to the minimal Euclidean distance that encompasses at least $n$ pairs of points corresponding to the intensity of the stressor.
+For example $D_{20}$ is the distance that excludes any $n_{20}$ pairs of points that are a distance of at least $D_{20}$ from each other, $D_{40}$ is the distance that excludes $n_{40}$ pairs, etc. (with $D_{20} > D_{40} > D_{60} > D_{80}$).
+Note that this algorithm is not directly based on the change of average density but rather on the change in pairwise distance between observations.
 This approximates our \textbf{facilitation mechanism} (i.e. the points left are only ones that are close to at least another point in space).
 
-\item Shifting space: by removing the required amount of data from a distance (radius) $\rho$ of the element with the maximum value.
+\item Shifting space: by removing the required amount of data from a distance (radius) $\rho'$ of the observation with the maximum numerical value on all dimensions.
+This is similar to the decreasing size algorithm but instead of choosing $\rho$ to be the radius from the centre of the trait space, $\rho'$ is a radius from the ``top right corner'' of the trait space.
+In other words the centre of the radius $\rho'$ is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with $\rho'_{20} > \rho'_{40} > \rho'_{60} > \rho'_{80}$).
 This approximates our \textbf{filtering mechanism}.
 
-\item Increasing evenness: by resampling the required amount of data but with skewed resampling probabilities per bandwidth (i.e. an estimated number of categories summarising the distribution, like in a histogram).
+\item Increasing evenness: by resampling the proportion of data (i.e. 20\%, 40\%, 60\% or 80\%) but with skewed resampling probabilities per bandwidth (i.e. an estimated number of categories summarising the distribution, like in a histogram).
 Each bandwidth has an observed probability of sampling of $n$ (proportional to the number of observations in that bandwidth) and is skewed to a probability of sampling of $n \times m^{p}$. 
 For bandwidths with a low density (low values of $n$) we used $m>0$ to increase their resampling probability, and the opposite for bandwidths with a high density (high values of $n$; using $m<0$ to decrease sampling property).
 This effectively flattened the normal distribution of the data by some factor $p$ (here we used $p=3$).
 This approximates our \textbf{competition mechanism}.
 \end{itemize}
 
-For the position, size and density algorithms, we estimated the parameters $\rho$ and $D$ recursively with the \texttt{dispRity} package to obtain the required amount of data to be removed (\texttt{dispRity::reduce.space}, \citealt{guillerme2018disprity,guillerme2020shifting}).
-These steps resulted in 3420 simulated trait spaces (171 simulated spaces $\times$ 5 stressors $\times$ 4 amounts of data removed).
+For the decreasing size, increasing density and shifting space stressors, we estimated the parameters $\rho$, $D$ and $\rho'$ recursively with the \texttt{dispRity} package to obtain the required amount of data to be removed (\texttt{dispRity::reduce.space}, \citealt{guillerme2018disprity,guillerme2020shifting}).
+Note that the algorithm used here to simulate the stressors depend, to some extent, to the distribution of the data for each trait space.
+The algorithms used can lead to similar stressors effects depending on the simulated data distribution.
+For example, ``increasing density'' and ``decreasing size'' stressors will lead to just what their name suggest if the observations are uniformly distributed (just average increase in density for ``increasing density'' and just overall decrease in size for the ``decreasing size'' stressors) but will have more or less similar effects (albeit no identical) in the case of a normal distribution (average increase in density and overall decrease in size for both ``increasing density'' and ``decreasing size'' stressors.)
+These steps resulted in 3420 simulated trait spaces (171 simulated spaces $\times$ 5 stressors $\times$ 4 intensities of data removal).
 We used 171 replicates per simulation because that was empirically the smallest number of simulations required to reach a variance between simulations lower than 1\% across all metrics (i.e. any additional simulation added less that 1\% extra variance).
 See Table \ref{Tab:mechanisms} for a biological description of these stressors and Figure \ref{Fig:simulations} for a visual description of them.
 
@@ -223,9 +233,9 @@ However, this is not tackled here for both simplicity and to understand how they
 
 We repeated each simulation pipeline (generate a trait space and apply the stressor) for uncorrelated 4 dimensional traits (Figure \ref{Fig:simulation_results}) and uncorrelated 2 and 8 dimensional traits (supplementary materials).
 We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait}) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
-This curse changes the properties of space occupancy in a non-linear way depending on the element's distribution and the number of dimensions.
+This curse changes the properties of space occupancy in a non-linear way depending on the observation's distribution and the number of dimensions.
 For example, the volume of a trait space (or hypervolume when using more than 3 dimensions) typically tends to zero in a high number of dimensions.
-However, the rate at which it approaches zero is not linear and depends on the distribution of each element on every dimension.
+However, the rate at which it approaches zero is not linear and depends on the distribution of each observation on every dimension.
 This makes it practically difficult to compare two randomly generated spaces with similar characteristics (e.g. for two spaces with 200 observations and 10 dimensions generated in the exact same way, one might have a hypervolume of nearly 0 and the other one of $10^5$).
 Note also that in our simulations, all dimensions have the same properties (i.e. same variance and distribution).
 This is often not the case in empirical cases (e.g. see our empirical example) where the dimensions have a decreased variance due to ordination techniques.
@@ -396,7 +406,7 @@ In contrast, avian malaria, which is known to be an important extinction pressur
 
 \section{Discussion}
 
-\subsections{Results}
+\subsection{Results}
 
 We tested 12 trait space occupancy metrics on simulated and empirical datasets to assess how each metric captures patterns of trait space changes based on stressors approximating ecological and evolutionary mechanisms.
 Our results show that, unexpectedly, different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
@@ -420,7 +430,7 @@ In contrast, avian malaria, which is known to be an important extinction pressur
 \subsection{Caveats}
 
 Our results may be influenced by our choice of space occupancy metrics - specifically, we focused on metrics available in three statistical packages in \texttt{R}, the most common statistical language currently used in ecology \citep{lai2019evaluating}, but many others could have been used (e.g. \citealt{guillerme2020shifting}).
-Also, our results are likely affected by the use of simplified algorithms designed to approximate very complex ecological and evolutionary mechanisms by simply removing a percentage of observations in trait spaces in a non-random manner.
+Also, our results are likely affected by the use of simplified stressors designed to approximate very complex ecological and evolutionary mechanisms by simply removing a percentage of observations in trait spaces in a non-random manner.
 Note also that the simulated trait spaces here did not always share common characteristics with empirical trait spaces.
 The simulated trait spaces in 2, 4 or 8 dimensions had the same variance on all dimensions (i.e. we used the same trait simulation process for all dimensions) whereas in empirical trait spaces, commonly generated using ordination techniques (e.g. PCA or PCO), the dimensions have by definition a decreasing variance.
 
@@ -447,7 +457,7 @@ Furthermore, the scaling of the metrics paired with the levels of removal (80\%,
 \hrule
 
 \section*{Box 2: so which metric do \textit{I} choose?}
-\susbsection{So which metric to choose?}
+\subsection{So which metric to choose?}
 
 TL;DR: it depends!
 
