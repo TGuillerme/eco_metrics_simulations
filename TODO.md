@@ -1,3 +1,5 @@
+ * [ ] add preprint
+
 # Supplementary
 
  * [ ] Write the empirical vignette
