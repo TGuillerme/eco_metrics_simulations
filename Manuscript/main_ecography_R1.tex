@@ -234,7 +234,7 @@ Furthermore, in real-world scenarios, we do not expect these mechanisms to act i
 However, this is not tackled here for both simplicity and to understand how they work in isolation. 
 
 We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure \ref{Fig:simulation_results}) for 2 and 8 dimensional traits with not correlation between each dimensions in each simulation pipeline (supplementary materials).
-We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait}) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
+We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait} - note that int the supplementary figures, we measured the \texttt{TPD} metrics on only the four first dimensions) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
 This curse changes the properties of space occupancy in a non-linear way depending on the observation's distribution and the number of dimensions.
 For example, the volume of a trait space (or hypervolume when using more than 3 dimensions) typically tends to zero in a high number of dimensions.
 However, the rate at which it approaches zero is not linear and depends on the distribution of each observation on every dimension.
@@ -281,7 +281,7 @@ F) \textbf{competition mechanism}: proportionally removing observations on the c
 
 \subsubsection{Metrics for measuring trait space occupancy dissimilarity/disparity:}
 
-We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics \citep{mammola2021concepts} using 12 metrics (Tab. \ref{Tab:metrics}):
+We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics (trait space occupancy metrics; \cite{mammola2021concepts}) using 12 metrics (Tab. \ref{Tab:metrics}):
 1) Richness, encompassing metrics reflecting the sum of differences among observations; (4 metrics, equivalent to size metrics in \citealt{guillerme2020shifting});
 2) Divergence, encompassing metrics reflecting the average differences among observations (4 metrics); and
 3) Regularity, encompassing metrics reflecting how regular the differences among observations are (4 metrics, equivalent to density metrics in \citealt{guillerme2020shifting}).
@@ -335,27 +335,26 @@ The results of these tests are displayed in figure \ref{Fig:simulation_results} 
 
 \subsubsection{Measuring the effect of the strength of the stressor}
 
-Finally, we measured the effect of the different levels of data removal (20\%, 40\%, 60\% and 80\%) by fitting a linear regression using the model centred and scaled metric score $\sim$ amount of data removed.
-For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables 1 to 3 and whether the slope was clearly distinguishable from 0 (Figure \ref{Fig:simulation_results}).
+Finally, we measured the effect of the different levels of data removal (20\%, 40\%, 60\% and 80\%) by fitting a linear regression using the model centred and scaled metric score as a function of the amount of data removed.
+For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables $1$ to $3$ and whether the slope was clearly distinguishable from $0$ (Figure \ref{Fig:simulation_results}).
 
 \subsection{Empirical data}
 
 We applied all metrics to an empirical dataset of bird extinctions on six Hawaiian islands (Hawaii, Kauai, Lanai, Maui, Molokai, Oahu), an archipelago which has suffered large numbers of anthropogenic extinctions due to a range of extinction drivers \citep{Walther2022}.
-A prehistoric species list (avifauna known to be present prior to human colonisation of the islands), historic species list (avifauna known to be present at 1500 CE) and extant species list of the native community for each island was taken from \cite{matthews2023global} along with trait values for the extinct species (\textit{Asio flammeus} was removed from the historic and extant species lists as its colonisation status is uncertain).
+A prehistoric species list (avifauna known to be present prior to human colonisation of the islands), historic species list (avifauna known to be present at $1500$ CE) and extant species list of the native community for each island was taken from \cite{matthews2023global} along with trait values for the extinct species (\textit{Asio flammeus} was removed from the historic and extant species lists as its colonisation status is uncertain).
 We also added two marine species to the prehistoric species list; we compiled missing trait data for these two extinct species from \cite{sayol2021loss}.
 We extracted dimensions for extant species from the AVONET database \citep{tobias2022avonet}.
-We used 9 morphological dimensions associated with dietary/foraging preference and dispersal ability \citep{pigot2020macroevolutionary,sheard2020ecological} to represent the functional diversity of the communities: mass; beak length (culmen); beak length (nares); beak width; beak depth; tarsus length; wing length; the length from the first secondary feather to the tip of the longest primary feather (Kipp's distance); and tail length.
-Traits were log transformed and standardised to a mean of 0 and standard deviation of 1, prior to analyses.
+We used $9$ morphological dimensions associated with dietary/foraging preference and dispersal ability \citep{pigot2020macroevolutionary,sheard2020ecological} to represent the functional diversity of the communities: mass; beak length (culmen); beak length (nares); beak width; beak depth; tarsus length; wing length; the length from the first secondary feather to the tip of the longest primary feather (Kipp's distance); and tail length.
+Traits were log transformed and standardised to a mean of $0$ and standard deviation of $1$, prior to analyses.
 
-The full trait dataset comprised 118 bird species, all native species known to have existed on these islands over the last 125,000 years.
-55 species are known to have gone extinct prior to 1500 CE and 26 after 1500 CE.
-For our analyses, we focused on two time periods: (i) the avifauna present in 1500 CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
-We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-1500 CE extinctions (i.e., $118-55$ species; a species richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a species richness reduction of 69\%).
+The full trait dataset comprised $118$ bird species, all native species known to have existed on these islands over the last $125,000$ years.
+$55$ species are known to have gone extinct prior to $1500$ CE and $26$ after $1500$ CE.
+For our analyses, we focused on two time periods: (i) the avifauna present in $1500$ CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
+We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-$1500$ CE extinctions (i.e., $118-55$ species; a species richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a species richness reduction of 69\%).
 
-
-To build the community trait space, we undertook a PCA including all 118 species, which we then subset to calculate the trait space for the historic and extant datasets.
-We selected the first 5 axes to represent the trait spaces that explained at least 97.5\% of the variance in each specific group (all, historic and extant species)
-We applied the same procedure as for the simulated data by simulating a null mechanism to compare to the observed ones by randomly removing 55 and 81 species for each stressor and scaling the results proportionally to this null mechanism (as described above).
+To build the community trait space, we undertook a PCA including all $118$ species, which we then subset to calculate the trait space for the historic and extant datasets.
+We selected the first $5$ axes to represent the trait spaces that explained at least 97.5\% of the variance in each specific group (all, historic and extant species)
+We applied the same procedure as for the simulated data by simulating a null mechanism to compare to the observed ones by randomly removing $55$ and $81$ species for each stressor and scaling the results proportionally to this null mechanism (as described above).
 
 
 \section{Results}
@@ -370,7 +369,7 @@ Negative and positive values signify a decrease/increase in the metric score.
 The dots represent the median metric value, the full line their 50\% confidence interval (CI) and the dashed line their 95\% CI.
 The colours are here to visually separate the metrics by categories (green = richness, yellow = divergence, blue = regularity); the colour gradient within each row corresponds to a removal of respectively 80\%, 60\%, 40\% and 20\% of the data (from top to bottom).
 The grey line plots represent distributions of metric scores not clearly distinguishable from the random metric scores (paired t-test $p$ value $> 0.05$).
-Grey lines in the background across the distributions of different removal amounts represent the fitted linear model ``centred and scaled metric score $\sim$ amount of data removed''.
+Grey lines in the background across the distributions of different removal amounts represent the fitted linear model ``centred and scaled metric score function of the amount of data removed''.
 Dashed thin grey lines represent non-significant models ($p$ value of slope or/and intercept $> 0.05$).
 The exact model results are available in supplementary table @@@.
 Similar figures are available in the supplementary materials for 2 and 8 dimensions.}}
@@ -380,8 +379,7 @@ Similar figures are available in the supplementary materials for 2 and 8 dimensi
 
 The ability of different metrics to capture the different patterns (and thus approximate the processes) was highly variable.
 It ranged from metrics capturing no clear pattern (e.g. the Functional evenness based on the dendrogram method for competition) to metrics clearly capturing one specific pattern (e.g. Divergence based on probability density for the equalising mechanism for a decrease in space occupancy).
-Some metrics even captured an opposite pattern to what was expected: for all metrics, we expected a relative decrease in trait space occupancy following different levels of species removals but some metrics captured an increase of trait space occupancy (e.g. the functional evenness based on hypervolume for the equalising mechanism) or non-linear ones (e.g. Alpha diversity based on dendrogram for the equalising mechanism).
-This raises an interesting point: the naive expectation that removing 80 to 20\% of the data would result in a reduction of trait space occupancy metric score (negative values) is often true but by no means always true.
+Although most metrics captured a decrease in metric score relative to the amount of removed data, some metrics resulted into a score increase (e.g. the functional evenness based on hypervolume for the equalising mechanism) or non-linear responses (e.g. Alpha diversity based on dendrogram for the equalising mechanism).
 Some cases resulted in an increase in metric score relative to random removals (positive values in Figure \ref{Fig:simulation_results}).
 
 \begin{figure}[!htbp]
@@ -411,7 +409,7 @@ In contrast, avian malaria, which is known to be an important extinction pressur
 \subsection{Results}
 
 We tested 12 trait space occupancy metrics on simulated and empirical datasets to assess how each metric captures patterns of trait space changes based on stressors approximating ecological and evolutionary mechanisms.
-Our results show that, unexpectedly, different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
+Our results show that different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
 Therefore, the choice of trait space occupancy metric is essential to accurately describe a pattern of interest.
 
 \subsubsection{Empirical results}
@@ -419,8 +417,8 @@ Therefore, the choice of trait space occupancy metric is essential to accurately
 The empirical results are also intriguing, as it indicates that, at least for certain metrics, the loss of Hawaiian bird functional diversity is less than expected than if extinctions were random with respect to dimensions (Figure \ref{Fig:empirical_results}).
 This contrasts with studies that have shown that species with certain traits (e.g., larger species) are more likely to have gone extinct and thus that functional diversity loss is larger than through random extinctions (e.g. \citealt{sayol2021loss,Matthews2022}).
 This could partly be due to the proportion of passerine extinctions in Hawaii.
-Although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines ($\sim$58\%), the majority of global known anthropogenic extinctions ($\sim$75\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
-However, in Hawaii, where the same proportion of known species were passerines ($\sim$58\%), the opposite is true: the majority of extinctions ($\sim$60\%) have been of passerine species.
+Although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines (approximatively 58\%), the majority of global known anthropogenic extinctions (approx. 75\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
+However, in Hawaii, where the same proportion of known species were passerines (approx. 58\%), the opposite is true: the majority of extinctions (approx. 60\%) have been of passerine species.
 It is important to note that we are not implying that there existed little morphological variation within extinct Hawaiian passerines - indeed, many of these extinctions involved the honeycreepers, a famous adaptive radiation involving substantial evolution of beak morphology \citep{Walther2022} - but simply that this morphological variation is less than that observed across all birds.
 But these results, given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines,  also indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
 In addition, it is worth stressing that these analyses included marine species (which constitute less than 4\% of  known extinctions in Hawaii, while making up 11\% of the prehistoric assemblage) and different results may have been found if focusing exclusively on terrestrial birds.
@@ -436,7 +434,8 @@ Also, our results are likely affected by the use of simplified stressors designe
 Note also that the simulated trait spaces here did not always share common characteristics with empirical trait spaces.
 The simulated trait spaces in 2, 4 or 8 dimensions had the same variance on all dimensions (i.e. we used the same trait simulation process for all dimensions) whereas in empirical trait spaces, commonly generated using ordination techniques (e.g. PCA or PCO), the dimensions have by definition a decreasing variance.
 
-Furthermore, we only presented results based on a relatively small number of dimensions (up to 8), while it is not uncommon to have a much greater number of dimensions, especially in paleontology (e.g. in \citealt{van2023should}).
+Furthermore, we only presented results based on a relatively small number of dimensions (up to 8).
+Although this number of dimensions is in the range of many studies in ecology (e.g. 6 dimensions in \citealt{healy2019animal}), it is not uncommon to use a much greater number of dimensions, especially in palaeontology (e.g. more than 200 dimensions in \citealt{van2023should}).
 In a higher number of dimensions (usually $>$10 but this is highly variable depending on the system under study), metrics results are harder to scale linearly.
 This sometimes makes metric interpretation more chaotic \cite{bellman1957dynamic} in the sense that there is no direct relationship between the number of observations and dimensions that can be used to extrapolate results in higher dimensional datasets.
 In fact, the relationship between observations has an important effect on how our results scale with higher dimensionality (e.g. the volume of an evenly occupied space scales differently in high dimensions compared to the same space but with normally distributed observations).
