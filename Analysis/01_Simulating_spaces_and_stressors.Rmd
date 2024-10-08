@@ -190,7 +190,7 @@ par(mfrow = c(6, 3), bty = "n")
 
 ## First line
 plot.text.box("A) Tree and trait\nsimulation:", cex = 2)
-plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (1D)", col = c("lightgrey", "blue"), ylab = "Trait 1")
+plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (1D)", col = c(tips = "blue", "nodes" = "lightgrey"), ylab = "Trait 1")
 plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (2D)", col = c("lightgrey", "blue"), trait = c(1,2), xlab = "Trait 1", ylab = "Trait 2")
 
 ## Stressors
