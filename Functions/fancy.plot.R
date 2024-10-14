@@ -18,7 +18,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, empirical = FALSE, ...) {
+fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, empirical = FALSE, xlab, xlim = c(-1, 0), ...) {
 
     ## Get the plot parameters
     plot_params <- list(...)
@@ -43,6 +43,8 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                            add.x = FALSE,
                            add.y = TRUE,
                            grid  = FALSE,
+                           xlab  = xlab,
+                           xlim  = xlim,
                            metric.names = metric.names)
 
             } else {
@@ -51,7 +53,9 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                 empty.plot(results[[one_stressor]],
                            plot.main = names(results)[one_stressor],
                            add.x = TRUE,
-                           add.y = FALSE)
+                           add.y = FALSE,
+                           xlim  = xlim,
+                           xlab  = xlab)
 
                 ## Adding the data
                 if(!missing(lm)) {
@@ -75,6 +79,8 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                    plot.main = names(results)[1],
                    add.x = TRUE,
                    add.y = TRUE,
+                   xlab  = xlab,
+                   xlim  = xlim,
                    metric.names = metric.names)
 
         ## Adding the data
@@ -217,7 +223,7 @@ add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col, lm
 }
 
 ## Creating an empty plot
-empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE,  plot.main, metric.names = NULL) {
+empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE,  plot.main, metric.names = NULL, xlab, xlim) {
     
     ## Number of metrics
     y_lim <- c(1,ncol(one_results))
@@ -228,10 +234,17 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
     } else {
         x_lim <- range(one_results)
     }
+    if(!missing(xlim)) {
+        x_lim <- xlim
+    }
+
+    if(missing(xlab)) {
+        xlab <- "scaled difference from null"
+    }
     
     ## Base plot
     if(add.x) {
-        plot(NULL, xlim = x_lim, ylim = y_lim, ylab = "", xlab = "scaled metric change", yaxt = "n", main = plot.main)
+        plot(NULL, xlim = x_lim, ylim = y_lim, ylab = "", xlab = xlab, yaxt = "n", main = plot.main)
     } else {
         plot(NULL, xlim = x_lim, ylim = y_lim, ylab = "", xlab = "", xaxt = "n", yaxt = "n", main = plot.main)
     }

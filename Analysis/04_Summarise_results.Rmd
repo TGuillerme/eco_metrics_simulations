@@ -149,18 +149,21 @@ We then scale the centred metric by dividing it by it's maximum absolute centred
 ```{r, echo = FALSE}
 ## Extracting all the scaled results
 scaled_results_2d <- extract.table(all_results_2d, scale.method = "between")
-scaled_within_2d  <- extract.table(all_results_2d, scale.method = "within")
 scaled_results_3d <- extract.table(all_results_3d, scale.method = "between")
-scaled_within_3d  <- extract.table(all_results_3d, scale.method = "within")
 scaled_results_4d <- extract.table(all_results_4d, scale.method = "between")
-scaled_within_4d  <- extract.table(all_results_4d, scale.method = "within")
 scaled_results_5d <- extract.table(all_results_5d, scale.method = "between")
-scaled_within_5d  <- extract.table(all_results_5d, scale.method = "within")
 scaled_results_8d <- extract.table(all_results_8d, scale.method = "between")
-scaled_within_8d  <- extract.table(all_results_8d, scale.method = "within")
 scaled_results_emp<- extract.table(empirical_results, scale.method = "between")
-scaled_within_emp <- extract.table(empirical_results, scale.method = "within")
+
+## Extracting all the results but not centred (still scaled)
+raw_results_2d <- extract.table(all_results_2d, scale.method = "between", centre = FALSE)
+raw_results_3d <- extract.table(all_results_3d, scale.method = "between", centre = FALSE)
+raw_results_4d <- extract.table(all_results_4d, scale.method = "between", centre = FALSE)
+raw_results_5d <- extract.table(all_results_5d, scale.method = "between", centre = FALSE)
+raw_results_8d <- extract.table(all_results_8d, scale.method = "between", centre = FALSE)
+raw_results_emp<- extract.table(empirical_results, scale.method = "between", centre = FALSE)
 ```
+
 
 ## Measuring the statistics for each metric
 
@@ -252,7 +255,7 @@ col_vector <- c(rep("darkgreen", 4), # The regularity ones
                 rep("orange", 4), # The divergence ones
                 rep("blue", 4)) # The richness ones
 ## The plot
-fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names, pch = rep(19,4))
+fancy.plot(scaled_results_2d, col = col_vector, lm = model_fits_2d, null = null_differences_2d, metric.names = fancy_names, pch = rep(19,4), xlab = "scaled metric change")
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_2d.pdf", height = 9, width = 9)
@@ -313,15 +316,39 @@ dev.off()
 fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17))
 
 ## Pdf version
-pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 11, width = 4.5)
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 11, width = 3.5)
 fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17))
 dev.off()
 ```
 
 Figure 3: Empirical data. Plain circles represents the metric for historic data (53 % - 63/118 species), lightly fainted squares for prehistoric data (46% - 55/118 species), and fainted triangles for extant data (31% - 37/118 species).
 
-## Get the computation time per metric type
 
+## Raw results per metric
+
+```{r}
+
+pdf(file = "../Manuscript/Figures/raw_results_per_metric_per_stressor_2d.pdf", height = 11, width = 8.5)
+fancy.plot(raw_results_2d, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = rep(19,5), xlab = "scaled metric", xlim = c(0,1))
+dev.off()
+
+pdf(file = "../Manuscript/Figures/raw_results_per_metric_per_stressor_4d.pdf", height = 11, width = 8.5)
+fancy.plot(raw_results_4d, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = rep(19,5), xlab = "scaled metric", xlim = c(0,1))
+dev.off()
+
+pdf(file = "../Manuscript/Figures/raw_results_per_metric_per_stressor_8d.pdf", height = 11, width = 8.5)
+fancy.plot(raw_results_8d, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = rep(19,5), xlab = "scaled metric", xlim = c(0,1))
+dev.off()
+
+pdf(file = "../Manuscript/Figures/raw_results_per_metric_per_stressor_emp.pdf", height = 11, width = 5.5)
+fancy.plot(raw_results_emp, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = c(19,15,17), xlab = "scaled metric", xlim = c(0,1))
+dev.off()
+```
+
+
+
+
+## Get the computation time per metric type
 
 ```{r}
 #@ combine logical, whether to combine the results per stressor (TRUE) or not (FALSE)
@@ -369,13 +396,13 @@ points(x = c(2,3,4,5,8)+0.00, c(times_tree[2,]), pch = 19, col = metric_cols[1])
 points(x = c(2,3,4,5,8)+0.04, c(times_dissimilarity[2,]), pch = 19, col = metric_cols[2])
 points(x = c(2,3,4,5,8)+0.08, c(times_hull[2,]), pch = 19, col = metric_cols[3])
 points(x = c(2,3,4,5,8)+0.12, c(times_hypervolume[2,]), pch = 19, col = metric_cols[4])
-points(x = c(2,3,4,5,8)+0.16, c(times_probabilities[2,]), pch = 19, col = metric_cols[5])
+points(x = c(2,3,4)+0.16, c(times_probabilities[2,c(1:3)]), pch = 19, col = metric_cols[5])
 ## Linkings
 lines(x = c(2,3,4,5,8)+0.00, c(times_tree[2,]), pch = 19, col = metric_cols[1])
 lines(x = c(2,3,4,5,8)+0.04, c(times_dissimilarity[2,]), pch = 19, col = metric_cols[2])
 lines(x = c(2,3,4,5,8)+0.08, c(times_hull[2,]), pch = 19, col = metric_cols[3])
 lines(x = c(2,3,4,5,8)+0.12, c(times_hypervolume[2,]), pch = 19, col = metric_cols[4])
-lines(x = c(2,3,4,5,8)+0.16, c(times_probabilities[2,]), pch = 19, col = metric_cols[5])
+lines(x = c(2,3,4)+0.16, c(times_probabilities[2,c(1:3)]), pch = 19, col = metric_cols[5])
 ## 95% CI
 dimensions <- c(2,3,4,5,8)
 for(one_ci in 1:5) {
@@ -390,7 +417,7 @@ for(one_ci in 1:5) {
 for(one_ci in 1:5) {
   lines(y = c(times_hypervolume[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.12, col = metric_cols[4])
 }
-for(one_ci in 1:5) {
+for(one_ci in 1:3) {
   lines(y = c(times_probabilities[c(1,3), one_ci]), x = rep(dimensions[one_ci], 2)+0.16, col = metric_cols[5])
 }
 ## legend
