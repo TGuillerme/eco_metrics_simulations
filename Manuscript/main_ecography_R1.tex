@@ -193,7 +193,7 @@ We used the following specific algorithms (Figure \ref{Fig:simulations}; Table \
 
 \begin{itemize}
 \item Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data.
-This approximates our \textbf{null mechanism}.
+This approximates our \textbf{null mechanism}. This is used to establish a reference to be compared to the other mechanisms and to test how removing elements in a specific way influences the metrics scores compared to removing them randomly.
 
 \item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius) $\rho$ of the centre of the trait space.
 $\rho$ is estimated for each trait space to match the required intensity. For example, for one trait space, the algorithm estimated $\rho_{20}$ to be the minimum radius excluding 20\% of the observations, $\rho_{40}$ the one removing 40\%, etc. (with $\rho_{20} > \rho_{40} > \rho_{60} > \rho_{80}$).
@@ -279,7 +279,7 @@ B) \textbf{null mechanism}: randomly removing a proportion of the observations;
 C) \textbf{approximating equalising mechanism}: removing observations on the edge of the distribution;
 D) \textbf{approximating facilitation mechanism}: removing observations to reduce the distance between pairs of observations (increasing local density; decreasing evenness);
 E) \textbf{approximating filtering mechanism}: removing observations on one extreme of the distribution;
-F) \textbf{approximating competition mechanism}: proportionally removing observations on the centre of the distribution (``flattening the curve'').}}
+F) \textbf{approximating competition mechanism}: proportionally removing observations on the centre of the distribution.}}
 \label{Fig:simulations}
 \end{figure}
 \bigskip
@@ -330,10 +330,11 @@ Divergence & Trait Probability Density & Divergence & Overlap between the TPD fu
 \label{Tab:metrics}
 \end{table}
 
-\subsubsection{Scaling the results to be proportional to the random removals (null)}
+\subsubsection{Comparing and scaling the results to the random removals (null stressor)}
 
-To ease interpretation of the results, we centred the results for the 12 metrics for the 4 non null stressors by the results for the null stressor and then scaled them.
-Effectively, for each metric and each single replicate, we subtracted the results under the null stressor to the ones under the other stressors and divided the resulting centred metrics by the maximum value for each metric between each replicate.
+To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_stressor_20\% - metric_null_20\%$).
+We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.).
+In other words, for each metric and each single replicate, we subtracted the results under the null stressor to the ones under the other stressors and divided the resulting centred metrics by the maximum value for each metric between each replicate.
 This resulted in each metric being scaled between –1 and 1 where 0 corresponds to no change compared to the null and 1 and –1 the maximum positive and negative deviations relative to the null.
 In parallel, we also compared the distribution of the 171 scores for each metric with each reduction level for each non-null stressor to the null stressor (with no scaling or centering) using pairwise t-tests.
 The results of these tests are displayed in figure \ref{Fig:simulation_results} (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).
@@ -371,13 +372,13 @@ We applied the same procedure as for the simulated data by simulating a null mec
    \includegraphics[width=0.8\textwidth]{Figures/results_per_metric_per_stressor_4d.pdf}
 \caption{\scriptsize{\textbf{Simulation results:} the y axes represent the different metrics tested (sorted by categories).
 The different columns represent the different stressors. The x-axes represent the metric values centred on the random changes and scaled by the maximum value for each metric between the four stressors.
-Negative and positive values signify a decrease/increase in the metric score.
+Negative and positive values signify that the metric score for the stressor of interest is lower/higher than the one from the random stressor.
 The dots represent the median metric value, the full line their 50\% confidence interval (CI) and the dashed line their 95\% CI.
 The colours are here to visually separate the metrics by categories (green = richness, yellow = divergence, blue = regularity); the colour gradient within each row corresponds to a removal of respectively 80\%, 60\%, 40\% and 20\% of the data (from top to bottom).
 The grey line plots represent distributions of metric scores not clearly distinguishable from the random metric scores (paired t-test $p$ value $> 0.05$).
 Grey lines in the background across the distributions of different removal amounts represent the fitted linear model ``centred and scaled metric score function of the amount of data removed''.
-Dashed thin grey lines represent non-significant models ($p$ value of slope or/and intercept $> 0.05$).
-The exact model results are available in supplementary table @@@.
+Dashed thin grey lines represent non-significant linear models (slope's $p$ value $> 0.05$).
+The model results are available in supplementary table 3.
 Similar figures are available in the supplementary materials for 2 and 8 dimensions.}}
 \label{Fig:simulation_results}
 \end{figure}
@@ -393,6 +394,7 @@ Some cases resulted in an increase in metric score relative to random removals (
    \includegraphics[width=0.4\textwidth]{Figures/results_per_metric_per_stressor_emp.pdf}
 \caption{\scriptsize{\textbf{Empirical results:} the metrics and the scaled changes are measured in the same way as in figure 2 (green = richness, yellow = divergence, blue = regularity).
 Plain circles represent the metrics for the historic dataset (46\% removal) and fainted squares for the extant dataset (69\% removal).
+\textbf{NOTE: for the \texttt{TPD} metrics, the metric is calculated using the 4 first dimensions only.}
 }}
 \label{Fig:empirical_results}
 \end{figure}
