@@ -18,7 +18,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, empirical = FALSE, xlab, xlim = c(-1, 0), ...) {
+fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, empirical = FALSE, xlab, xlim = c(-1, 1), ...) {
 
     ## Get the plot parameters
     plot_params <- list(...)
