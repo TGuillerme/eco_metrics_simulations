@@ -117,4 +117,31 @@ results <- optim.replicate(input.fun = empirical.pipeline,
 > Note that you can use the parallel version by adding the argument `parallel = TRUE` that is automatised using the package `future` and `future.apply` which makes the whole process run on all your available cores but is way less verbose. Without using the parallel version, it takes roughly 10 hours (overnight) to run the analyses on an old 2.2Ghz 8GB core.
 
 
+## Empirical example for box 2
 
+```{r}
+library(dispRity)
+## Plotting the trait space
+data <- custom.subsets(empirical_traitspace, group = lapply(groups, which))
+pdf(file = "../Manuscript/Figures/empirical_example.pdf", height = 4, width = 4)
+plot(data, legend = FALSE, col = c("blue", "orange"))
+legend("topright", pch = 19, col = c("blue", "orange"), legend = c("Current species", "Pre 1500 species"))
+dev.off()
+
+## Measuring disparity
+library(xtable)
+xtable(summary(dispRity(data, metric = convhull.volume)))
+xtable(summary(dispRity(data, metric = displacements)))
+```
+
+## Empirical number of dimensions selection
+
+
+```{r}
+library(dispRity)
+pca <- readRDS("../Data/Processed/pca-object-historic-community.RDS")
+data <- custom.subsets(pca$x, group = list(extant = extant_species, pre_1500 = historic_species))
+pdf(file = "../Manuscript/Figures/empirical_data_dimensions.pdf", height = 8, width = 4)
+plot(select.axes(data))
+dev.off()
+```
