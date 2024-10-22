@@ -172,9 +172,9 @@ In this simplistic example, the functional overlap between populations (``what a
 See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
 
 Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations} and \ref{Tab:mechanisms}).
-To apply our framework to a realistic context, we also used an empirical dataset of Hawaiian bird traits and used pre-historical and historical extinction events on Hawaiian islands (process) resulting in a trait space modified by extinctions (the pattern) capturing the effects of species extinction on species trait distributions (the mechanism).
-We show that, with a fixed process and pattern, the choice of statistics used to describe the patterns (the disparity or functional diversity metrics) have a great impact on our ability to recover the process and understand the mechanism.
-We suggest caution when summarising patterns in observed data and propose tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
+To apply our framework to a realistic context, we also used an empirical dataset of Hawaiian bird traits and looked at how anthropogenic pressures have shaped the trait space (mechanism; why) based extinction events on Hawaiian islands before and after the year 1500 (process; how) and how different metrics (pattern; what) can lead to different interpretations of the data.
+We show that, that with a fixed process and mechanisms approximation, the choice of the statistic to describe the pattern (the disparity or functional diversity metrics) has a great impact on the interpretation of the data with the exact same data being sometimes interpreted in opposite ways.
+We suggest caution when summarising patterns in observed data and propose a pipeline and tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.
 
 \section{Methods}
 \subsection{Simulating trait space patterns}
@@ -264,7 +264,7 @@ This is often not the case in empirical cases (e.g. see our empirical example) w
 
 \begin{figure}[!htbp]
 \centering
-   \includegraphics[width=0.5\textwidth]{Figures/simulation_protocol.pdf}
+   \includegraphics[width=0.5\textwidth]{Figures/simulation_protocol_explained.pdf}
 \caption{\scriptsize{Illustration of the simulation protocol used in this paper.
 A) we simulated a pure birth-tree with a trait evolving under a Brownian Motion process until reaching 200 observations resulting a trait space of 2, 4, or 8 dimensions.
 The first plot on row A illustrates one such simulation in one dimensions through time (with time on the horizontal axis and trait value for one dimension on the vertical axis).
@@ -279,12 +279,13 @@ B) \textbf{null mechanism}: randomly removing a proportion of the observations;
 C) \textbf{approximating equalising mechanism}: removing observations on the edge of the distribution;
 D) \textbf{approximating facilitation mechanism}: removing observations to reduce the distance between pairs of observations (increasing local density; decreasing evenness);
 E) \textbf{approximating filtering mechanism}: removing observations on one extreme of the distribution;
-F) \textbf{approximating competition mechanism}: proportionally removing observations on the centre of the distribution.}}
+F) \textbf{approximating competition mechanism}: proportionally removing observations on the centre of the distribution.
+G) we presented the results of the simualtions as the scaled metric scores for the approximated mechanisms (C to F) relative to the null mechanism. The dot represents the median metric score and the thick and dashed lines respectively the 50\% and 95\% confidence intervals.}}
 \label{Fig:simulations}
 \end{figure}
 \bigskip
 
-\subsubsection{Metrics for measuring trait space occupancy dissimilarity/disparity:}
+\subsubsection{Metrics for measuring trait space occupancy (\textit{aka} function diversity, dissimilarity, disparity):}
 
 We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics (trait space occupancy metrics; \cite{mammola2021concepts}) using 12 metrics (Tab. \ref{Tab:metrics}):
 1) Richness, encompassing metrics reflecting the sum of differences among observations; (4 metrics, equivalent to size metrics in \citealt{guillerme2020shifting});
@@ -332,17 +333,20 @@ Divergence & Trait Probability Density & Divergence & Overlap between the TPD fu
 
 \subsubsection{Comparing and scaling the results to the random removals (null stressor)}
 
-To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_stressor_20\% - metric_null_20\%$).
-We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.).
-In other words, for each metric and each single replicate, we subtracted the results under the null stressor to the ones under the other stressors and divided the resulting centred metrics by the maximum value for each metric between each replicate.
-This resulted in each metric being scaled between –1 and 1 where 0 corresponds to no change compared to the null and 1 and –1 the maximum positive and negative deviations relative to the null.
-In parallel, we also compared the distribution of the 171 scores for each metric with each reduction level for each non-null stressor to the null stressor (with no scaling or centering) using pairwise t-tests.
+To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first scaled each metrics by their absolute greatest values to scale them between $0$ and $1$.
+We then calculated the difference between each scaled metric score under the stressors of interest (approximating equalisation, facilitation, filtering and competition) and the null stressor for each different stressor level (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
+This resulted in each metric being scaled between $–1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs \ref{Fig:simulations}, \ref{Fig:simulation_results} and \ref{Fig:empirical_results}).
+We interpret this last scenario as the metric score performing poorly, i.e. it is unable to clearly distinguish between a random removal of elements and a non random one.
+To assess these poor performances, we compared the distributions of the $171$ scores for each metric with each reduction level for each non-null stressor to the null stressor using pairwise t-tests.
 The results of these tests are displayed in figure \ref{Fig:simulation_results} (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).
 
 \subsubsection{Measuring the effect of the strength of the stressor}
 
-Finally, we measured the effect of the different levels of data removal (20\%, 40\%, 60\% and 80\%) by fitting a linear regression using the model centred and scaled metric score as a function of the amount of data removed.
+Finally, we measured the effect of the different strengths of the stressors (i.e. removing 20\%, 40\%, 60\% and 80\% the data) by fitting a linear regression using the scaled metric difference to null score as a function of the amount of data removed.
 For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables $1$ to $3$ and whether the slope was clearly distinguishable from $0$ (Figure \ref{Fig:simulation_results}).
+This allowed us to see if there was any predictable linearity in the metric scores.
+In other words testing whether the metric scores relative to null removals where linearly scaling with the amount of data removed.
+
 
 \subsection{Empirical data}
 
@@ -460,56 +464,118 @@ This legitimate question would thus require first a trait space (the pattern - w
 Furthermore, the scaling of the metrics paired with the levels of removal (80\%, 60\%, 40\% and 20\%) creates an expected artifact similarity when comparing the random removals against the other ones: when less data is available overall, the metrics are more likely to be similar (e.g. if removing 99\% of the data, we expect the random and removal metric score to be nearly identical to the non-random ones).
 
 
+Importantly, it should always be borne in mind that empirical mechanisms ought of course to be more complex in real world scenarios.
+For example, evolutionary mechanisms can vary through time or per clades (and so patterns are often the results of multiple processes); or ecological mechanisms are often intertwined and work together to generate a pattern (e.g. facilitation + competition; \citealt{danet2024species}), or counteract each others by operating on the trait space in opposite directions (e.g., competition + filtering; \citealt{mammola2024functional})
+
 \bigskip
 \bigskip
 \hrule
 \hrule
 
 \section*{Box 2: so which metric do \textit{I} choose?}
-\subsection{So which metric to choose?}
 
 TL;DR: it depends!
 
-Following our results and these thoughts, we encourage workers in ecology and evolution to test whether their metrics are capable of capturing a pattern of interest before discussing the process and/or mechanism inferred by it.
-We encourage workers to test their metrics using simplified example datasets to see if they have the ability to capture at least crude changes as exemplified in this work (e.g. using simulations \citealt{guillerme2024treats} or the \texttt{moms} interactive package \citealt{guillerme2020shifting}).
-Importantly, it should always be borne in mind that empirical mechanisms ought of course to be more complex in real world scenarios.
-For example, evolutionary mechanisms can vary through time or per clades (and so patterns are often the results of multiple processes); or ecological mechanisms are often intertwined and work together to generate a pattern (e.g. facilitation + competition; \citealt{danet2024species}), or counteract each others by operating on the trait space in opposite directions (e.g., competition + filtering; \citealt{mammola2024functional})
+Here is a proposed step by step protocol that could help one decide what to measure by clearly specifying their mechanism, process and pattern of interest prior to any functional diversity or disparity measurements.
+
+\textit{We have a data of bird traits for native species in Hawaii through time before and after 1500.
+We want to know how anthropogenic stresses (hunting, invasive species, land use change) have affected the trait diversity in native Hawaiian birds.}
+
+\begin{figure}[!htbp]
+\centering
+   \includegraphics[width=0.5\textwidth]{Figures/empirical_example.pdf}
+\caption{Example of a traitspace based on the empirical data described above.}
+\label{Fig:trait_space_example}
+\end{figure}
+\bigskip
+
+\subsubsection{Frame the question:}
+
+\begin{itemize}
+
+    \item \textbf{Why?} Think of the broad biological mechanism of interest. In our example, this could be asking why (due to what mechanism) has the community changed: \textit{the trait diversity has changed due to a filtering mechanism where anthropogenic stressors affect specific species with specific traits (e.g. through hunting, predation on eggs by mammals, etc...).}
+    \item \textbf{How?} With the data we have at hand, identify the process we could analyse. In our example, this could be native bird species traits through time: \textit{how did filtering affect the native species after 1500?}
+
+\end{itemize}
+
+Although asking \textbf{why} and \textbf{how} is a relatively standard step in the literature, we suggest that proposing them in this framework more easily leads to the next, often less asked question of what pattern to capture:
+
+\begin{itemize}
+    \item \textbf{What?} Choose the appropriate pattern that would capture changes through time in relation to a filtering mechanism. In our example, this could be a continuous metric that measures either changes in the trait space position or/and changes in the trait space side. The idea being that filtering would remove either the edges or a specific portion of the trait space without affecting to many other parts of the trait space.
+\end{itemize}
 
 
-% Maybe use the empirical example here.
+\subsubsection{Find the type of metrics of interest:}
 
-1 - Which questions to ask yourself?
+Once the one has clearly defined the pattern they want to capture (\textbf{what}), we believe it gets easier to pick up the type of metric that would be the most adequate.
+For example, we can follow the suggestions from \cite{mammola2021concepts} (Table \ref{Tab:box2}).
 
-- Why? Think of the broad biological mechanism of interest. For example: ``we are interested in inter specific competition''.
-- How? With the data you have at hand, identify the process you could analyse. For example ``we have data collected on two islands, one control with only one species and another one with two species''.
-- What? Then select your pattern and test whether it could answer your question.
+\begin{table}
+\center
+\begin{tabular}{c | c | c}
+\textbf{Metric type}  & \textbf{Question} & \textbf{Are we interested?}\\
+\hline
+Size & Is one group bigger than another one? & Yes \\
+Divergence & Is one group more spread than another one? & Not really \\
+Regularity & Is one group more evenly disperse in space? & Not really \\
+Something else  & Does the position of a group changes in space? & Yes \\
+\end{tabular}
+\caption{\textbf{Example of questions we can ask with the different metric types.}The categories are arbitrary and are taken from \cite{mammola2021concepts}}
+\label{Tab:box2}
+\end{table}
 
-2 - Choose your broad type of metric: what pattern do you want to capture?
 
--Is one group bigger than an other? -> Richness
--Is one group more dispersed that the other? -> Divergence
--Is one group more evenly dispersed in the space than another? -> Regularity 
--Is it something else -> There are many many more subtleties to these broad distinctions in the literature!
+\subsubsection{Get the metric most appropriate to your data:}
 
-3 -  Choose your broad method: what method to use to capture the pattern
-
+So to describe the pattern for our specific example question, we will be interested in size and position of the trait space.
+There is a lot of different metrics that capture changes in size and in position of the trait space and their choice should depend on the following questions:
 Do you have a lot of data or not?
 Do you have a lot of computational time available or not?
 What type of data do you use (categorical, continuous, transformed)?
+Are you familiar with the metric (is there a software implementation you can use)?
+Of course, these are example questions and are not necessary the only ones you should ask.
+\cite{mammola2021concepts} proposes a very handy flow chart.
 
-See Figure 1 in \cite{mammola2021concepts}.
+Here following our experience and the nature of the data, we will measure the absolute size of the trait space using the convex hull size and the potential displacement of the trait space using the displacement metric \citep{guillerme2020shifting}.
+Results are displayed in tables \ref{Tab:results_convhull} and \ref{Tab:displacement}.
 
-4 - Optional: check whether your method works!
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrr}
+  \hline
+ group & n & convex hull volume \\ 
+  \hline
+ current &  37 & 25.44 \\ 
+ pre 1500 &  63 & 60.84 \\ 
+   \hline
+\end{tabular}
+\caption{Trait space size measured as the convex hull volume for both groups.}
+\label{Tab:results_convhull}
+\end{table}
 
-Depending on some properties of your space, you can use simulations to see if it works!
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrrrrrr}
+  \hline
+ group & n & median displacement & 2.5\% & 25\% & 75\% & 97.5\% \\ 
+  \hline
+ current &  37 & 1.04 & 0.95 & 0.99 & 1.05 & 1.10 \\ 
+ pre 1500 &  63 & 1.12 & 0.85 & 0.94 & 1.19 & 1.34 \\ 
+   \hline
+\end{tabular}
+\caption{Trait space position distribution measured as the displacement metric: the percentages are the confidence intervals of the distribution.}
+\label{Tab:displacement}
+\end{table}
 
+Note that it is also possible to test whether the metric is actually capturing the broad mechanism of interest using evolutionary simulations (e.g. by simulating evolutionary scenarios that would include species traits that would go through a filtering mechanisms - \citealt{guillerme2024treats}) or, like in this manuscript, using stressors (e.g. by using the \texttt{moms} interactive package \citealt{guillerme2020shifting}).
 
-% Therefore we advise workers to test assumptions specifically about their trait space and ``play'' around with it before choosing their functional diversity/disparity framework and metric of interest.
 
 \bigskip
 \bigskip
 \hrule
 \hrule
+
+
 
 \section{Conclusion}
 Different ecological and evolutionary processes or mechanisms do not always results in different patterns.
