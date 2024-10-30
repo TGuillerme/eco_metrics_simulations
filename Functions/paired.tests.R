@@ -19,6 +19,7 @@ paired.tests <- function(one_stressor) {
     stressor_list <- unlist(apply(results_table[, seq(from = 2, to = ncol(results_table), by = 2)], 2, list), recursive = FALSE)
     ## Calculate all the differences
     test_list <- mapply(t.test, random_list, stressor_list, MoreArgs = list(paired = TRUE), SIMPLIFY = FALSE)
+    ses_list <- mapply(function(x,y) return(effectsize::hedges_g(x, y)[[1]]), random_list, stressor_list)
     ## Extract the parameters (d, t and p)
     extract.params <- function(one_test) {
         return(c(d = one_test$estimate[[1]],
@@ -27,6 +28,7 @@ paired.tests <- function(one_stressor) {
     }
     test_table <- t(do.call(cbind, lapply(test_list, extract.params)))
     rownames(test_table) <- gsub("random_", "", rownames(test_table))
+    test_table <- cbind(test_table, ses = ses_list)
     
     ## Splitting by rm levels
     test_list <- split.metric(t(test_table))

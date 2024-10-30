@@ -27,9 +27,12 @@ get.columns <- function(one_stressor, columns, symbols, digits) {
     extracted_data <- lapply(columns, function(col, dat) dat[, col, drop = FALSE], dat = one_stressor)
     ## Fancied data
     fancy_data <- lapply(extracted_data, function(col, symbols, digits) apply(col, 1, p.symbol, symbols, digits), symbols = symbols, digits = digits)
+
+    fancy_data1 <- lapply(extracted_data, function(col, symbols, digits))
+
     ## Combine that
     fancy_data <- as.data.frame(do.call(cbind, fancy_data))
-    colnames(fancy_data) <- colnames(one_stressor)[unlist(lapply(columns, function(x) x[1]))]
+    colnames(fancy_data) <- colnames(one_stressor)[unlist(lapply(columns, function(x) x[w]))]
     return(fancy_data)
 }
 
@@ -38,7 +41,7 @@ p.symbol <- function(x, symbols, digits) {
     ## Arbitrary p_value limits
     limits <- c(0.1, 0.05, 0.01, 0.001)
 
-    if(length(x) == 1) {
+    if(missing(symbols)) {
         ## No p-value symbol needed
         return(round(x, digits))
     } else {

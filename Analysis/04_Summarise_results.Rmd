@@ -195,12 +195,12 @@ model_table_4d  <- fancy.table(model_fits_4d, columns = list(c(3,4), 5))
 model_table_5d  <- fancy.table(model_fits_5d, columns = list(c(3,4), 5))
 model_table_8d  <- fancy.table(model_fits_8d, columns = list(c(3,4), 5))
 model_table_emp <- fancy.table(model_fits_emp, columns = list(c(3,4), 5))
-null_table_2d   <- fancy.table(null_differences_2d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
-null_table_3d   <- fancy.table(null_differences_3d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
-null_table_4d   <- fancy.table(null_differences_4d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
-null_table_5d   <- fancy.table(null_differences_5d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
-null_table_8d   <- fancy.table(null_differences_8d, columns = list(c(1,3), c(4, 6), c(7, 9), c(10, 12)))
-null_table_emp  <- fancy.table(null_differences_emp, columns = list(c(1,3), c(4, 6)))
+null_table_2d   <- fancy.table(null_differences_2d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
+null_table_3d   <- fancy.table(null_differences_3d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
+null_table_4d   <- fancy.table(null_differences_4d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
+null_table_5d   <- fancy.table(null_differences_5d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
+null_table_8d   <- fancy.table(null_differences_8d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
+null_table_emp  <- fancy.table(null_differences_emp, columns = list(c(1,3), c(1,3)+4))
 ```
 
 ```{r, echo = FALSE}
@@ -213,7 +213,7 @@ kable(model_table_3d, caption = "Results of the model scaled metric ~ removal le
 ```
 ```{r, echo = FALSE}
 rownames(model_table_emp) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-kable(model_table_emp, caption = "Results of the model scaled metric ~ removal level for the empirical data (3D)", align = "c")
+kable(model_table_emp, caption = "Results of the model scaled metric ~ removal level for the empirical data (5D)", align = "c")
 ```
 ```{r, echo = FALSE}
 rownames(null_table_2d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
