@@ -179,7 +179,7 @@ plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "
 
 ## Paper figure 1
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 plot.text.box <- function(my_text, ...) {
   plot(1,1, xaxt = "n", yaxt = "n", xlab = "", ylab = "", col = "white", pch = 21)
   text(c(1,1), my_text, ...)
@@ -194,23 +194,23 @@ plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (1D)"
 plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (2D)", col = c("lightgrey", "blue"), trait = c(1,2), xlab = "Trait 1", ylab = "Trait 2")
 
 ## Stressors
-plot.text.box("B) Resampling\nwith stressor:\nnull mechanism", cex = 2)
+plot.text.box("B) Null mechanism:\nno specific\nmetric change", cex = 2)
 plot.1D(trait_space, reduction = random_reduction, null = !random_reduction, main = "1D null mechanism")
 plot.2D(trait_space, reduction = random_reduction, null = !random_reduction, main = "2D null mechanism")
 
-plot.text.box("C) Resampling\nwith stressor:\napproximating\nequalizing\nmechanism", cex = 2)
+plot.text.box("C) Approximating\nequalizing\nmechanism:\nexpected changes\nin richness", cex = 2)
 plot.1D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "1D equalising mechanism")
 plot.2D(trait_space, reduction = equalizing_fitness, null = random_reduction, main = "2D equalising mechanism")
 
-plot.text.box("D) Resampling\nwith stressor:\napproximating\nfacilitating\nmechanism", cex = 2)
+plot.text.box("D) Approximating\nfacilitating\nmechanism:\nexpected changes\nin regularity", cex = 2)
 plot.1D(trait_space, reduction = facilitation, null = random_reduction, main = "1D facilitation mechanism")
 plot.2D(trait_space, reduction = facilitation, null = random_reduction, main = "2D facilitation mechanism")
 
-plot.text.box("E) Resampling\nwith stressor:\napproximating\nfiltering\nmechanism", cex = 2)
+plot.text.box("E) Approximating\nfiltering\nmechanism:\nexpected changes\nin position", cex = 2)
 plot.1D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "1D filtering mechanism")
 plot.2D(trait_space, reduction = filtering_reduction, null = random_reduction, main = "2D filtering mechanism")
 
-plot.text.box("F) Resampling\nwith stressor:\napproximating\ncompetition\nmechanism", cex = 2)
+plot.text.box("F) Approximating\ncompetition\nmechanism:\nexpected changes\nin divergence", cex = 2)
 plot.1D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "1D competition mechanism")
 plot.2D(trait_space, reduction = !competitive_exclusion, null = random_reduction, main = "2D competition mechanism")
 
