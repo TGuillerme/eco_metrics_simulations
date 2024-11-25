@@ -112,7 +112,7 @@ However, as the diversity of functional diversity metrics and methods increases,
 We studied the ability of different functional diversity metrics to recover patterns and signals from different processes linked to common assembly mechanisms in community ecology; such as environmental filtering, competitive exclusion, equalising fitness, and facilitation.
 Using both simulated data and an empirical dataset affected by more complex and nuanced mechanisms, we tested the effectiveness of different space occupancy metrics to recover the simulated or empirical changes.
 We show that different metrics perform differently when trying to capture signal from different approximation of common mechanisms relative to no mechanism at all (null).
-For example the competition was harder to disentangle from the null mechanisms compared to facilitation in our simulations.
+For example competition was harder to disentangle from the null mechanisms compared to facilitation in our simulations.
 This emphasises the importance of not using a one-size-fits-all metric.
 Instead, researchers should carefully consider and test whether a particular metric will be effective in capturing a pattern of interest.
 
@@ -174,18 +174,21 @@ In such a scenario, measuring the occupied area (i.e. $km^{2}$) of each populati
 In this simplistic example, the functional overlap between populations (``what and how'') might be more appropriate.
 See for example \citealt{carvalho2020decomposing} for a discussion of how Darwin's finches share resources depending on the existence or not of competition.
 
-Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations} and \ref{Tab:mechanisms}).
-Our goal is to the relative performance of different metrics to capture the patterns of different mechanisms by comparing the score of various metrics under specifically approximated mechanisms and the absence of any specific mechanism (null mechanism).
-We expect that our ability to capture a pattern does not only depends on the choice of metric (what) but also on the process and mechanism at hand (how and why).
-To apply our framework to a realistic context, we also used an empirical dataset of Hawaiian bird traits and looked at how anthropogenic pressures have shaped the trait space (mechanism; why) based extinction events on Hawaiian islands before and after the year 1500 (process; how) and how different metrics (pattern; what) can lead to different interpretations of the data.
-We show that, that with a fixed process and mechanisms approximation, the choice of the statistic to describe the pattern (the disparity or functional diversity metrics) has a great impact on the interpretation of the data with the exact same data being sometimes interpreted in opposite ways.
+Through a simulation exercise, we analysed different patterns (what) across different processes (how) approximating different mechanisms (why) of interaction between organisms: equalisation, filtering, facilitation and competition (Figure \ref{Fig:simulations} and Table \ref{Tab:mechanisms}).
+Our goal is to assess the relative performance of different metrics in capturing the patterns of different mechanisms by comparing the score of various metrics under specifically approximated mechanisms and the absence of any specific mechanism (null mechanism).
+We expect that our ability to capture a pattern does not only depend on the choice of metric (what) but also on the process and mechanism at hand (how and why).
+To apply our framework to a realistic context, we also used an empirical dataset of Hawaiian bird traits and looked at how anthropogenic pressures have shaped the trait space (mechanism; why) based on extinction events on Hawaiian islands before and after the year 1500 (process; how), and how different metrics (pattern; what) can lead to different interpretations of the data.
+We show that, with a fixed process and mechanisms approximation, the choice of statistic to describe the pattern (the disparity or functional diversity metrics) has a great impact on the interpretation of the data, with the exact same data being sometimes interpreted in opposite ways.
 
 \section{Methods}
 \subsection{Simulating trait space patterns}
 
 First, we simulated a single random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
 This trait was simulated either as a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensions.
-These observations can represent any biological focal entities, e.g. tips in a phylogenetic tree, individuals, species, populations, OTUs, etc. %@@@ link to glossary
+Note here that we refer to traits as any measurable aspect of an organism (\textit{sensu} \cite{mcgill2006rebuilding} - but see \cite{dawson2021traits} for nuances in what researchers perceive).
+These aspects are often expressed in one dimension but can in fact be described in any number of dimensions.
+For example, for trait defined as ``leaf insertion angle'', this can measured in one dimension (an angle in degrees) or three dimensions (the same angle expressed as the trigonometric relation of three sides of a triangle).
+These observations on which the traits are measured can represent any biological focal entities, e.g. tips in a phylogenetic tree, individuals, species, populations, OTUs, etc. (see Glossary table in supplementary materials).
 This resulted in a neutral null model of trait evolution with no effect of competition, extinction, selection or other processes (\textit{sensu} \citealt{bausman2018modeling}).
 We refer to this as the ``non-stressed trait space''.
 
@@ -197,7 +200,7 @@ We used the following specific algorithms (Figure \ref{Fig:simulations}; Table \
 
 \begin{itemize}
 \item Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data.
-This approximates our \textbf{null mechanism}. This is used to establish a reference to be compared to the other mechanisms and to test how removing elements in a specific way influences the metrics scores compared to removing them randomly. We chose this algorithm to approximate the absence of any specific stressor (i.e. the removal of data only changes the number of observations, not the properties of the trait space).
+This approximates our \textbf{null mechanism}. This is used to establish a reference to be compared to the other mechanisms and to test how removing elements in a specific way influences the metrics scores compared to removing them randomly. We chose this algorithm to approximate the absence of any specific stressor (i.e. the removal of data only changes the number of observations, not the properties of the trait space in a systematic way).
 
 \item Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius) $\rho$ of the centre of the trait space.
 $\rho$ is estimated for each trait space to match the required intensity. For example, for one trait space, the algorithm estimated $\rho_{20}$ to be the minimum radius excluding 20\% of the observations, $\rho_{40}$ the one removing 40\%, etc. (with $\rho_{20} > \rho_{40} > \rho_{60} > \rho_{80}$).
@@ -209,31 +212,31 @@ $D$ is a distance estimated for each trait space to correspond to the minimal Eu
 For example $D_{20}$ is the distance that excludes any $n_{20}$ pairs of points that are a distance of at least $D_{20}$ from each other, $D_{40}$ is the distance that excludes $n_{40}$ pairs, etc. (with $D_{20} > D_{40} > D_{60} > D_{80}$).
 Note that this algorithm is not directly based on the change of average density but rather on the change in pairwise distance between observations.
 This approximates our \textbf{facilitation mechanism} (i.e. the points left are only ones that are close to at least another point in space).
-We chose this algorithm to approximate facilitation mechanism where a stressor could increase the probability of extinction for observations that are more isolated in the trait space.
-I.e. pairs of observations that share a close trait combinations are more likely to remain (i.e. observations adjacent to each other in the trait space).
+We chose this algorithm to approximate the facilitation mechanism where a stressor could increase the probability of extinction for observations that are more isolated in the trait space.
+I.e. pairs of observations that share similar trait combinations are more likely to remain (i.e. observations adjacent to each other in the trait space).
 
 \item Shifting space: by removing the required amount of data from a distance (radius) $\rho'$ of the observation with the maximum numerical value on all dimensions.
 This is similar to the decreasing size algorithm but instead of choosing $\rho$ to be the radius from the centre of the trait space, $\rho'$ is a radius from the ``top right corner'' of the trait space.
 In other words the centre of the radius $\rho'$ is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with $\rho'_{20} > \rho'_{40} > \rho'_{60} > \rho'_{80}$).
 This approximates our \textbf{filtering mechanism}.
-We chose this algorithm to approximate a flitering assuming that a stressor that could increase the probability of extinction for observations further from some trait combination optimum.
+We chose this algorithm to approximate a flitering mechanism assuming a stressor that could increase the probability of extinction for observations further from some trait combination optimum.
 This is similar to our equalising mechanism approximation but with the optimum not being in the center of the trait space (a region with a high density of observations) but with the optimum being in a corner of the trait space (a region with low density).
 
 \item Increasing evenness: by resampling the proportion of data (i.e. 20\%, 40\%, 60\% or 80\%) but with skewed resampling probabilities.
 In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.
-This is done by selecting of $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' \citep[\texttt{bw.nrd0()} function in \texttt{R};][]{silverman1986density}.
-Each of these discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
-Where $p$ is factor increasing the scaling power of the algorithm (here we used $p=3$).
+This is done by selecting $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' \citep[\texttt{bw.nrd0()} function in \texttt{R};][]{silverman1986density}.
+Each discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
+Where $p$ is a factor increasing the scaling power of the algorithm (here we used $p=3$).
 In other words, observations in categories with a low density ($b<0.5$) were more likely to be resampled and the ones in categories with high density ($b>0.5$) were less likely to be resampled.
-This approximates our \textbf{competition mechanism}, were observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.
+This approximates our \textbf{competition mechanism}, where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.
 We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination.
-This could approximate the fact that observation that have similar trait combinations are more likely to go extinct, due to competition (e.g. using the same resources). 
+This could approximate the fact that observations that have similar trait combinations are more likely to go extinct due to competition (e.g. using the same resources). 
 \end{itemize}
 
 For the decreasing size, increasing density and shifting space stressors, we estimated the parameters $\rho$, $D$ and $\rho'$ recursively with the \texttt{dispRity} package to obtain the required amount of data to be removed (\texttt{dispRity::reduce.space}, \citealt{guillerme2018disprity,guillerme2020shifting}).
-Note that the algorithm used here to simulate the stressors depend, to some extent, to the distribution of the data for each trait space.
-The algorithms used can lead to similar stressors effects depending on the simulated data distribution.
-For example, ``increasing density'' and ``decreasing size'' stressors will lead to just what their name suggest if the observations are uniformly distributed (just average increase in density for ``increasing density'' and just overall decrease in size for the ``decreasing size'' stressors) but will have more or less similar effects (albeit no identical) in the case of a normal distribution (average increase in density and overall decrease in size for both ``increasing density'' and ``decreasing size'' stressors.)
+Note that the algorithm used here to simulate the stressors depends, to some extent, on the distribution of the data for each trait space.
+The algorithms used can lead to similar stressor effects depending on the simulated data distribution.
+For example, ``increasing density'' and ``decreasing size'' stressors will lead to just what their names suggest if the observations are uniformly distributed (just average increase in density for ``increasing density'' and just overall decrease in size for the ``decreasing size'' stressors) but will have more or less similar effects (albeit not identical) in the case of a normal distribution (average increase in density and overall decrease in size for both ``increasing density'' and ``decreasing size'' stressors.)
 These steps resulted in 3420 simulated trait spaces (171 simulated spaces $\times$ 5 stressors $\times$ 4 intensities of data removal).
 We used 171 replicates because that was empirically the smallest number of replicates required to reach a variance between replicates lower than 1\% across all metrics (i.e. any additional replicates beyond 171 added less that 1\% extra variance).
 See Table \ref{Tab:mechanisms} for a biological description of these stressors and Figure \ref{Fig:simulations} for a visual description of them.
@@ -245,9 +248,10 @@ Furthermore, in real-world scenarios, we do not expect these mechanisms to act i
 However, this is not tackled here for both simplicity and to understand how they work in isolation. 
 Therefore the prediction of how each different mechanism approximation would affect the metrics (Table \ref{Tab:mechanisms}) should be taken as a cautious guideline when dealing with empirical data where the distribution of the data might not be normal and where it could be affected by multiple mechanisms.
 
-We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure \ref{Fig:simulation_results}) for 2 and 8 dimensional traits with not correlation between each dimensions in each simulation pipeline (supplementary materials).
-We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait} - note that int the supplementary figures, we measured the \texttt{TPD} metrics on only the four first dimensions) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
-This curse changes the properties of space occupancy in a non-linear way depending on the observation's distribution and the number of dimensions.
+We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure \ref{Fig:simulation_results}), and for 2 and 8 dimensional (see supplementary materials).
+In each pipeline, the dimensions where simulated as uncorrelated.
+We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait} - note that in the supplementary figures, we measured the \texttt{TPD} metrics on only the four first dimensions) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
+This curse changes the properties of space occupancy in a non-linear way depending on each observation's distribution and the number of dimensions.
 For example, the volume of a trait space (or hypervolume when using more than 3 dimensions) typically tends to zero in a high number of dimensions.
 However, the rate at which it approaches zero is not linear and depends on the distribution of each observation on every dimension.
 This makes it practically difficult to compare two randomly generated spaces with similar characteristics (e.g. for two spaces with $200$ observations and $10$ dimensions generated in the exact same way, one might have a hypervolume of nearly $0$ and the other one of $10^5$).
@@ -261,15 +265,15 @@ This is often not the case in empirical cases (e.g. see our empirical example) w
 \begin{tabular}{p{0.2\linewidth}|p{0.2\linewidth}|p{0.4\linewidth}|p{0.2\linewidth}}
 \textbf{Approximated mechanism (biological)} & \textbf{Used mechanism (algorithm in \texttt{dispRity::reduce.space})} & \textbf{Stressor description} & \textbf{Type of metric expected to recover the mechanism}\\
 \hline
-  Null mechanism & Random removal (``random'') & No overall change in observations' traits or community structure except for the reduction in the number of observations. & Metrics sensitive to the amount of data \\
+  Null mechanism & Random removal (``random'') & No overall systematic change in observations' traits or community structure except for the reduction in the number of observations. & Metrics sensitive to the amount of data \\
   
-  Equalising fitness & Size change (``size'') & When observations with trait combinations that are more extreme (i.e. observations located away from the centre of the trait space) are disadvantaged due to some resource concentration gradient \citep{chesson2000mechanisms,barot2004mechanisms}. & Metrics capturing changes in richness (but not divergence and regularity) \\
+  Equalising fitness & Size change (``size'') & When observations with trait combinations that are more extreme (i.e. observations located away from the centre of the trait space) are disadvantaged due to some resource concentration gradient \citep{chesson2000mechanisms,barot2004mechanisms}. & Metrics mainly capturing changes in richness (but less in divergence and not in regularity) \\
   
-  Facilitation & Density change (``density'') & When observations with closely shared trait combinations (i.e. located close together in the trait space) are more likely to survive the stressor \citep{bruno2003inclusion, danet2024species}. In other words, this simulates the idea that some observations are more likely to be resilient if they are present in a community of observations (e.g. a community of species) with shared traits rather than the opposite. & Metrics capturing changes in regularity (but not richness and regularity) \\
+  Facilitation & Density change (``density'') & When observations with similar trait combinations (i.e. located close together in the trait space) are more likely to survive the stressor \citep{bruno2003inclusion, danet2024species}. In other words, this simulates the idea that some observations are more likely to be resilient if they are present in a community of observations (e.g. a community of species) with shared traits rather than the opposite. & Metrics capturing changes in regularity (but not richness and divergence) \\
   
   Environmental filtering & Position change (``position'') & When an increase in observations' trait similarity happens through some strong abiotic constraints \citep{cornwell2006trait}. For example, some trait combinations become more and more unlikely due to some environmental constraints (i.e. some regions of the trait space become unsuitable). & Metrics capturing changes in position (and richness) \\\\
   
-  Competitive exclusion & Evenness change (``evenness'') & When functionally similar observations compete more intensively with one another than with functionally dissimilar observations (``competitive exclusion principle''; \citealt{hardin1960competitive}). At the extreme, it implies that only dissimilar individuals will coexist (``limiting similarity principle''; \citealt{macarthur1967limiting}). & Metrics capturing changes in divergence (but not richness and regularity) \\\\
+  Competitive exclusion & Evenness change (``evenness'') & When functionally similar observations compete more intensively with one another than with functionally dissimilar observations (``competitive exclusion principle''; \citealt{hardin1960competitive}). At the extreme, it implies that only dissimilar observations will coexist (``limiting similarity principle''; \citealt{macarthur1967limiting}). & Metrics capturing changes in divergence (but not richness and regularity) \\\\
 
     \end{tabular}
     \caption{\scriptsize{\textbf{Description of the stressors applied to the simulated data and the mechanism each approximated.} Here we distinguish between the biological mechanism we are trying to simulate and the algorithmic one we used to simulate it. We also provide a more detailed description of the stressor. Note that in biological data, we don't expect any of the mechanisms to act on communities alone (e.g. equalising fitness and facilitation can both act on the distribution of species traits). Nor do we expect their effects to be unidirectional (for example, equalising fitness can happen both by removing the edges or changing the position of a trait distribution), thus, the type of metric expected to recover the mechanism can be variable. These mechanisms serve as a simplified description of reality for the narrative purpose of this paper.}
@@ -281,27 +285,27 @@ This is often not the case in empirical cases (e.g. see our empirical example) w
 \centering
    \includegraphics[width=0.5\textwidth]{Figures/simulation_protocol_explained.pdf}
 \caption{\scriptsize{Illustration of the simulation protocol used in this paper.
-A) we simulated a pure birth-tree with a trait evolving under a Brownian Motion process until reaching 200 observations resulting a trait space of 2, 4, or 8 dimensions.
-The first plot on row A illustrates one such simulation in one dimensions through time (with time on the horizontal axis and trait value for one dimension on the vertical axis).
-The second plot on the same row shows the same results but with 2 dimensions of the trait represented here.
+A) we simulated a pure birth-tree with a trait evolving under a Brownian Motion process until reaching 200 observations resulting in a trait space of 2, 4, or 8 dimensions.
+The first plot on row A illustrates one such simulation in one dimension through time (with time on the horizontal axis and trait value for one dimension on the vertical axis).
+The second plot on the same row shows the same results but with a two dimensional trait represented here.
 We then applied different stressors to the resulting trait space.
 We represent the observations removed by the stressors in blue and the ones kept in the trait space in orange.
 The first column (histograms) illustrates the distribution of observations in one dimension of the 2D, 4D or 8D traits with the overlap between the removed (blue) and kept (orange) observations in brown (note we did not measure any metric on 1D spaces).
-The second column illustrate the trait in 2 dimensions.
+The second column illustrates the trait in 2 dimensions.
 We did not illustrate the data beyond 2 dimensions for traits in 4 or 8 dimensions.
 We used the following stressors:
 B) \textbf{null mechanism}: randomly removing a proportion of the observations;
 C) \textbf{approximating equalising mechanism}: removing observations on the edge of the distribution;
 D) \textbf{approximating facilitation mechanism}: removing observations to reduce the distance between pairs of observations (increasing local density; decreasing evenness);
-E) \textbf{approximating filtering mechanism}: removing observations on one extreme of the distribution;
-F) \textbf{approximating competition mechanism}: proportionally removing observations on the centre of the distribution.
+E) \textbf{approximating filtering mechanism}: removing observations from one extreme of the distribution;
+F) \textbf{approximating competition mechanism}: proportionally removing observations from the centre of the distribution.
 The expected changes indicate the main type of metric affect by the stressor (following the aspects in \citealt{mammola2021concepts}).
 G) we presented the results of the simulations as the scaled metric scores for the approximated mechanisms (C to F) relative to the null mechanism. The dot represents the median metric score and the thick and dashed lines respectively the 50\% and 95\% confidence intervals.}}
 \label{Fig:simulations}
 \end{figure}
 \bigskip
 
-\subsubsection{Metrics for measuring trait space occupancy (\textit{aka} function diversity, dissimilarity, disparity):}
+\subsubsection{Metrics for measuring trait space occupancy (\textit{aka} functional diversity, dissimilarity, disparity):}
 
 We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics (trait space occupancy metrics; \cite{mammola2021concepts}) using 12 metrics (Tab. \ref{Tab:metrics}):
 1) Richness, encompassing metrics reflecting the sum of differences among observations; (4 metrics, equivalent to size metrics in \citealt{guillerme2020shifting});
