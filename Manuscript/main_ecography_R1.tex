@@ -353,8 +353,8 @@ Regularity & Trait Probability Density & Functional evenness & An index of the s
 
 \subsubsection{Comparing and scaling the results to the random removals (null stressor)}
 
-To understand the ability of each metric to capture a mechanism of interest, we compared their scores relatively to the same metric scores of a null mechanism.
-To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first scaled each metrics by their absolute greatest values to scale them between $0$ and $1$.
+To understand the ability of each metric to capture a mechanism of interest, we compared their scores relative to the same metric scores of a null mechanism.
+To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first scaled each metric by their absolute greatest value to scale them between $0$ and $1$.
 We then calculated the difference between each scaled metric score under the stressors of interest (approximating equalisation, facilitation, filtering and competition) and the null stressor for each different stressor level (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
 This resulted in each metric being scaled between $–1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs \ref{Fig:simulations}, \ref{Fig:simulation_results} and \ref{Fig:empirical_results}).
 We interpret this last scenario as the metric score performing poorly, i.e. it is unable to clearly distinguish between a random removal of elements and a non random one.
@@ -363,29 +363,30 @@ The results of these tests are displayed in figure \ref{Fig:simulation_results} 
 
 \subsubsection{Measuring the effect of the strength of the stressor}
 
-Finally, we measured the effect of the different strengths of the stressors (i.e. removing 20\%, 40\%, 60\% and 80\% the data) by fitting a linear regression using the scaled metric difference to null score as a function of the amount of data removed.
-For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables $1$ to $3$ and whether the slope was clearly distinguishable from $0$ (Figure \ref{Fig:simulation_results}).
+Finally, we measured the effect of the different strengths of the stressors (i.e. removing 20\%, 40\%, 60\% and 80\% the data) by fitting a linear regression using the scaled metric difference to the null score as a function of the amount of data removed.
+For each of these models, we reported the model fit (adjusted $R^2$) in the supplementary tables $1$ to $3$ and whether the slope was clearly distinguishable from $0$ (Figure \ref{Fig:simulation_results}; \textit{sensu} \cite{dushoff2019can}).
 This allowed us to see if there was any predictable linearity in the metric scores.
-In other words testing whether the metric scores relative to null removals where linearly scaling with the amount of data removed.
+In other words testing whether the metric scores relative to null removals were linearly scaling with the amount of data removed.
 
 
 \subsection{Empirical data}
 
 
 We applied all metrics to an empirical dataset of bird extinctions on six Hawaiian islands (Hawaii, Kauai, Lanai, Maui, Molokai, Oahu), an archipelago which has suffered large numbers of anthropogenic extinctions due to a range of extinction drivers \citep{Walther2022}.
-A prehistoric species list (avifauna known to be present prior to human colonisation of the islands), historic species list (avifauna known to be present at $1500$ CE) and extant species list of the native community for each island was taken from \cite{matthews2023global} along with trait values for the extinct species (\textit{Asio flammeus} was removed from the historic and extant species lists as its colonisation status is uncertain).
+A prehistoric species list (avifauna known to be present prior to human colonisation of the islands), historic species list (avifauna known to be present at $1500$ CE) and extant species list of the native community for each island were taken from \cite{matthews2023global} along with trait values for the extinct species (\textit{Asio flammeus} was removed from the historic and extant species lists as its colonisation status is uncertain).
 We also added two marine species to the prehistoric species list; we compiled missing trait data for these two extinct species from \cite{sayol2021loss}.
-We extracted dimensions for extant species from the AVONET database \citep{tobias2022avonet}.
-We used $9$ morphological dimensions associated with dietary/foraging preference and dispersal ability \citep{pigot2020macroevolutionary,sheard2020ecological} to represent the functional diversity of the communities: mass; beak length (culmen); beak length (nares); beak width; beak depth; tarsus length; wing length; the length from the first secondary feather to the tip of the longest primary feather (Kipp's distance); and tail length.
+We extracted traits for extant species from the AVONET database \citep{tobias2022avonet}.
+We used $9$ morphological traits associated with dietary/foraging preference and dispersal ability \citep{pigot2020macroevolutionary,sheard2020ecological} to represent the functional diversity of the communities: mass; beak length (culmen); beak length (nares); beak width; beak depth; tarsus length; wing length; the length from the first secondary feather to the tip of the longest primary feather (Kipp's distance); and tail length.
 Traits were log transformed and standardised to a mean of $0$ and standard deviation of $1$, prior to analyses.
 
 The full trait dataset comprised $118$ bird species, all native species known to have existed on these islands over the last $125,000$ years.
 $55$ species are known to have gone extinct prior to $1500$ CE and $26$ after $1500$ CE.
+Note that we used the extinct species data as presented in \cite{matthews2023global}, and thus we do not include de Hawaiian species declared extinct by the IUCN in $2024$.
 For our analyses, we focused on two time periods: (i) the avifauna present in $1500$ CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
 We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-$1500$ CE extinctions (i.e., $118-55$ species; a species richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a species richness reduction of 69\%).
 
 To build the community trait space, we undertook a PCA including all $118$ species, which we then subset to calculate the trait space for the historic and extant datasets.
-We selected the first $5$ axes to represent the trait spaces that explained at least 95\% of the variance in each specific group (historic and extant species - see supplementary figure 7; following recommendations of \citealt{pigot2020macroevolutionary} and dimensionality selection method from \citealt{guillerme2023innovation}).
+We selected the first $5$ axes to represent the trait spaces that explained at least 95\% of the variance in each specific group (historic and extant species - see supplementary figure 7; following the recommendations of \citealt{pigot2020macroevolutionary} and the dimensionality selection method from \citealt{guillerme2023innovation}).
 We applied the same procedure as for the simulated data by simulating a null mechanism to compare to the observed ones by randomly removing $55$ and $81$ species for each stressor and scaling the results proportionally to this null mechanism (as described above).
 
 
@@ -399,7 +400,7 @@ The different columns represent the different stressors. The x-axes represent th
 Negative and positive values signify that the metric score for the stressor of interest is lower/higher than the one from the random stressor.
 The dots represent the median metric value, the full line their 50\% confidence interval (CI) and the dashed line their 95\% CI.
 The colours are here to visually separate the metrics by categories (green = richness, yellow = divergence, blue = regularity); the colour gradient within each row corresponds to a removal of respectively 80\%, 60\%, 40\% and 20\% of the data (from top to bottom).
-The grey line plots represent distributions of metric scores not clearly distinguishable from the random metric scores (paired t-test $p$ value $> 0.05$).
+The grey dots and corresponding CI lines represent distributions of metric scores not clearly distinguishable from the random metric scores (paired t-test $p$ value $> 0.05$).
 Grey lines in the background across the distributions of different removal amounts represent the fitted linear model ``centred and scaled metric score function of the amount of data removed''.
 Dashed thin grey lines represent non-significant linear models (slope's $p$ value $> 0.05$).
 The model results (including $R^{2}$ and t-statistics) are available in supplementary table 3.
@@ -410,9 +411,9 @@ Similar figures are available in the supplementary materials for 2 and 8 dimensi
 
 The ability of different metrics to capture the different patterns (and thus approximate the mechanisms) was highly variable.
 It ranged from metrics capturing no clear pattern (e.g. the Functional evenness based on the dendrogram method for competition) to metrics clearly capturing one specific pattern (e.g. Divergence based on probability density for the equalising mechanism for a decrease in space occupancy).
-Although most metrics captured a decrease in metric score relative to the amount of removed data, some metrics resulted into a score increase (e.g. the functional evenness based on hypervolume for the equalising mechanism) or non-linear responses (e.g. Alpha diversity based on dendrogram for the equalising mechanism).
+Although most metrics captured a decrease in metric score relative to the amount of removed data, some metrics resulted in a score increase (e.g. the Functional evenness based on a hypervolume for the equalising mechanism) or non-linear responses (e.g. Alpha diversity based on a dendrogram for the equalising epresent distributions of metric scores).
 Some cases resulted in an increase in metric score relative to random removals (positive values in Figure \ref{Fig:simulation_results}).
-Furthermore, although we predicted some more common changes in aspects of functional diversity for some specific mechanisms, our simulation show that most metrics under most aspects (richness, divergence or regularity) capture changes of trait space occupancy under any mechanism (see caveats section in the discussion).
+Furthermore, although we predicted some more common changes in aspects of functional diversity for some specific mechanisms, our simulations show that most metrics under most aspects (richness, divergence or regularity) capture changes of trait space occupancy under any mechanism (see caveats section in the discussion).
 
 \begin{figure}[!htbp]
 \centering
@@ -434,20 +435,16 @@ Note that this apparent global increase in most metric values may appear counter
 This is due to the scaling of the metrics compared to random equivalent extinctions.
 That is, Figure \ref{Fig:empirical_results} is not displaying absolute changes in trait space occupancy but rather changes in trait space occupancy relative to a crude neutral model where all species are equally likely to go extinct.
 
-More broadly, as can be seen from this empirical case, patterns are likely to be much less clear than with simulated data due to multiple stressors acting simultaneously.
-For instance, extensive hunting is likely to present equalising and/or filtering pressure due to the selective hunting of larger bodied species.
-In contrast, avian malaria, which is known to be an important extinction pressure of native Hawaiian birds \citep{samuel2011dynamics}, could show signals of a null mechanism since susceptibility to the disease is not trait-dependent (at least not in relation to the dimensions we have considered here), but is related to genetics (it mainly affects passerines, but there is considerable variation in susceptibility within passerines) and distributional range \citep{jessup2023wildlife}.
-
 \section{Discussion}
 
-\subsection{Results}
+\subsection{Capturing approximated mechanisms with different metrics}
 
 We tested 12 trait space occupancy metrics on simulated and empirical datasets to assess how each metric captures patterns of trait space changes based on stressors approximating ecological and evolutionary mechanisms.
 Our results show that different metrics capture different patterns (what) leading to inferring different processes (how) that can be proposed to explain different mechanisms (why).
 Therefore, the choice of trait space occupancy metric is essential to accurately describe a pattern of interest.
 We found that different metrics can capture changes in pattern relative to the null mechanisms in different ways depending on the approximated mechanism of interest.
 For example, for the approximated equalising mechanism, most metrics capture a pattern clearly smaller than the one from the null mechanism (i.e. randomly removing elements has more effects on the metric than removing them following the mechanism).
-However, some metrics (e.g. the functional evenness based on the hypervolume) capture a pattern clearly greater than the one from the null mechanism.
+However, some metrics (e.g. the Functional evenness based on the hypervolume) capture a pattern clearly greater than the one from the null mechanism.
 This means that changes in metric values can be counter intuitive and should always been interpreted in the context of the metric, data and question at hand.
 
 For example, say one is interested in looking at changes in functional diversity using a divergence metric using the probability density method (e.g. \texttt{TPD::REND}).
@@ -457,22 +454,24 @@ In our simulations, if the mechanism approximated was the equalising one, the pa
 In this made up example, the procedure is done in reverse order where the the pattern is specified first and then the process and the mechanism (``What process and mechanism are needed to interpret pattern X?'').
 In Box 2 we suggest an approach that specifies the process and the mechanism first (``how do I interpret pattern X under a specific process and mechanism''; see Box 2).
 
-Regarding the different approximated mechanisms, it is interesting to note that our different approximations lead to different general behaviours of the metrics: for example the range of variance of metrics behaviour is greater for the equalising mechanism and smaller for the competition mechanism (albeit nearly always distinguishable from the null mechanism).
-This differences in metrics variance per mechanisms suggest that some mechanisms leads to more subttle changes or/and that our approximation of these mechanisms can be variable (see caveats below).
+Regarding the different approximated mechanisms, it is interesting to note that our different approximations lead to different general behaviours of the metrics: for example the range of variance in the metric values is greater for the equalising mechanism and smaller for the competition mechanism (albeit nearly always distinguishable from the null mechanism).
+These differences in metric variance across mechanisms suggest that some mechanisms lead to more subtle changes or/and that our approximation of these mechanisms can be variable (see caveats below).
 
 \subsubsection{Empirical results}
 
-The empirical results are also intriguing in that the loss of Hawaiian bird's functional diversity since 1500 is not greater than expected by chance (at least for certain metrics; Figure \ref{Fig:empirical_results}) because one would expect that extinctions since 1500 target specific areas of functional diversity space (i.e. birds with specific trait combinations).
+The empirical results are also intriguing in that the loss of Hawaiian bird's functional diversity due to extinction is not greater than expected by chance (at least for certain metrics; Figure \ref{Fig:empirical_results}) because one would expect that extinctions target specific areas of functional diversity space (i.e. birds with specific trait combinations).
 This contrasts with studies that have shown that species with certain traits (e.g., larger species) are more likely to have gone extinct and thus that functional diversity loss is larger than through random extinctions (e.g. \citealt{sayol2021loss,Matthews2022}).
 This illustrates the importance of positing the mechanism and process of interest as well as the pattern to capture it before analysing the results.
-For example, for the divergence metrics using probability density, hypervolume or dendrogram methods, we recovered changes in trait space that are smaller than expected by chance for the species present before 1500 and larger than expected by change for the current species.
-This could lead to the interpretation that the trait space was not changed under any specific mechanism before 1500 (i.e. null mechanism) but that since then, specific mechanisms have been reducing specific areas of the trait space (e.g. filtering mechanism).
-However, when using a different metric (say the Rao's quadratic entropy based on distance matrices), the results would indicate that a reduction of specific areas of the trait space could have also occured before 1500 leading to very different interpretation of the results.
+For example, for the divergence metrics using probability density, hypervolume or dendrogram methods, we recovered changes in trait space that are smaller than expected by chance when focusing on all extinctions and larger than expected by chance when considereing only pre-$1500$ extinctions.
+% This could lead to the interpretation that the trait space was not changed under any specific mechanism before $1500$ (i.e. null mechanism) but that since then, specific mechanisms have been reducing specific areas of the trait space (e.g. filtering mechanism).
+% However, when using a different metric (say the Rao's quadratic entropy based on distance matrices), the results would indicate that a reduction of specific areas of the trait space could have also occured before $1500$ leading to very different interpretation of the results.
+%TM: can we make this interpretation? as this isn't the two time periods, i.e., there isn't a before and after 1500 comparison. It is all extinctions, and then just pre-1500 extinctions. 
+%TM: And also see my previous comment - is not saying the opposite? That there was some mechanism pre 1500? But not when considering all extinctions?
 
-Our results also indicate that although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines (approximatively 58\%), the majority of global known anthropogenic extinctions (approx. 75\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
-However, in Hawaii, where the same proportion of known species were passerines (approx. 58\%), the opposite is true: the majority of extinctions (approx. 60\%) have been of passerine species.
+Our results indicating that the loss of functional diversity (based on several metrics) was not more than expected by chance when focusing on all extinctions could be due to the fact that although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines (approximatively $58$\%), the majority of global known anthropogenic extinctions (approx. $75$\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
+However, in Hawaii, where the same proportion of known species were passerines (approx. $58$\%), the opposite is true: the majority of extinctions (approx. $60$\%) have been of passerine species.
 It is important to note that we are not implying that there existed little morphological variation within extinct Hawaiian passerines - indeed, many of these extinctions involved the honeycreepers, a famous adaptive radiation involving substantial evolution of beak morphology \citep{Walther2022} - but simply that this morphological variation is less than that observed across all birds.
-But these results, given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines,  also indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
+Given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines, our results indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
 In addition, it is worth stressing that these analyses included marine species (which constitute less than 4\% of  known extinctions in Hawaii, while making up 11\% of the prehistoric assemblage) and different results may have been found if focusing exclusively on terrestrial birds.
 
 More broadly, as can be seen from this empirical case, patterns are likely to be much less clear than with simulated data due to multiple stressors acting simultaneously.
@@ -499,12 +498,12 @@ Some metrics (e.g. Functional evenness using the dendrogram method) were not abl
 In other words, our statistical question was ``Does metric X distinguish between removing N\% of data in a biassed way (the mechanism) and removing N\% of data randomly (the null)?''.
 This definition of null hypothesis is also appropriate for the empirical data if the question is the same.
 However, it is very likely that researchers will ask a more exciting or intriguing question based on these data.
-For example, an interesting one could be ``Are the extinctions uniform across all birds in Hawaii?".
+For example, an interesting one could be ``Are the extinctions spread uniformly in the trait space across all birds in Hawaii?".
 This legitimate question would thus require first a trait space (the pattern - what) and maybe some contrasting groups of interest like extinctions through time (the process - how) to answer the question (the mechanism - why).
 Furthermore, the scaling of the metrics paired with the levels of removal (80\%, 60\%, 40\% and 20\%) creates an expected artifact similarity when comparing the random removals against the other ones: when less data is available overall, the metrics are more likely to be similar (e.g. if removing 99\% of the data, we expect the random and removal metric score to be nearly identical to the non-random ones).
 
-Importantly, it should always be borne in mind that empirical mechanisms ought of course to be more complex in real world scenarios.
-For example, evolutionary mechanisms can vary through time or per clades (and so patterns are often the results of multiple processes); or ecological mechanisms are often intertwined and work together to generate a pattern (e.g. facilitation + competition; \citealt{danet2024species}), or counteract each others by operating on the trait space in opposite directions (e.g., competition + filtering; \citealt{mammola2024functional})
+Importantly, it should always be borne in mind that mechanisms ought of course to be more complex in real world scenarios.
+For example, evolutionary mechanisms can vary through time or across clades (and so patterns are often the results of multiple processes); and ecological mechanisms are often intertwined and work together to generate a pattern (e.g. facilitation + competition; \citealt{danet2024species}), or counteract each others by operating on the trait space in opposite directions (e.g., competition + filtering; \citealt{mammola2024functional})
 
 \bigskip
 \bigskip
