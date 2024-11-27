@@ -125,7 +125,7 @@ library(dispRity)
 data <- custom.subsets(empirical_traitspace, group = lapply(groups, which))
 pdf(file = "../Manuscript/Figures/empirical_example.pdf", height = 4, width = 4)
 plot(data, legend = FALSE, col = c("blue", "orange"))
-legend("topright", pch = 19, col = c("blue", "orange"), legend = c("Current species", "Pre 1500 species"))
+legend("topright", pch = 19, col = c("blue", "orange"), legend = c("Current species", "Species in 1500"))
 dev.off()
 
 ## Measuring disparity
@@ -140,7 +140,7 @@ xtable(summary(dispRity(data, metric = displacements)))
 ```{r}
 library(dispRity)
 pca <- readRDS("../Data/Processed/pca-object-historic-community.RDS")
-data <- custom.subsets(pca$x, group = list(extant = extant_species, pre_1500 = historic_species))
+data <- custom.subsets(pca$x, group = list(extant = extant_species, at_1500 = historic_species))
 pdf(file = "../Manuscript/Figures/empirical_data_dimensions.pdf", height = 8, width = 4)
 plot(select.axes(data))
 dev.off()
