@@ -13,6 +13,7 @@ In this section we are going to analyse the results from the `optim.replicates` 
 
 ```{r, echo = FALSE}
 library(knitr)
+library(xtable)
 ## Loading the functions
 source("../Functions/extract.table.R")
 source("../Functions/plot.metric.results.R")
@@ -188,65 +189,138 @@ null_differences_5d  <- lapply(all_results_5d, paired.tests)
 null_differences_8d  <- lapply(all_results_8d, paired.tests)
 null_differences_emp <- lapply(empirical_results, paired.tests)
 
-## Making the fancy tables
+## Making the fancy tables for the models
 model_table_2d  <- fancy.table(model_fits_2d, columns = list(c(3,4), 5))
 model_table_3d  <- fancy.table(model_fits_3d, columns = list(c(3,4), 5))
 model_table_4d  <- fancy.table(model_fits_4d, columns = list(c(3,4), 5))
 model_table_5d  <- fancy.table(model_fits_5d, columns = list(c(3,4), 5))
 model_table_8d  <- fancy.table(model_fits_8d, columns = list(c(3,4), 5))
 model_table_emp <- fancy.table(model_fits_emp, columns = list(c(3,4), 5))
-null_table_2d   <- fancy.table(null_differences_2d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
-null_table_3d   <- fancy.table(null_differences_3d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
-null_table_4d   <- fancy.table(null_differences_4d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
-null_table_5d   <- fancy.table(null_differences_5d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
-null_table_8d   <- fancy.table(null_differences_8d, columns = list(c(1,3), c(1,3)+4, c(1,3)+8, c(1,3)+12))
-null_table_emp  <- fancy.table(null_differences_emp, columns = list(c(1,3), c(1,3)+4))
+## For the differences
+columns_diff_ses <- list(c(1,3), 4)
+columns_diff_ses <- c(columns_diff_ses,
+                      lapply(columns_diff_ses, `+`, 4),
+                      lapply(columns_diff_ses, `+`, 8),
+                      lapply(columns_diff_ses, `+`, 12))
+null_table_2d   <- fancy.table(null_differences_2d, columns = columns_diff_ses, digits = 2)
+null_table_3d   <- fancy.table(null_differences_3d, columns = columns_diff_ses, digits = 2)
+null_table_4d   <- fancy.table(null_differences_4d, columns = columns_diff_ses, digits = 2)
+null_table_5d   <- fancy.table(null_differences_5d, columns = columns_diff_ses, digits = 2)
+null_table_8d   <- fancy.table(null_differences_8d, columns = columns_diff_ses, digits = 2)
+null_table_emp  <- fancy.table(null_differences_emp, columns = list(c(1,3), 4, c(1,3)+4, 4+4), digits = 2)
 ```
 
-```{r, echo = FALSE}
-rownames(model_table_2d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-kable(model_table_2d, caption = "Results of the model scaled metric ~ removal level per stressor (2D)", align = "c")
-```
-```{r, echo = FALSE}
-rownames(model_table_3d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-kable(model_table_3d, caption = "Results of the model scaled metric ~ removal level per stressor (3D)", align = "c")
-```
-```{r, echo = FALSE}
-rownames(model_table_emp) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-kable(model_table_emp, caption = "Results of the model scaled metric ~ removal level for the empirical data (5D)", align = "c")
-```
-```{r, echo = FALSE}
-rownames(null_table_2d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-## Even fancier column names
-colnames(null_table_2d) <- gsub(".d_rm", ".rm", colnames(null_table_2d))
-colnames(null_table_2d) <- gsub("equalizing", "equa", colnames(null_table_2d))
-colnames(null_table_2d) <- gsub("facilitation", "faci", colnames(null_table_2d))
-colnames(null_table_2d) <- gsub("filtering", "filt", colnames(null_table_2d))
-colnames(null_table_2d) <- gsub("competition", "comp", colnames(null_table_2d))
-kable(null_table_2d, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2d)", align = "c")
-```
+#### Printing the latex tables for the models
 
 ```{r, echo = FALSE}
-rownames(null_table_3d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-## Even fancier column names
-colnames(null_table_3d) <- gsub(".d_rm", ".rm", colnames(null_table_3d))
-colnames(null_table_3d) <- gsub("equalizing", "equa", colnames(null_table_3d))
-colnames(null_table_3d) <- gsub("facilitation", "faci", colnames(null_table_3d))
-colnames(null_table_3d) <- gsub("filtering", "filt", colnames(null_table_3d))
-colnames(null_table_3d) <- gsub("competition", "comp", colnames(null_table_3d))
-kable(null_table_3d, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (3d)", align = "c")
+# rownames(model_table_2d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
+change.names <- function(table, fancy_names, output = "xtable", colnames = FALSE) {
+  if(output == "xtable") {
+    ## Format the row names for xtable
+    ## split should be \\ and the third element should be \texttt{}
+    row_names <- sapply(fancy_names, strsplit, split = "\\n")
+    add.ttt <- function(x) {
+      x[[3]] <- paste0("\\texttt{", x[[3]], "}")
+      return(x)
+    }
+    row_names <- lapply(row_names, add.ttt)
+    row_names <- lapply(row_names, function(x) paste(x, collapse = "\\\\"))
+  }
+  if(colnames) {
+    colnames(table) <- gsub("equalizing", "EQ", colnames(table))
+    colnames(table) <- gsub("facilitation", "FA", colnames(table))
+    colnames(table) <- gsub("filtering", "FI", colnames(table))
+    colnames(table) <- gsub("competition", "CO", colnames(table))
+    colnames(table) <- gsub("rm", "", colnames(table))
+  }
+  rownames(table) <- row_names
+  return(table)
+}
+# kable(model_table_2d, caption = "Results of the model scaled metric ~ removal level per stressor (2D)", align = "c")
+print(xtable(change.names(model_table_2d, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (2D)"), file = "../Manuscript/Tables/results_model2d.tex")
+
+print(xtable(change.names(model_table_4d, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (4D)"), file = "../Manuscript/Tables/results_model4d.tex")
+
+print(xtable(change.names(model_table_8d, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (8D)"), file = "../Manuscript/Tables/results_model8d.tex")
+
+print(xtable(change.names(model_table_emp, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (empirical data)"), file = "../Manuscript/Tables/results_empirical.tex")
 ```
 
+#### Printing the latex tables for the differences
+
 ```{r, echo = FALSE}
-rownames(null_table_emp) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
-## Even fancier column names
-colnames(null_table_emp) <- gsub(".d_rm", ".rm", colnames(null_table_emp))
-colnames(null_table_emp) <- gsub("equalizing", "equa", colnames(null_table_emp))
-colnames(null_table_emp) <- gsub("facilitation", "faci", colnames(null_table_emp))
-colnames(null_table_emp) <- gsub("filtering", "filt", colnames(null_table_emp))
-colnames(null_table_emp) <- gsub("competition", "comp", colnames(null_table_emp))
-kable(null_table_emp, caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal for the empirical data (pre-history and history)", align = "c")
+print(xtable(change.names(null_table_2d[, 1:8], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences2d_1.tex")
+
+print(xtable(change.names(null_table_2d[, 9:16], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences2d_2.tex")
+
+print(xtable(change.names(null_table_2d[, 17:24], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences2d_3.tex")
+
+print(xtable(change.names(null_table_2d[, 25:32], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences2d_4.tex")
+
+
+
+print(xtable(change.names(null_table_4d[, 1:8], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences4d_1.tex")
+
+print(xtable(change.names(null_table_4d[, 9:16], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences4d_2.tex")
+
+print(xtable(change.names(null_table_4d[, 17:24], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences4d_3.tex")
+
+print(xtable(change.names(null_table_4d[, 25:32], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences4d_4.tex")
+
+
+
+
+print(xtable(change.names(null_table_8d[, 1:8], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences8d_1.tex")
+
+print(xtable(change.names(null_table_8d[, 9:16], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences8d_2.tex")
+
+print(xtable(change.names(null_table_8d[, 17:24], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences8d_3.tex")
+
+print(xtable(change.names(null_table_8d[, 25:32], fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differences8d_4.tex")
+
+
+
+print(xtable(change.names(null_table_emp, fancy_names, colnames = TRUE),
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each
+stressor (empirical); d = difference, s = standardised effect size. Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+  file = "../Manuscript/Tables/results_differencesempirical.tex")
 ```
+
+
+<!-- Table cleaning (in shell)
+
+## Cleaning (in shell)
+## search replace
+## $\backslash$ by \
+## \{ by {
+## \} by }
+## \centering by \scriptsize\n\centering
+
+ -->
 
 # Plots per stressor
 

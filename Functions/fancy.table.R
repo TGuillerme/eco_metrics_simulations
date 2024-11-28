@@ -16,7 +16,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-fancy.table <- function(data, columns, symbols = c("", ".", "*", "**", "***"), digits = 3) {
+fancy.table <- function(data, columns, symbols = c("", ".", "*", "**", "***"), digits = 2) {
     ## Making the fancy table
     return(do.call(cbind, lapply(data, get.columns, columns, symbols, digits)))
 }
@@ -28,11 +28,9 @@ get.columns <- function(one_stressor, columns, symbols, digits) {
     ## Fancied data
     fancy_data <- lapply(extracted_data, function(col, symbols, digits) apply(col, 1, p.symbol, symbols, digits), symbols = symbols, digits = digits)
 
-    fancy_data1 <- lapply(extracted_data, function(col, symbols, digits))
-
     ## Combine that
     fancy_data <- as.data.frame(do.call(cbind, fancy_data))
-    colnames(fancy_data) <- colnames(one_stressor)[unlist(lapply(columns, function(x) x[w]))]
+    colnames(fancy_data) <- colnames(one_stressor)[unlist(lapply(columns, function(x) x[1]))]
     return(fancy_data)
 }
 
@@ -41,7 +39,7 @@ p.symbol <- function(x, symbols, digits) {
     ## Arbitrary p_value limits
     limits <- c(0.1, 0.05, 0.01, 0.001)
 
-    if(missing(symbols)) {
+    if(length(x) == 1) {
         ## No p-value symbol needed
         return(round(x, digits))
     } else {
