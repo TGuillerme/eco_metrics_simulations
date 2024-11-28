@@ -112,35 +112,35 @@ We have now specified more clearly throughout the manuscript the role of our nul
 Namely:
 
 \textit{This is used to establish a reference to be compared to the other mechanisms and to test how removing elements in a specific way influences the metrics scores compared to removing them randomly.}
-Lines @@@
+Lines 149-151.
 
-\textit{To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g.~\(metric\_stressor\_20 \- metric\_null\_20\)).}
-\textit{We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.).}
-Lines @@@
+\textit{To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
+We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.).}
+Lines 274-279.
 
-% The effect of the focal mechanisms is well explained, but I believe a more explicit explanation of how these mechanisms were tested is necessary
-% I recommend adding clear statements at the end of the introduction that outline how you tested the different mechanisms against the null model, along with the associated hypotheses and predictions (perhaps in table 1)
-% While you briefly mention this in the methods section (e.g., lines 198-201), it would be beneficial to include this information earlier to provide readers with a clearer framework for understanding your approach.
+\textcolor{blue}{The effect of the focal mechanisms is well explained, but I believe a more explicit explanation of how these mechanisms were tested is necessary.
+I recommend adding clear statements at the end of the introduction that outline how you tested the different mechanisms against the null model, along with the associated hypotheses and predictions (perhaps in table 1)
+While you briefly mention this in the methods section (e.g., lines 198-201), it would be beneficial to include this information earlier to provide readers with a clearer framework for understanding your approach.}
 
-% We have now clarified our goal and expectations at the end of the introduction:
-%  \textit{Our goal is to assess the relative performance of different metrics to capture the patterns of different mechanisms by comparing the score of various metrics under specifically approximated mechanisms and the absence of any specific mechanism (null mechanism).}
-%  \textit{We expect that our ability to capture a pattern does not only depends on the choice of metric (what) but also on the process and mechanism at hand (how and why).}
-%  Lines @@@.
+We have now clarified our goal and expectations at the end of the introduction:
 
-% We have clarified how and why we compare the metrics to the null mechanisms:
-%  \textit{To understand the ability of each metric to capture a mechanism of interest, we compared their scores relatively to the same metric scores of a null mechanism.}
-%  \textit{To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first scaled each metrics by their absolute greatest values to scale them between \(0\) and \(1\).}
-%  \textit{We then calculated the difference between each scaled metric score under the stressors of interest (approximating equalisation, facilitation, filtering and competition) and the null stressor for each different stressor level (e.g.~\(metric\_{stressor20
-% %} \- metric\_{null20
-% %}\)).}
-%  \textit{This resulted in each metric being scaled between \(–1\) and \(1\), where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e.~approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near \(0\) meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs \textbackslash ref\{Fig:simulations\}, \textbackslash ref\{Fig:simulation\_results\} and \textbackslash ref\{Fig:empirical\_results\}).}
-%  \textit{We interpret this last scenario as the metric score being unable to clearly distinguish between a random removal of elements and a non random one.}
-%  Lines @@@
+\textit{Our goal is to assess the relative performance of different metrics to capture the patterns of different mechanisms by comparing the score of various metrics under specifically approximated mechanisms and the absence of any specific mechanism (null mechanism).
+We expect that our ability to capture a pattern does not only depends on the choice of metric (what) but also on the process and mechanism at hand (how and why).}
+Lines 109-114.
 
-% Furthermore, we have added an expected results column to Table 1 as suggested.
+We have clarified how and why we compare the metrics to the null mechanisms:
 
-% Additionally, the use of both simulated and real data in your study should be better explained, with more details provided on the value and rationale behind this choice
-% This would help to further justify your methodology and enhance the overall clarity and impact of your manuscript.
+\textit{To understand the ability of each metric to capture a mechanism of interest, we compared their scores relative to the same metric scores of a null mechanism.
+To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
+We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.).
+This resulted in each metric being scaled between $–1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs 1, 2 and 3).
+We interpret this last scenario as the metric score performing poorly, i.e. it is unable to clearly distinguish between a random removal of elements and a non random one.}
+Lines 273-287.
+
+Furthermore, we have added an expected results column to Table 1 as suggested.
+
+\textcolor{blue}{Additionally, the use of both simulated and real data in your study should be better explained, with more details provided on the value and rationale behind this choice.
+This would help to further justify your methodology and enhance the overall clarity and impact of your manuscript.}
 
 % We have rewritten the last paragraph of the introduction to include the following:
 %  \textit{Beyond simulations, we also used an empirical dataset of Hawaiian bird traits and looked at how anthropogenic pressures have shaped the trait space (mechanism; why) based extinction events on Hawaiian islands before and after the year 1500 (process; how) and how different metrics (pattern; what) can lead to different interpretations of the data.}
