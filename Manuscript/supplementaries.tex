@@ -116,6 +116,10 @@ Stressors' intensity & The amount of observation removed (percentages) & Proport
 
 
 
+\newpage
+
+
+
 \subsection{Supplementary results}
 
 
@@ -246,158 +250,88 @@ The colours are here to visually separate the metrics by categories (blue = regu
 \bigskip
 
 
+\newpage
 
+\subsection{Model results}
 
 \begin{landscape}
-\begin{table}
-\scriptsize
-\caption{Results of the model scaled metric $\sim$ removal level per stressor (2D)}
-\centering
-\begin{tabular}[t]{l|c|c|c|c|c|c|c|c}
-\hline
-  & equalizing slope & equalizing adj.$R^{2}$ & facilitation slope & facilitation adj.$R^{2}$ & filtering slope & filtering adj.$R^{2}$ & competition slope & competition adj.$R^{2}$\\
-\hline
-Functional evenness\\distances\\ \texttt{FD::dbFD()\$FEve} & 0.017*** & 0.02 & -0.015** & 0.012 & 0.026*** & 0.057 & -0.001 & -0.001\\
-\hline
-Functional evenness\\dendrogram\\ \texttt{BAT::evenness} & 0.014** & 0.011 & -0.016** & 0.014 & 0.024*** & 0.038 & -0.009* & 0.007\\
-\hline
-Functional evenness\\hypervolume\\ \texttt{BAT::kernel.evenness} & 0.007 & 0.002 & -0.006 & 0 & 0.03*** & 0.069 & 0.004 & 0\\
-\hline
-Functional evenness\\probability density\\ \texttt{TPD::REND} & 0.002 & -0.001 & -0.055*** & 0.07 & 0.001 & -0.001 & -0.02*** & 0.048\\
-\hline
-Rao's quadratic entropy\\distances\\ \texttt{FD::dbFD()\$RaoQ} & 0.185*** & 0.578 & 0.022** & 0.009 & 0.102*** & 0.117 & 0.022** & 0.013\\
-\hline
-Functional dispersion\\dendrogram\\ \texttt{BAT::dispersion} & 0.08*** & 0.396 & 0.009. & 0.003 & 0.054*** & 0.195 & 0.008* & 0.005\\
-\hline
-Functional dispersion\\hypervolume\\ \texttt{BAT::kernel.dispersion} & 0.018** & 0.009 & -0.023*** & 0.04 & 0.014* & 0.004 & -0.022*** & 0.048\\
-\hline
-Divergence\\probability density\\ \texttt{TPD::REND} & 0.066*** & 0.436 & -0.028*** & 0.046 & -0.009. & 0.004 & -0.022*** & 0.038\\
-\hline
-Alpha diversity\\dendrogram\\ \texttt{BAT::alpha} & 0.227*** & 0.572 & 0.044*** & 0.037 & 0.091*** & 0.155 & 0.002 & -0.001\\
-\hline
-Functional richness\\convex hull\\ \texttt{BAT::hull.alpha} & -0.09*** & 0.293 & -0.002 & -0.001 & -0.027*** & 0.043 & -0.011* & 0.008\\
-\hline
-Functional richness\\hypervolume\\ \texttt{BAT::kernel.alpha} & 0.018*** & 0.049 & 0.046*** & 0.179 & 0.004 & 0 & -0.012*** & 0.02\\
-\hline
-Functional richness\\probability density\\ \texttt{TPD::REND} & 0.09*** & 0.356 & 0.14*** & 0.28 & 0.022*** & 0.037 & -0.009* & 0.005\\
-\hline
-\end{tabular}
-\end{table}
+\input{Tables/results_model2d.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_model4d.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_model8d.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_empirical.tex}
+\end{landscape}
+
+\newpage
+
+\subsection{Average differences between null and focal stressors}
+
+\begin{landscape}
+\input{Tables/results_differences2d_1.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences2d_2.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences2d_3.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences2d_4.tex}
 \end{landscape}
 
 
 
 \begin{landscape}
-\begin{table}
-\scriptsize
-\caption{Results of the model scaled metric $\sim$ removal level per stressor (4D)}
-\centering
-\begin{tabular}[t]{l|c|c|c|c|c|c|c|c}
-\hline
-  & equalizing slope & equalizing adj.$R^{2}$ & facilitation slope & facilitation adj.$R^{2}$ & filtering slope & filtering adj.$R^{2}$ & competition slope & competition adj.$R^{2}$\\
-\hline
-Functional evenness\\distances\\ \texttt{FD::dbFD()\$FEve} & 0.054*** & 0.143 & -0.009 & 0.002 & 0.032*** & 0.076 & 0.002 & 0\\
-\hline
-Functional evenness\\dendrogram\\ \texttt{BAT::evenness} & 0.013* & 0.007 & -0.032*** & 0.092 & 0.015** & 0.012 & -0.002 & 0\\
-\hline
-Functional evenness\\hypervolume\\ \texttt{BAT::kernel.evenness} & 0.049*** & 0.122 & 0.008 & 0.002 & 0.061*** & 0.194 & 0.018*** & 0.038\\
-\hline
-Functional evenness\\probability\\ \texttt{TPD::REND} & 0.03*** & 0.135 & -0.01 & 0.002 & 0.024*** & 0.09 & 0.001 & -0.001\\
-\hline
-Rao's quadratic entropy\\distances\\ \texttt{FD::dbFD()\$RaoQ} & 0.164*** & 0.539 & -0.02** & 0.012 & 0.039*** & 0.023 & -0.002 & -0.001\\
-\hline
-Functional dispersion\\dendrogram\\ \texttt{BAT::dispersion} & 0.108*** & 0.535 & -0.009** & 0.009 & 0.067*** & 0.258 & 0.012*** & 0.025\\
-\hline
-Functional dispersion\\hypervolume\\ \texttt{BAT::kernel.dispersion} & 0.064*** & 0.145 & -0.004 & 0.002 & 0.045*** & 0.05 & 0.005* & 0.004\\
-\hline
-Divergence\\probability density\\ \texttt{TPD::REND} & 0.11*** & 0.52 & -0.03*** & 0.071 & 0.034*** & 0.065 & 0.004 & 0.001\\
-\hline
-Alpha diversity\\dendrogram\\ \texttt{BAT::alpha} & 0.153*** & 0.393 & 0.059*** & 0.083 & 0.014* & 0.005 & -0.035*** & 0.048\\
-\hline
-Functional richness\\convex hull\\ \texttt{BAT::hull.alpha} & -0.118*** & 0.517 & 0.013*** & 0.018 & -0.025*** & 0.06 & -0.002 & 0\\
-\hline
-Functional richness\\hypervolume\\ \texttt{BAT::kernel.alpha} & -0.008** & 0.009 & -0.015*** & 0.016 & -0.006 & 0.002 & -0.001 & -0.001\\
-\hline
-Functional richness\\probability density\\ \texttt{TPD::REND} & 0.016*** & 0.037 & 0.196*** & 0.535 & 0.014*** & 0.02 & -0.001 & -0.001\\
-\hline
-\end{tabular}
-\end{table}
+\input{Tables/results_differences4d_1.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences4d_2.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences4d_3.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences4d_4.tex}
+\end{landscape}
+
+
+
+
+\begin{landscape}
+\input{Tables/results_differences8d_1.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences8d_2.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences8d_3.tex}
+\end{landscape}
+
+\begin{landscape}
+\input{Tables/results_differences8d_4.tex}
 \end{landscape}
 
 
 
 \begin{landscape}
-\begin{table}
-\scriptsize
-\caption{Results of the model scaled metric $\sim$ removal level per stressor (8D)}
-\centering
-\begin{tabular}[t]{l|c|c|c|c|c|c|c|c}
-\hline
-  & equalizing slope & equalizing adj.$R^{2}$ & facilitation slope & facilitation adj.$R^{2}$ & filtering slope & filtering adj.$R^{2}$ & competition slope & competition adj.$R^{2}$\\
-\hline
-Functional evenness\\distances\\ \texttt{FD::dbFD()\$FEve} & 0.039*** & 0.071 & 0.013** & 0.009 & 0.026*** & 0.051 & 0 & -0.001\\
-\hline
-Functional evenness\\dendrogram\\ \texttt{BAT::evenness} & -0.023*** & 0.041 & -0.038*** & 0.122 & -0.024*** & 0.102 & -0.008*** & 0.056\\
-\hline
-Functional evenness\\hypervolume\\ \texttt{BAT::kernel.evenness} & -0.055*** & 0.159 & -0.051*** & 0.121 & -0.034*** & 0.093 & -0.007*** & 0.015\\
-\hline
-Functional evenness\\probability\\ \texttt{TPD::REND} & -0.032*** & 0.134 & -0.118*** & 0.345 & -0.059*** & 0.185 & -0.008*** & 0.03\\
-\hline
-Rao's quadratic entropy\\distances\\ \texttt{FD::dbFD()\$RaoQ} & 0.088*** & 0.157 & -0.02** & 0.01 & 0.013 & 0.002 & -0.012. & 0.004\\
-\hline
-Functional dispersion\\dendrogram\\ \texttt{BAT::dispersion} & 0.05*** & 0.166 & -0.022*** & 0.055 & 0.01. & 0.003 & -0.005 & 0.002\\
-\hline
-Functional dispersion\\hypervolume\\ \texttt{BAT::kernel.dispersion} & 0.035*** & 0.035 & -0.004 & 0.001 & 0.028*** & 0.029 & -0.007** & 0.009\\
-\hline
-Divergence\\probability density\\ \texttt{TPD::REND} & 0.037*** & 0.121 & -0.029*** & 0.101 & -0.005 & 0 & -0.017*** & 0.041\\
-\hline
-Alpha diversity\\dendrogram\\ \texttt{BAT::alpha} & 0.03*** & 0.019 & 0.08*** & 0.131 & 0.041*** & 0.028 & -0.041*** & 0.05\\
-\hline
-Functional richness\\convex hull\\ \texttt{BAT::hull.alpha} & -0.077*** & 0.265 & 0.031*** & 0.09 & -0.009* & 0.006 & 0.002 & -0.001\\
-\hline
-Functional richness\\hypervolume\\ \texttt{BAT::kernel.alpha} & -0.019** & 0.013 & -0.023*** & 0.017 & -0.02*** & 0.018 & 0.002 & -0.001\\
-\hline
-Functional richness\\probability density\\ \texttt{TPD::REND} & 0.014** & 0.012 & 0.175*** & 0.574 & 0.08*** & 0.112 & -0.002 & -0.001\\
-\hline
-\end{tabular}
-\end{table}
+\input{Tables/results_differencesempirical.tex}
 \end{landscape}
-
-
-
-\begin{table}[ht]
-\caption{Results of the model scaled metric ~ removal level for the empirical data (5D)}
-\centering
-\begin{tabular}{rll}
-  \hline
- & empirical.Slope & empirical.adj.R\verb|^|2 \\ 
-\hline
-Functional evenness\\distances\\ \texttt{FD::dbFD()\$FEve} & -0.006 & -0.003 \\ 
-\hline
-Functional evenness\\dendrogram\\ \texttt{BAT::evenness} & -0.175*** & 0.058 \\ 
-\hline
-Functional evenness\\hypervolume\\ \texttt{BAT::kernel.evenness} & -0.271*** & 0.191 \\ 
-\hline
-Functional evenness\\probability\\ \texttt{TPD::REND} & -0.047. & 0.008 \\ 
-\hline
-Rao's quadratic entropy\\distances\\ \texttt{FD::dbFD()\$RaoQ} & 0.571*** & 0.544 \\ 
-\hline
-Functional dispersion\\dendrogram\\ \texttt{BAT::dispersion} & 0.434*** & 0.263 \\ 
-\hline
-Functional dispersion\\hypervolume\\ \texttt{BAT::kernel.dispersion} & 0.589*** & 0.507 \\ 
-\hline
-Divergence\\probability density\\ \texttt{TPD::REND} & -0.148*** & 0.049 \\ 
-\hline
-Alpha diversity\\dendrogram\\ \texttt{BAT::alpha} & -0.342*** & 0.245 \\ 
-\hline
-Functional richness\\convex hull\\ \texttt{BAT::hull.alpha} & -0.001 & -0.003 \\ 
-\hline
-Functional richness\\hypervolume\\ \texttt{BAT::kernel.alpha} & -0.375*** & 0.199 \\ 
-\hline
-Functional richness\\probability density\\ \texttt{TPD::REND} & -0.225*** & 0.133 \\ 
-   \hline
-\end{tabular}
-\end{table}
 
 \bibliographystyle{sysbio}
 \bibliography{references}
