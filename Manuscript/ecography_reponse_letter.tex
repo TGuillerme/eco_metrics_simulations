@@ -116,7 +116,7 @@ Lines 149-151.
 
 \textit{To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
 We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.).}
-Lines 274-279.
+Lines 273-279.
 
 \textcolor{blue}{The effect of the focal mechanisms is well explained, but I believe a more explicit explanation of how these mechanisms were tested is necessary.
 I recommend adding clear statements at the end of the introduction that outline how you tested the different mechanisms against the null model, along with the associated hypotheses and predictions (perhaps in table 1)
@@ -132,9 +132,9 @@ We have clarified how and why we compare the metrics to the null mechanisms:
 
 \textit{To understand the ability of each metric to capture a mechanism of interest, we compared their scores relative to the same metric scores of a null mechanism.
 To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
-We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.).
-This resulted in each metric being scaled between $–1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs 1, 2 and 3).
-We interpret this last scenario as the metric score performing poorly, i.e. it is unable to clearly distinguish between a random removal of elements and a non random one.}
+We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.)
+This resulted in each metric being scaled between $-1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs 1, 2 and 3).
+We interpret this last scenario as the metric score being unable to clearly distinguish between a random removal of elements and a non random one.}
 Lines 273-287.
 
 Furthermore, we have added an expected results column to Table 1 as suggested.
@@ -152,22 +152,23 @@ Lines 114-122.
 \textit{We suggest caution when summarising patterns in observed data and propose a pipeline and tools for researchers to help understand how their pattern (often stemming from multidimensional data) can vary intuitively or not depending on the process and mechanism of interest.}
 Lines 570-573.
 
-% \textbf{Item 2.}
-%  While I appreciate the detailed explanation of the methodology used to produce the simulated space patterns and the application of the stressors, this section appears disproportionate compared to the rest of the methods, especially concerning the testing of focal metrics
-% I recommend enhancing the clarity of Sections 3.1.3 and 3.1.4
-% Together with providing more explicit statements regarding your hypotheses and predictions (see item 1), it would help readers navigate the different aspects of the analyses
-% For instance, clarifying how the performance of each metric in capturing various focal mechanisms was evaluated, and how different results support or challenge this evaluation, would be beneficial.
+\textcolor{blue}{\textbf{Item 2.}}
 
-% We have now rewritten sections 3.1.3 and 3.14 to be clearer:
-%  \textit{To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first scaled each metrics by their absolute greatest values, normalizing them to a range between \(0\) and \(1\).}
-%  \textit{We then calculated the difference between each scaled metric score under the stressors of interest (approximating equalisation, facilitation, filtering and competition) and the null stressor for each different stressor level (e.g.~\(metric\_{stressor20
-% %} \- metric\_{null20
-% %}\)).}
-%  \textit{This resulted in each metric being scaled between \(–1\) and \(1\) where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e.~approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near \(0\) meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs \textbackslash ref\{Fig:simulations\}, \textbackslash ref\{Fig:simulation\_results\} and \textbackslash ref\{Fig:empirical\_results\}).}
-%  \textit{We interpret this last scenario as the metric score being unable to clearly distinguish between a random removal of elements and a non random one.}
-%  \textit{To assess these poor performances, we compared the distributions of the \(171\) scores for each metric with each reduction level for each non-null stressor to the null stressor using pairwise t-tests.}
-%  \textit{The results of these tests are displayed in figure \textbackslash ref\{Fig:simulation\_results\} (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).}
-%  Lines @@@
+\textcolor{blue}{While I appreciate the detailed explanation of the methodology used to produce the simulated space patterns and the application of the stressors, this section appears disproportionate compared to the rest of the methods, especially concerning the testing of focal metrics
+I recommend enhancing the clarity of Sections 3.1.3 and 3.1.4
+Together with providing more explicit statements regarding your hypotheses and predictions (see item 1), it would help readers navigate the different aspects of the analyses
+For instance, clarifying how the performance of each metric in capturing various focal mechanisms was evaluated, and how different results support or challenge this evaluation, would be beneficial.}
+
+We have now rewritten sections 3.1.3 and 3.14 to be clearer:
+
+\textit{To understand the ability of each metric to capture a mechanism of interest, we compared their scores relative to the same metric scores of a null mechanism.
+To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
+We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.)
+This resulted in each metric being scaled between $-1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs \ref{Fig:simulations}, \ref{Fig:simulation_results} and \ref{Fig:empirical_results}).
+We interpret this last scenario as the metric score being unable to clearly distinguish between a random removal of elements and a non random one.
+To assess these poor performances, we compared the distributions of the $171$ scores for each metric with each reduction level for each non-null stressor to the null stressor using pairwise t-tests.
+The results of these tests are displayed in figure \ref{Fig:simulation_results} (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).}
+Lines 273-291.
 
 % \textit{Finally, we measured the effect of the different strengths of the stressors (i.e.~removing 20\textbackslash\%, 40\textbackslash\%, 60\textbackslash\% and 80\textbackslash\% the data) by fitting a linear regression using the scaled metric difference to null score as a function of the amount of data removed.}
 %  \textit{For each of these models, we reported the variance explained by the model (adjusted \(R^2\)) in the supplementary tables \(1\) to \(3\) and whether the slope was clearly distinguishable from \(0\) (Figure \textbackslash ref\{Fig:simulation\_results\}).}
