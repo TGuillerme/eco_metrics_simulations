@@ -334,89 +334,106 @@ Lines 164-167.
 
 \textcolor{blue}{Line 139-144. I suggest breaking this section into two sentences and improve readability.
 The current structure is challenging to follow.}
-%  We split this sentence in three for clarity:
-%  \textit{Each bandwidth has an observed probability of sampling of \(n\) (proportional to the number of elements in that bandwidth) and is skewed to a probability of sampling of \(n 
-% times m^{p}\)
-% For bandwidths with a low density (low values of \(n\)) we used \(m\>0\) to increase their resampling probability, and the opposite for bandwidths with a high density (high values of \(n\); using \(m\<0\) to decrease sampling property)
-% This effectively flattened the normal distribution of the data by some factor \(p\) (here we used \(p=3\)).}
-%  Lines @@@
+
+We re-wrote this section to be hopefully clearer:
+\textit{In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.
+This is done by selecting $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' (texttt{bw.nrd0()} function in \texttt{R};Silverman, 1986).
+Each discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
+Where $p$ is a factor increasing the scaling power of the algorithm (here we used $p=3$).
+In other words, observations in categories with a low density ($b<0.5$) were more likely to be resampled and the ones in categories with high density ($b>0.5$) were less likely to be resampled.}
+Lines 192-203.
+
 
 \textcolor{blue}{Table 1. Please provide references for the Equalizing and Facilitation mechanisms to offer clearer context for the focal ecological mechanisms studied.}
-%  We now added references to \textbackslash citep\{chesson2000mechanisms,barot2004mechanisms\} for the equalising mechanism and to \textbackslash citep\{bruno2003inclusion, danet2024species\} for the facilitation one.
-%  Lines @@@
+
+We now added references to Chesson 2000 and Barot 2004 for the equalising mechanism and to Bruno et al. 2003 and Danet et al. 2024 for the facilitation one in Table 1.
 
 \textcolor{blue}{Line 183. Please provide the total number of the different metrics you used and refer to the table below (table 2).}
-%  We've now added a reference to table 2 and summarised the total amount of metrics.
-%  Lines @@@
+
+We've now added a reference to table 2 and summarised the total amount of metrics.
+Lines 264.
 
 \textcolor{blue}{Figure 1. I believe adding a color legend to the figure would enhance its clarity.}
-%  We have now reworked figure 1 to be more didactic (especially for the results interpretation)
-% We have not added the color legend to the plot itself (although we have added orange arrows to make it clearer) but in the caption to not overload an already busy figure.
+
+We have now reworked figure 1 to be more didactic (especially for the results interpretation)
+We have not added the color legend to the plot itself (although we have added orange arrows to make it clearer) but in the caption to not overload an already busy figure.
 
 \textcolor{blue}{Figure 1. Please include information in the figure caption explaining what the two types of graphs represent.}
-%  We added the following clarifications to the figure caption:
-%  \textit{We then applied different stressors to the resulting trait space
-% We represent the elements removed by the stressors in blue and the ones kept in the trait space in orange
-% The first column illustrate the distribution of the elements in one dimension with the overlap between the removed (blue) and kept (orange) elements in brown (note we did not measure any metric on 1D spaces)
-% The second column illustrate the same distributions in 2 dimensions
-% We did not illustrate the distributions in 4 or 8 dimensions here
-% We used the following stressors:}
-%  Lines @@@
+
+We added the following clarifications to the figure caption:
+\textit{We then applied different stressors to the resulting trait space
+We represent the elements removed by the stressors in blue and the ones kept in the trait space in orange.
+The first column illustrate the distribution of the elements in one dimension with the overlap between the removed (blue) and kept (orange) elements in brown (note we did not measure any metric on 1D spaces)
+The second column illustrate the same distributions in 2 dimensions.
+We did not illustrate the distributions in 4 or 8 dimensions here.}
+Figure 1.
 
 \textcolor{blue}{Line 194-195. Please improve clarity.}
+
 %  @@@TODO: rewrite following other reviewers comments (stats for results)
 
 \textcolor{blue}{Line 201-203. Please simplify and improve clarity.}
+
 %  @@@TODO: rewrite following other reviewers comments (stats for results)
 
 \textcolor{blue}{Line 207-211. Please provide a clearer explanation of the effect size and statistical significance of these model outcomes, similar to the explanation provided in lines 198-201.}
+
 %  @@@TODO: rewrite following other reviewers comments (stats for results)
 %  @@@TODO: calculate effect sizes
-%  We now added all the statistics results in the supplementary results from table 6 to 18.
+We now added all the statistics results in the supplementary results from table 6 to 18.
 
 \textcolor{blue}{Line 221. Please specify the added species.}
+
 %  @@@TODO: name of the two added marine species
 
 \textcolor{blue}{Table 2. The aspect for the third row is missing.}
-%  We are not sure about what the reviewer meant here
-% The tables are all formatted in LaTeX and we prefer to leave it to the production team to set it up as they like should the manuscript be accepted.
+
+We are not sure about what the reviewer meant here.
+The tables are all formatted in LaTeX and we prefer to leave it to the production team to set it up as they like should the manuscript be accepted.
 
 \textcolor{blue}{\textbf{Results}.}
 
 \textcolor{blue}{Line 248-251. Please provide more detail regarding these results (e.g., what the scaled metric scores are, the effect size, and the significance of data reduction caused by the stressor). Additionally, refer to the relevant section of Figure 2 (to explain how the observed trends in the figure support this assertion), and to the tables in supplementary material.}
+
 %  @@@TODO: add stats for results (following other reviewers comments)
 
 \textcolor{blue}{Line 252. I would avoid the term ``naively''.}
-%  We removed this term.
+
+We removed this term.
 
 \textcolor{blue}{Line 254. Please ensure that the use of italics follows the guidelines from the journal.}
-%  We did not find any specific guideline regarding emphasising words with italics but removed it nonetheless.
+
+We did not find any specific guideline regarding emphasising words with italics but removed it nonetheless.
 
 \textcolor{blue}{Line 254-256. Apply the same changes mentioned in the comment below to lines 248-251.}
 %  @@@TODO: add stats for results (following other reviewers comments)
 
 \textcolor{blue}{Line 260. Please avoid using the exclamation mark.}
-%  We changed the punctuation to a dot.
+
+We changed the punctuation to a dot.
 
 \textcolor{blue}{Line 262-269. Please provide more detail regarding these results. Additionally, refer to the table in supplementary material.}
+
 %  @@@TODO: add stats for results (following other reviewers comments)
-%  We also now refer to the supplementary results:
-%  \textit{For the empirical data, we see again a range of different possible interpretations depending on the metric describing the pattern (Figure \textbackslash ref\{Fig:empirical\_results\}, Supplementary table 5).}
-%  Lines @@@
+
+We also now refer to the supplementary results:
+\textit{For the empirical data, we see again a range of different possible interpretations depending on the metric describing the pattern (Figure 3, Supplementary table 5).}
+Lines 354-355.
 
 \textcolor{blue}{Line 275-283. This should be in the discussion section.}
-%  We moved this paragraph to the discussion on lines @@@.
+
+We moved this paragraph to the discussion on lines 440-448.
 
 \textcolor{blue}{Figure 2. Maybe I misunderstood, but I think that you are missing the adjusted R square from the figure.}
 
-%  We removed mention of the R2 (from a previous cluttered version of the figure) and now refer to it in the supplementaries in the figure caption.
+We removed mention of the R2 (from a previous cluttered version of the figure) and now refer to it in the supplementaries in the figure caption.
 
 \textcolor{blue}{Figure 3. Please provide more details in the figure caption. Please include the results from the t-test in the supplementary material.
 While the significance of the test is demonstrated through the gray plots in Figures 2 and 3, the relative values are also necessary.}
-%  The tables in the supplementary materials now contain the R2 values for both the Figures 2 and 3
-% We have now clarified that in the figure captions:
-%  \textit{The model results (including \(R^{2}\) and t-statistics) are available in supplementary table 4.}
-%  Lines @@@ and Lines @@@
+
+The tables in the supplementary materials now contain the R2 values for both the Figures 2 and 3.
+We have now clarified that in the figure captions:
+\textit{The model results (including \$R^{2}$ and t-statistics) are available in supplementary table 3.}
 
 \textcolor{blue}{\textbf{Discussion}.}
 \textcolor{blue}{Line 285-291. This section effectively summarizes your main goal and key message.
@@ -433,56 +450,64 @@ Consider placing the discussion of caveats and limitations in a separate paragra
 \textcolor{blue}{Line 303-315.
 Based on your preference, I recommend moving this section further into the discussion.
 This will allow you to address the importance of selecting the appropriate metric in relation to the number of dimensions used for the trait space.}
-% We have now re-orginased the discussion and clearly separated each subsection
-% The first one now discusses the results (simulated and empirical), the second one focuses on the caveats of our approach.
-% And the third section is now a standalone box (box 2) discussing how we believe the what, how and why questions can help workers choose their functional diversity metric of interest based on their own data and question
-% Hopefully these clear distinctions will make it easier to follow (or skip) for the reader.
+
+We have now re-orginased the discussion and clearly separated each subsection.
+The first one now discusses the results (simulated and empirical), the second one focuses on the caveats of our approach.
+And the third section is now a standalone box (box 2) discussing how we believe the what, how and why questions can help workers choose their functional diversity metric of interest based on their own data and question.
+Hopefully these clear distinctions will make it easier to follow (or skip) for the reader.
 
 \textcolor{blue}{Line 313-316. Please rephrase to improve readability.}
-%  We have now removed this sentence.
+
+We have now removed this sentence.
 
 \textcolor{blue}{Line 316-337. I think this section should be simplified.
 The discussion focuses too heavily on the limitations of the approach, making it overly methodological.
 A greater emphasis on the ecological implications of the results would better convey your main message.
 I recommend streamlining this section and, if preferred, moving part of it to the supplementary material, where you can address the implications of scaling your results with the null model.}
-%  We have now moved this section into the named ``caveats'' section
-% Hopefully this will make it easier to skip for readers no interested in the methodological aspects of our work
-% However, if the reviewer still thinks this section is too focused, we're happy to reduce it in a future version.
+
+We have now moved this section into the named ``caveats'' section.
+Hopefully this will make it easier to skip for readers no interested in the methodological aspects of our work.
+However, if the reviewer still thinks this section is too focused, we're happy to reduce it in a future version.
 
 \textcolor{blue}{Line 321-324. When you refer to your findings, please provide a more explicit reference to the values you found and the relative graph to better guide the reader through your results and your interpretation.}
-%  We have now specified which part of figure 2 we were using to illustrate this point:
-%  \textit{(e.g.~facilitation mechanism measured as divergence using the probability density method - not distinguishable from null when removing 80\textbackslash\% or 60\textbackslash\% of the data; Figure \textbackslash ref\{Fig:simulations\})}
-%  Lines @@@
+
+We have now specified which part of figure 2 we were using to illustrate this point:
+\textit{(e.g. facilitation mechanism measured as divergence using the probability density method - not distinguishable from null when removing 80\% or 60\% of the data; Figure 2)}. Lines 480-482.
 
 \textcolor{blue}{Line 327. Please replace `workers' with `ecologists,' as you are referring to an example from an ecological study.}
-%  We changed ``workers'' to ``researchers'' because not only ecologists are likely to work on such data/questions (e.g.~evolutionary biologists, palaeobiologists, etc.)
+
+We changed ``workers'' to ``researchers'' because not only ecologists are likely to work on such data/questions (e.g. evolutionary biologists, palaeobiologists, etc.)
 
 \textcolor{blue}{Line 339-340. Please simplify and increase readability.}
-%  We reworded this sentence as follows:
-%  \textit{The empirical results are also intriguing in that the loss of Hawaiian bird's functional diversity since 1500 is not greater than expected by chance (at least for certain metrics; Figure \textbackslash ref\{Fig:empirical\_results\}) because one would expect that extinctions since 1500 target specific areas of functional diversity space (i.e.~birds with specific trait combinations).}
-%  Lines @@@
+
+We reworded this sentence as follows:
+\textit{The empirical results are also intriguing in that the loss of Hawaiian bird's functional diversity due to extinction is not greater than expected by chance (at least for certain metrics; Figure 3) because one would expect that extinctions target specific areas of functional diversity space (i.e. birds with specific trait combinations).}
+Lines 407-410.
 
 \textcolor{blue}{Line 340-361. I believe this section should be simplified and partially reframed.
 While it's clear that you applied your framework to a real study case using empirical data, this section currently diverges too much from the main focus of your study.
 Since your primary goal is to test functional diversity metrics, the main discussion should center on the performance of these metrics, their differences from the simulated data, and their relevance to the ``why'', ``what'', and ``how'' framework.
 After addressing these points, you can briefly discuss the extinction dynamics of avian species in Hawaii.}
-%  We have now expanded this section to be clearer:
-%  \textit{This illustrates the importance of positing the mechanism and process of interest as well as the pattern to capture it before analysing the results.}
-%  \textit{For example, for the divergence metrics using probability density, hypervolume or dendrogram methods, we recovered changes in trait space that are smaller than expected by chance for the species present before 1500 and larger than expected by change for the current species.}
-%  \textit{This could lead to the interpretation that the trait space was not changed under any specific mechanism before 1500 (i.e.~null mechanism) but that since then, specific mechanisms have been reducing specific areas of the trait space (e.g.~filtering mechanism).}
-%  \textit{However, when using a different metric (say the Rao's quadratic entropy based on distance matrices), the results would indicate that a reduction of specific areas of the trait space could have also occured before 1500 leading to very different interpretation of the results.}
-%  Lines @@@
+
+We have now expanded this section to be clearer:
+\textit{This illustrates the importance of positing the mechanism and process of interest as well as the pattern to capture it before analysing the results.
+For example, for the divergence metrics using probability density, hypervolume or dendrogram methods, we recovered changes in trait space that are smaller than expected by chance when focusing on all extinctions and larger than expected by chance when considering only pre-$1500$ extinctions.
+This could lead to the interpretation that the trait space was not changed under any specific mechanism up to $1500$ (i.e. null mechanism) but that since then, specific mechanisms have been reducing specific areas of the trait space (e.g. filtering mechanism).
+However, when using a different metric (say the Rao's quadratic entropy based on distance matrices), the results would indicate that a reduction of specific areas of the trait space could have also occured before $1500$ leading to very different interpretation of the results.}
+Lines 413-424.
 
 \textcolor{blue}{\textbf{Conclusion}.}
 
 \textcolor{blue}{Similarly to my comments on the discussion, I suggest strengthening the connection between your conclusion and the main ``what, how, and why'' framewor.
 This would enhance the overall flow of the paper and help the reader more clearly connect the main question and introduction to the final conclusions and discussion.}
-%  We have now added the box 2 that would hopefully help with strengthening the connection between our results and the need to set up the ``what how and why'' framework for functional diversity analyses.
+
+We have now added the box 2 that would hopefully help with strengthening the connection between our results and the need to set up the ``what how and why'' framework for functional diversity analyses.
 
 \textcolor{blue}{\textbf{Supplementary material}.}
 
 \textcolor{blue}{Like for figure 2 in the main manuscript, I think that you are missing the adjusted R square from the figure.}
-%  We have now specified in the caption that the adjusted R squares are available in the supplementary tables to not clutter the figure.
+
+We have now specified in the caption that the adjusted R squares are available in the supplementary tables to not clutter the figure.
 
 \textcolor{blue}{I enjoyed reviewing and with some time in revisions, this paper and the messaging will be stronger and more applied. I appreciate the framework and application this paper will support.}
 

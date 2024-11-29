@@ -288,11 +288,11 @@ This is often not the case in empirical cases (e.g. see our empirical example) w
 A) we simulated a pure birth-tree with a trait evolving under a Brownian Motion process until reaching 200 observations resulting in a trait space of 2, 4, or 8 dimensions.
 The first plot on row A illustrates one such simulation in one dimension through time (with time on the horizontal axis and trait value for one dimension on the vertical axis).
 The second plot on the same row shows the same results but with a two dimensional trait represented here.
-We then applied different stressors to the resulting trait space.
-We represent the observations removed by the stressors in blue and the ones kept in the trait space in orange.
-The first column (histograms) illustrates the distribution of observations in one dimension of the 2D, 4D or 8D traits with the overlap between the removed (blue) and kept (orange) observations in brown (note we did not measure any metric on 1D spaces).
-The second column illustrates the trait in 2 dimensions.
-We did not illustrate the data beyond 2 dimensions for traits in 4 or 8 dimensions.
+We then applied different stressors to the resulting trait space
+We represent the elements removed by the stressors in blue and the ones kept in the trait space in orange.
+The first column illustrate the distribution of the elements in one dimension with the overlap between the removed (blue) and kept (orange) elements in brown (note we did not measure any metric on 1D spaces)
+The second column illustrate the same distributions in 2 dimensions.
+We did not illustrate the distributions in 4 or 8 dimensions here.
 We used the following stressors:
 B) \textbf{null mechanism}: randomly removing a proportion of the observations;
 C) \textbf{approximating equalising mechanism}: removing observations on the edge of the distribution;
@@ -462,12 +462,9 @@ These differences in metric variance across mechanisms suggest that some mechani
 The empirical results are also intriguing in that the loss of Hawaiian bird's functional diversity due to extinction is not greater than expected by chance (at least for certain metrics; Figure \ref{Fig:empirical_results}) because one would expect that extinctions target specific areas of functional diversity space (i.e. birds with specific trait combinations).
 This contrasts with studies that have shown that species with certain traits (e.g., larger species) are more likely to have gone extinct and thus that functional diversity loss is larger than through random extinctions (e.g. \citealt{sayol2021loss,Matthews2022}).
 This illustrates the importance of positing the mechanism and process of interest as well as the pattern to capture it before analysing the results.
-For example, for the divergence metrics using probability density, hypervolume or dendrogram methods, we recovered changes in trait space that are smaller than expected by chance when focusing on all extinctions and larger than expected by chance when considereing only pre-$1500$ extinctions.
-% This could lead to the interpretation that the trait space was not changed under any specific mechanism before $1500$ (i.e. null mechanism) but that since then, specific mechanisms have been reducing specific areas of the trait space (e.g. filtering mechanism).
-% However, when using a different metric (say the Rao's quadratic entropy based on distance matrices), the results would indicate that a reduction of specific areas of the trait space could have also occured before $1500$ leading to very different interpretation of the results.
-%TM: can we make this interpretation? as this isn't the two time periods, i.e., there isn't a before and after 1500 comparison. It is all extinctions, and then just pre-1500 extinctions. 
-%TM: And also see my previous comment - is not saying the opposite? That there was some mechanism pre 1500? But not when considering all extinctions?
-%TODO@@@
+For example, for the divergence metrics using probability density, hypervolume or dendrogram methods, we recovered changes in trait space that are smaller than expected by chance when focusing on all extinctions and larger than expected by chance when considering only pre-$1500$ extinctions.
+This could lead to the interpretation that the trait space was not changed under any specific mechanism up to $1500$ (i.e. null mechanism) but that since then, specific mechanisms have been reducing specific areas of the trait space (e.g. filtering mechanism).
+However, when using a different metric (say the Rao's quadratic entropy based on distance matrices), the results would indicate that a reduction of specific areas of the trait space could have also occured before $1500$ leading to very different interpretation of the results.
 
 
 Our results indicating that the loss of functional diversity (based on several metrics) was not more than expected by chance when focusing on all extinctions could be due to the fact that although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines (approximatively $58$\%), the majority of global known anthropogenic extinctions (approx. $75$\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
@@ -495,7 +492,7 @@ In fact, the relationship between observations has an important effect on how ou
 
 Another cautionary note could be made about our choice of scaling the metrics relative to a random trait space reduction (with the same percentage of reduction).
 This choice allowed us to simulate a null model designed to test whether the mechanisms of interest were causing the observed change in pattern \citep{bausman2018modeling}.
-For example, if removing 80\% of the edges of a distribution was distinguishable or not from removing 80\% of a distribution randomly (e.g. facilitation mechanism measured as divergence using the probability density method - not distinguishable from null when removing 80\% or 60\% of the data; Figure \ref{Fig:simulations}).
+For example, if removing 80\% of the edges of a distribution was distinguishable or not from removing 80\% of a distribution randomly (e.g. facilitation mechanism measured as divergence using the probability density method - not distinguishable from null when removing 80\% or 60\% of the data; Figure \ref{Fig:simulation_results}).
 Some metrics (e.g. Functional evenness using the dendrogram method) were not able to distinguish between the null mechanism and the mechanism of interest (here the mechanism simulating competition).
 In other words, our statistical question was ``Does metric X distinguish between removing N\% of data in a biassed way (the mechanism) and removing N\% of data randomly (the null)?''.
 This definition of null hypothesis is also appropriate for the empirical data if the question is the same.
