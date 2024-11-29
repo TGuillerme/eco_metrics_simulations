@@ -735,49 +735,57 @@ While these processes can be discussed and associated with ecological mechanisms
 
 \textcolor{blue}{LL 150-152: The description is unclear and appears to use the term ``simulation'' inconsistently.
 In the phrase ``replicates per simulations,'' the term ``simulation'' seems to have a different meaning than in ``smallest number of simulations.'' Additionally, the first part of the sentence suggests that variance decreases with an increasing number of simulations, whereas the second part implies that adding more simulations leads to increased variance.}
-%  There was a confusion indeed
-% We now refer to ``the simulation pipeline'' for the whole set of replicates per stressors, and ``replicates'' for each individual run (one trait space + one stressor)
-% We changed this sentence to:
-%  \textit{We used 171 replicates because that was empirically the smallest number of replicates required to reach a variance between replicates lower than 1\textbackslash\% across all metrics (i.e.~any additional replicates beyond 171 added less that 1\textbackslash\% extra variance).}
-%  Lines @@@
+
+There was a confusion indeed.
+We now refer to ``the simulation pipeline'' for the whole set of replicates per stressors, and ``replicates'' for each individual run (one trait space + one stressor).
+We changed this sentence to:
+\textit{We used 171 replicates because that was empirically the smallest number of replicates required to reach a variance between replicates lower than 1\% across all metrics (i.e. any additional replicates beyond 171 added less that 1\% extra variance).}
+Lines 223-225
 
 \textcolor{blue}{L 166: what does ``uncorrelated'' mean here? Does this mean that the branching process was independently repeated four times, once for each trait dimension, or does it mean that it generates four trait dimensions simultaneously, with these dimensions being uncorrelated?}
-%  We meant that the dimensions for each multidimensional traits are uncorrelated (i.e.~the trait is a uncorrelated Brownian motion process in n dimensions)
-% We have now clarified this point:
-%  \textit{We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure \textbackslash ref\{Fig:simulation\_results\}) for 2 and 8 dimensional traits with not correlation between each dimensions in each simulation pipeline (supplementary materials).}
-%  Lines @@@
+
+We meant that the dimensions for each multidimensional traits are uncorrelated (i.e. the trait is a uncorrelated Brownian motion process in $n$ dimensions).
+We have now clarified this point:
+\textit{We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure 2) for 2 and 8 dimensional traits with not correlation between each dimensions in each simulation pipeline (supplementary materials figures 1 and 2).}
+Lines 241-243.
 
 \textcolor{blue}{LL 170-178: why then did the authors not simply generate more data points (see my comment above)?}
 %  @@@TODO: Rerun the simulations with 400, 800 and 1000 elements.
 
 \textcolor{blue}{Table 1: The integration of this table into the main text could be improved.
 Specifically, the abrupt mention of species (which are not part of the model) is confusing.}
-%  We have now improved the context of the tables with predictions and removed most of the mentions of ``species'' now replaced by the standardised term of ``observations'' (unless they were specific examples).
+
+We have now improved the context of the tables with predictions and removed most of the mentions of ``species'' now replaced by the standardised term of ``observations'' (unless they were specific examples).
 
 \textcolor{blue}{L 178 and several instances later ``o'' should read ``0'' (zero).}
-%  These integers were compiled using the latex mathpazo font
-% We have now clarified them by changing into a default serif font.
+
+These integers were compiled using the latex mathpazo font.
+We have now clarified them by changing into a default serif font.
 
 \textcolor{blue}{L184, I suggest to mention here, that these functional metrics are denoted as trait space occupancy later on.}
-%  Great suggestions
-% We added the following:
-%  \textit{We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics (trait space occupancy metrics; \textbackslash cite\{mammola2021concepts\}) using 12 metrics (Tab
-% \textbackslash ref\{Tab:metrics\}):}
-%  Lines@@@
+
+Great suggestions!
+We added the following:
+\textit{We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics (trait space occupancy metrics; Mammola et al. 2021) using 12 metrics (Table 2):}
+Lines 262-264.
 
 \textcolor{blue}{L 208, ``\textasciitilde{}'' symbol: This usage of mathematical notation (instead of plain words) in a sentence (here, but also later in the text) is difficult to understand.}
-%  We removed tilde symbols throughout the manuscript.
+
+We removed tilde symbols throughout the manuscript.
 
 \textcolor{blue}{Table 2: Column two (``Methods'') does not provide any information beyond what is explained in ``Description'' and can be removed.}
-%  We decided to keep the ``methods'' column to make it easier for the reader to refer to the terms used in Mammola et al.~2021 at a glance.
+
+We decided to keep the ``methods'' column to make it easier for the reader to refer to the terms used in Mammola et al. 2021 at a glance.
 
 \textcolor{blue}{LL 252-260 ``opposite pattern to what was expected'' and ``naïve expectation'': I do not agree.
 It is well known that removing data points can increase the evenness of a distribution, so it is not surprising that removal procedures can result in a reduction of the metric scores.
 The term ``space occupancy'' could be contributing to this misconception.}
-%  We rewritten this section to be in line with the reviewer's comment:
-%  \textit{Although most metrics captured a decrease in metric score relative to the amount of removed data, some metrics resulted into a score increase (e.g.~the functional evenness based on hypervolume for the equalising mechanism) or non-linear responses (e.g.~Alpha diversity based on dendrogram for the equalising mechanism).}
-%  Lines @@@
-%  Additionally, there appears to be a logical inconsistency
+
+We re-wrote this section to be in line with the reviewer's comment:
+\textit{Although most metrics captured a decrease in metric score relative to the amount of removed data, some metrics resulted in a score increase (e.g. the Functional evenness based on a hypervolume for the equalising mechanism) or non-linear responses (e.g. Alpha diversity based on a dendrogram for the equalising epresent distributions of metric scores).}
+Lines 344-348.
+
+Additionally, there appears to be a logical inconsistency.
 % Figure 2 illustrates the difference between two functional diversity metrics, rather than the metrics themselves
 % Therefore, changes in this difference do not provide information about the individual increases or decreases of the metrics.
 %  We have now added supplementary figures showing the scaled metric score changes (to keep the values manageable between 0 and 1) but not also scaled to the null mechanism changes (to display just the raw metric changes).

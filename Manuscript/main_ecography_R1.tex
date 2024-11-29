@@ -248,7 +248,7 @@ Furthermore, in real-world scenarios, we do not expect these mechanisms to act i
 However, this is not tackled here for both simplicity and to understand how they work in isolation. 
 Therefore the prediction of how each different mechanism approximation would affect the metrics (Table \ref{Tab:mechanisms}) should be taken as a cautious guideline when dealing with empirical data where the distribution of the data might not be normal and where it could be affected by multiple mechanisms.
 
-We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure \ref{Fig:simulation_results}), and for 2 and 8 dimensional (see supplementary materials).
+We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure \ref{Fig:simulation_results}), and for 2 and 8 dimensional (see supplementary materials figures 1 and 2).
 In each pipeline, the dimensions where simulated as uncorrelated.
 We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait} - note that in the supplementary figures, we measured the \texttt{TPD} metrics on only the four first dimensions) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
 This curse changes the properties of space occupancy in a non-linear way depending on each observation's distribution and the number of dimensions.
@@ -307,7 +307,7 @@ G) we presented the results of the simulations as the scaled metric scores for t
 
 \subsubsection{Metrics for measuring trait space occupancy (\textit{aka} functional diversity, dissimilarity, disparity):}
 
-We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics (trait space occupancy metrics; \cite{mammola2021concepts}) using 12 metrics (Tab. \ref{Tab:metrics}):
+We structured our simulations based on three aspects of diversity commonly captured by functional diversity metrics (trait space occupancy metrics; \cite{mammola2021concepts}) using 12 metrics (Table \ref{Tab:metrics}):
 1) Richness, encompassing metrics reflecting the sum of differences among observations; (4 metrics, equivalent to size metrics in \citealt{guillerme2020shifting});
 2) Divergence, encompassing metrics reflecting the average differences among observations (4 metrics); and
 3) Regularity, encompassing metrics reflecting how regular the differences among observations are (4 metrics, equivalent to density metrics in \citealt{guillerme2020shifting}).
