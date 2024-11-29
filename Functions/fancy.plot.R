@@ -34,7 +34,7 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
         par(mfrow = c(1, length(results)+1))
         ## Plotting each stressor
         for(one_stressor in 0:length(results)) {
-            
+
             if(one_stressor == 0) {
                 ## Making the labels plot
                 par(mar = c(5, 10, 4, 0), bty = "n")
@@ -46,7 +46,6 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                            xlab  = xlab,
                            xlim  = xlim,
                            metric.names = metric.names)
-
             } else {
                 par(mar = c(5, 0, 4, 1))
                 ## Making the empty plot
@@ -170,16 +169,9 @@ add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col, lm_da
         }
         ## Setting the pch param
         if(!is.null(null_data)) {
-            if(null_data[3*one_level] > 0.05) {
+            if(null_data[3+((one_level*4)-4)] > 0.05) {
                 plotting_params$col <- "grey"
             }
-            # plot_params$pch <- 1
-            # if(null_data[3*one_level] < 0.05) {
-            #     plot_params$pch <- 20
-            #     if(null_data[3*one_level] < 0.001) {
-            #         plot_params$pch <- 19
-            #     }
-            # }
         }
         add.one.line(one_metric[, one_level], plot_params = plotting_params, probs = probs, cent.tend = cent.tend)
     }

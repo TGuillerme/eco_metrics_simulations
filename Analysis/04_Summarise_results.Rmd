@@ -212,7 +212,7 @@ null_table_emp  <- fancy.table(null_differences_emp, columns = list(c(1,3), 4, c
 
 #### Printing the latex tables for the models
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 # rownames(model_table_2d) <- gsub("\\]", "_", gsub("\\[", "_", gsub("\n", "", fancy_names)))
 change.names <- function(table, fancy_names, output = "xtable", colnames = FALSE) {
   if(output == "xtable") {
@@ -248,7 +248,7 @@ print(xtable(change.names(model_table_emp, fancy_names), caption = "Results of t
 
 #### Printing the latex tables for the differences
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 print(xtable(change.names(null_table_2d[, 1:8], fancy_names, colnames = TRUE),
   caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
   file = "../Manuscript/Tables/results_differences2d_1.tex")
