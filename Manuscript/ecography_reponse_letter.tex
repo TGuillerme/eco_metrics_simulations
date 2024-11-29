@@ -822,84 +822,86 @@ However, for mechanisms such as competition, the reasoning is not as straightfor
 I believe that formulating clear ``hypotheses'' on species patterns in the space in relation to the various mechanisms tested may help readers better navigate through the metrics analysed.
 This part could also be enhanced by introducing a new figure or expanding Figure 1 or Table 1 (which I found very well done).}
 
-% We have now improved the description of the algorithms (lines @@@) as well as added our predictions to Table 1 and improved Figure 1 to be a better tool to understand our simulation protocol and how to read the results figures.
-%  Furthermore we agree with the reviewer that the effect of different mechanisms can be sometimes more intuitive than others (e.g.~in their example and counterexample of equalizing vs.~competition).
+We have now improved the description of the algorithms (lines 148-209) as well as added our predictions to Table 1 and improved Figure 1 to be a better tool to understand our simulation protocol and how to read the results figures.
+Furthermore we agree with the reviewer that the effect of different mechanisms can be sometimes more intuitive than others (e.g. in their example and counterexample of equalizing vs. competition).
 
-% We've expanded on the following paragraph:
-%  \textit{Note that in empirical data, depending on the distribution of the data, some mechanisms can lead to similar or dissimilar patterns.}
-%  \textit{For example, if the data are normally distributed, the equalising mechanisms, by removing data on the edges of the distribution also increases the density of the trait space (because normally distributed data are denser in the centre of the distribution), similarly to the facilitation mechanism.}
-%  \textit{However, if the data are distributed uniformly, this does not happen.}
-%  \textit{Furthermore, in real-world scenarios, we do not expect these mechanisms to act in isolation of each other: multiple mechanisms may stress the observed data simultaneously, with cumulative or synergistic effects.}
-%  \textit{However, this is not tackled here for both simplicity and to understand how they work in isolation.}
-%  \textit{Therefore the prediction of how each different mechanism approximation would affect the metrics (Table \textbackslash ref\{Tab:mechanisms\}) should be taken as a cautious guideline when dealing with empirical data where the distribution of the data might not be normal and where it could be affected by multiple mechanisms.}
-%  Lines @@@
+We've expanded on the following paragraph:
+\textit{Note that in empirical data, depending on the distribution of the data, some mechanisms can lead to similar or dissimilar patterns.
+For example, if the data are normally distributed, the equalising mechanisms, by removing data on the edges of the distribution also increases the density of the trait space (because normally distributed data are denser in the centre of the distribution), similarly to the facilitation mechanism.
+However, if the data are distributed uniformly, this does not happen.
+Furthermore, in real-world scenarios, we do not expect these mechanisms to act in isolation of each other: multiple mechanisms may stress the observed data simultaneously, with cumulative or synergistic effects.
+However, this is not tackled here for both simplicity and to understand how they work in isolation. 
+Therefore the prediction of how each different mechanism approximation would affect the metrics (Table 1) should be taken as a cautious guideline when dealing with empirical data where the distribution of the data might not be normal and where it could be affected by multiple mechanisms.}
+Lines 228-240.
 
 \textcolor{blue}{Lines 165-170 and 303-307: As mentioned, TPD methods are implemented for a maximum of four dimensions.
 I am curious about how the metric for the eight-dimensional space was computed.
 Furthermore, although eight-dimensional spaces may be considered ``relatively small'' in morphological studies, ecological studies addressing both plants (Laughlin 2014, Díaz et al.2016, Weigelt et al.2021) and animals (Healy et al.2019, Mouillot et al.2021, Cox et al.2022, Beccari et al.2024) generally use far fewer than eight dimensions.
 Accordingly, I wonder if this was the reason behind selecting the four-dimensional space as the main analysis in Figure 2, or was it to allow comparison with the dimensionality of the empirical trait space? I believe this selection requires justification in the text.}
 
-% We add the following clarification in the methods for the 8 dimensional spaces:
-%  \textit{We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \textbackslash texttt\{TPD::TPDsMean\} is only implemented for up to 4 dimensions; \textbackslash citealt\{carmona2019trait\} - note that int the supplementary figures, we measured the \textbackslash texttt\{TPD\} metrics on only the four first dimensions)}
-%  Lines @@@
-%  And:
-%  \textit{Although this number of dimensions is in the range of many studies in ecology (e.g.~6 dimensions in \textbackslash citealt\{healy2019animal\}), it is not uncommon to use a much greater number of dimensions, especially in palaeontology (e.g.~more than 200 dimensions in \textbackslash citealt\{van2023should\}).}
-%  Lines @@@
+We add the following clarification in the methods for the 8 dimensional spaces:
+\textit{We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; Carmona et al. 2019 - note that in the supplementary figures, we measured the \texttt{TPD} metrics on only the four first dimensions)}.
+Lines 244-247.
 
-% We also specified the that we used only the four first dimensions for the TPD metrics in the supplementary results
+And:
+\textit{Although this number of dimensions is in the range of many studies in ecology (e.g. 6 dimensions in Healy et al. 2019), it is not uncommon to use a much greater number of dimensions, especially in palaeontology (e.g. more than 200 dimensions in Van Den Ende et al. 2023).}
+Lines 469-472.
+
+We also specified the that we used only the four first dimensions for the TPD metrics in the supplementary results.
 
 \textcolor{blue}{The use of bird traits is an interesting aspect that fits well with the scope of the manuscript.
 However, for the same reason mentioned in the previous comment and as stated by the authors in lines 165-181, I am puzzled by the choice of five dimensions to portray the AVONET variation.
 Morphological traits are generally highly correlated, resulting in a few axes explaining the highest proportion of trait variation and a space highly clustered in the centre with few species occupying its outer part (Pigot et al.2020, Germain et al.2023, Toussaint et al.2024).
 How is the selection of five dimensions justified for the analysis? Are these properties of the dataset considered important for the example?}
-%  We chose to use five dimensions to describe the Hawaiian birds trait space to make sure that each focal group has at least 95\% of their variance described in the trait space (following Guillerme et al.~2023 protocol).
-%  Furthermore, the choice of 5 dimensions is congruent with the suggestions from Pigot et al 2020 (``\textit{We have demonstrated that a minimum of four independent morphological trait axes are required to predict variation in avian trophic niches, calling into question the validity of trait-based macroecological analyses that assess functional diversity on the basis of fewer morphological trait dimensions}.'').
-%  We have now specified this in the main text:
-%  \textit{We selected the first \(5\) axes to represent the trait spaces that explained at least 95\textbackslash\% of the variance in each specific group (historic and extant species - see supplementary figure 7; following recommendations of \textbackslash citealt\{pigot2020macroevolutionary\} and dimensionality selection method from \textbackslash citealt\{guillerme2023innovation\}).}
-%  Lines @@@
+
+We chose to use five dimensions to describe the Hawaiian birds trait space to make sure that each focal group has at least 95\% of their variance described in the trait space (following Guillerme et al.~2023 protocol).
+Furthermore, the choice of 5 dimensions is congruent with the suggestions from Pigot et al 2020 (``\textit{We have demonstrated that a minimum of four independent morphological trait axes are required to predict variation in avian trophic niches, calling into question the validity of trait-based macroecological analyses that assess functional diversity on the basis of fewer morphological trait dimensions}.'').
+
+We have now specified this in the main text:
+\textit{We selected the first $5$ axes to represent the trait spaces that explained at least 95\% of the variance in each specific group (historic and extant species - see supplementary figure 7; following the recommendations of Pigot et al. 2020 and the dimensionality selection method from Guillerme et al. 2023).
+}
+Lines 331-335.
 
 \textcolor{blue}{I found the Results section very broad and believe it would benefit from specifying further details about discrepancies and similarities found among metrics.
 Referring to my first comment, the authors mention expected patterns (like a decrease in trait space occupancy) that are not previously introduced in the text.
 Similarly, I am not convinced by the expectation that all metrics (i.e., richness, evenness, and divergence) should generally increase compared to a null mechanism.
 For instance, if the competition mechanism is removing species from the centre of the distribution (as specified in Figure 1), wouldn't it produce a decrease in functional richness but an increase in its divergence?}
 
-% We have now shorten the results to be more descriptive:
+We have now shorten the results to be more descriptive:
 
-% \textit{The ability of different metrics to capture the different patterns (and thus approximate the processes) was highly variable.}
-%  \textit{It ranged from metrics capturing no clear pattern (e.g.~the Functional evenness based on the dendrogram method for competition) to metrics clearly capturing one specific pattern (e.g.~Divergence based on probability density for the equalising mechanism for a decrease in space occupancy).}
-%  \textit{Although most metrics captured a decrease in metric score relative to the amount of removed data, some metrics resulted into a score increase (e.g.~the functional evenness based on hypervolume for the equalising mechanism) or non-linear responses (e.g.~Alpha diversity based on dendrogram for the equalising mechanism).}
-%  \textit{Some cases resulted in an increase in metric score relative to random removals (positive values in Figure \textbackslash ref\{Fig:simulation\_results\}).}
-%  \textit{Furthermore, although we predicted some more common changes in aspects of functional diversity for some specific mechanisms, our simulation show that most metrics under most aspects (richness, divergence or regularity) capture changes of trait space occupancy under any mechanism (see caveats section in the discussion).}
-%  Lines @@@
+\textit{The ability of different metrics to capture the different patterns (and thus approximate the mechanisms) was highly variable.
+It ranged from metrics capturing no clear pattern (e.g. the Functional evenness based on the dendrogram method for competition) to metrics clearly capturing one specific pattern (e.g. Divergence based on probability density for the equalising mechanism for a decrease in space occupancy).
+Although most metrics captured a decrease in metric score relative to the amount of removed data, some metrics resulted in a score increase (e.g. the Functional evenness based on a hypervolume for the equalising mechanism) or non-linear responses (e.g. Alpha diversity based on a dendrogram for the equalising epresent distributions of metric scores).
+Some cases resulted in an increase in metric score relative to random removals (positive values in Figure 2).
+Furthermore, although we predicted some more common changes in aspects of functional diversity for some specific mechanisms, our simulations show that most metrics under most aspects (richness, divergence or regularity) capture changes of trait space occupancy under any mechanism (see caveats section in the discussion).}
+Lines 340-353.
 
-% However, we have now greatly expanded our discussion of these results in the discussions section under two subheadings (results, Lines @@@; and caveats Lines @@@)
-% We felt there was a dilemma in 1) expanding the results at the cost of the discussion (i.e.~longer results section and shorter discussion one) which would have highlighted specific results but maybe downplayed some caveats; or 2) expanding the discussion at the cost of the results section which we felt more highlighted what we believe is the main takeaway from the results (``\textit{The ability of different metrics to capture the different patterns (and thus approximate the mechanisms) was highly variable.''}) and expanding where this variability comes from in the discussion (difficulties of interpreting multidimensional spaces + caveats stemming from our methodological choices).
+However, we have now greatly expanded our discussion of these results in the discussions section under two subheadings (``\textbf{Capturing approximated mechanisms with different metrics}'', lines 370-454; and ``\textbf{Caveats}'' lines 456-511).
+We felt there was a dilemma in 1) expanding the results at the cost of the discussion (i.e.~ longer results section and shorter discussion one) which would have highlighted specific results but maybe downplayed some caveats; or 2) expanding the discussion at the cost of the results section which we felt more highlighted what we believe is the main takeaway from the results (``\textit{The ability of different metrics to capture the different patterns (and thus approximate the mechanisms) was highly variable.''}) and expanding where this variability comes from in the discussion (difficulties of interpreting multidimensional spaces + caveats stemming from our methodological choices).
 
 \textcolor{blue}{Lines 332-337: The rationale behind the choice of scaling for the null mechanism is unclear to me.
 While I agree with the authors that this transformation may help in data visualization and interpretation, if scaling introduces such an artifact, why rely so heavily on these comparisons? Wouldn't it be more straightforward to simply compare metrics across each other without scaling?}
 
-% We have now expanded the section in the methods discussing the scaling:
-%  \textit{To understand the ability of each metric to capture a mechanism of interest, we compared their scores relatively to the same metric scores of a null mechanism.}
-%  \textit{To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first scaled each metrics by their absolute greatest values to scale them between \(0\) and \(1\).}
-%  \textit{We then calculated the difference between each scaled metric score under the stressors of interest (approximating equalisation, facilitation, filtering and competition) and the null stressor for each different stressor level (e.g.~\(metric\_{stressor20
-% %} \- metric\_{null20
-% %}\)).}
-%  \textit{This resulted in each metric being scaled between \(–1\) and \(1\) where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e.~approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near \(0\) meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs \textbackslash ref\{Fig:simulations\}, \textbackslash ref\{Fig:simulation\_results\} and \textbackslash ref\{Fig:empirical\_results\}).}
-%  \textit{We interpret this last scenario as the metric score performing poorly, i.e.~it is unable to clearly distinguish between a random removal of elements and a non random one.}
-%  Lines @@@
+We have now expanded the section in the methods discussing the scaling:
+ \textit{To understand the ability of each metric to capture a mechanism of interest, we compared their scores relative to the same metric scores of a null mechanism.
+To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
+We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.)
+This resulted in each metric being scaled between $-1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs 1, 2 and 3).
+We interpret this last scenario as the metric score being unable to clearly distinguish between a random removal of elements and a non random one.}
+Lines 273-287.
 
-% As well as updated figure 1 to hopefully improve the readability of the scaled results
-% We believe that they are more interpretable than just displaying the raw results (now also available in the supplementaries), especially since it highlights how some metrics cannot distinguish between the null and the focal mechanism (e.g.~functional evenness using the dendrogram method for the competition) but can still distinguish from the null even when the range of change seems rather small (e.g.~functional evenness using the hypervolume method for competition).
+As well as updated figure 1 to hopefully improve the readability of the scaled results.
+We believe that they are more interpretable than just displaying the raw results (now also available in the supplementaries), especially since it highlights how some metrics cannot distinguish between the null and the focal mechanism (e.g. functional evenness using the dendrogram method for the competition) but can still distinguish from the null even when the range of change seems rather small (e.g. functional evenness using the hypervolume method for competition).
 
 \textcolor{blue}{While I agree with the conclusion that the metric of choice should align with the research question or the specific pattern analyzed, I feel the Discussion is missing some mechanistic links.
 The take-home message that different metrics are suitable for different ecological processes should be paired with an explanation or at least a suggestion of which metric may be more appropriate for which process.
 For instance, the highest dispersion observed in the empirical dataset for RaoQ compared to other metrics may relate to the lower accuracy of the metric.
 Without further details on the mechanisms of the metrics analyzed, I fear the reader may lose sight of the importance of metric choice and the implications of their different behaviors in addressing ecological processes.}
 
-% Although we did wish to expand the discussion with more clear messages of which metrics to use in which circumstances, we do not believe that the findings of our analysis justify prescriptive choice of specific metrics for specific scenarios
-% As highlighted by the reviewer, although some metrics seem to work as better tools to capture changes in some specific scenarios, these are highly dependent on the type of data used here
-% In the example of using the RaoQ having a lower accuracy than other methods, this might be true for this example dataset but we cannot posit that it would be the case for other datasets.
+Although we did wish to expand the discussion with more clear messages of which metrics to use in which circumstances, we do not believe that the findings of our analysis justify prescriptive choice of specific metrics for specific scenarios.
+As highlighted by the reviewer, although some metrics seem to work as better tools to capture changes in some specific scenarios, these are highly dependent on the type of data used here.
+In the example of using the RaoQ having a lower accuracy than other methods, this might be true for this example dataset but we cannot posit that it would be the case for other datasets.
 
-% To convey this message more clearly, we have now entirely restructured the discussion by separating it into sub-sections (simulated results, empirical results and caveats) as well as added a new text box (box 2) summarising how we believe that thinking more carefully about the pattern, process and mechanism allows for a better choice of functional diversity metric.
+To convey this message more clearly, we have now entirely restructured the discussion by separating it into sub-sections (simulated results, empirical results and caveats) as well as added a new text box (box 2) summarising how we believe that thinking more carefully about the pattern, process and mechanism allows for a better choice of functional diversity metric.
 
 \end{document}
