@@ -433,7 +433,7 @@ While the significance of the test is demonstrated through the gray plots in Fig
 
 The tables in the supplementary materials now contain the R2 values for both the Figures 2 and 3.
 We have now clarified that in the figure captions:
-\textit{The model results (including \$R^{2}$ and t-statistics) are available in supplementary table 3.}
+\textit{The model results (including $R^{2}$ and t-statistics) are available in supplementary table 3.}
 
 \textcolor{blue}{\textbf{Discussion}.}
 \textcolor{blue}{Line 285-291. This section effectively summarizes your main goal and key message.
@@ -533,75 +533,54 @@ This issue may stem from examining two distinct layers: the simple removal of po
 The distinction between these layers is confusing and is primarily addressed in Table 1, which does not effectively clarify these points.
 To improve clarity, I recommend a more systematic presentation of these issues in the main text: This would involve, describing the relevant ecological processes (e.g., facilitation, filtering, competition), explaining how these processes influence species-associated trait distributions, and then outlining how these influences are represented in the five trait-removal processes.}
 
-% We have now improved both the mechanisms approximation description (see comment below) as well as added more justification on why we believe our algorithms approximate the focal mechanisms (see response to the next comment).
-%  Furthermore, we have also added some general predictions as to which type of metric would capture which type of changes in the trait space (Table 1).
-%  We hope that these three points improve the clarity of our objectives and justifications.
+We have now improved both the mechanisms approximation description (see comment below) as well as added more justification on why we believe our algorithms approximate the focal mechanisms (see response to the next comment).
+Furthermore, we have also added some general predictions as to which type of metric would capture which type of changes in the trait space (Table 1).
+We hope that these three points improve the clarity of our objectives and justifications.
 
 \textcolor{blue}{\textbf{Model description:}}
-The section on simulating trait-space patterns needs to be significantly expanded to include more technical details regarding how the simulations were conducted.
+
+\textcolor{blue}{The section on simulating trait-space patterns needs to be significantly expanded to include more technical details regarding how the simulations were conducted.
 Key information, such as the model parameters, is entirely absent.
 A more thorough explanation of the model setup, parameters, and procedures is required to ensure that the simulations can be reproduced without needing to consult external publications (such as those by Guillerme and Mammola).
 To address this, I suggest adding a detailed explanation of the model in either the main Methods section or in a supplementary appendix, to ensure that all necessary parameters and computational steps are clearly specified.}
 
-% We have now developed the explanation of the algorithms description as follows:
-%  \textit{\textbackslash begin\{itemize\}}
-%  \textit{\textbackslash item Random removal: by randomly removing 20\textbackslash\%, 40\textbackslash\%, 60\textbackslash\% or 80\textbackslash\% of the data.}
-%  \textit{This approximates our \textbackslash textbf\{null mechanism\}
-% This is used to establish a reference to be compared to the other mechanisms and to test how removing elements in a specific way influences the metrics scores compared to removing them randomly
-% We chose this algorithm to approximate the absence of any specific stressor (i.e.~the removal of data only changes the number of observations, not the properties of the trait space).}
+We have now developed the explanation of the algorithms description as follows:
 
-% \textit{\textbackslash item Decreasing size: by removing the required amount (20\textbackslash\%, 40\textbackslash\%, 60\textbackslash\% or 80\textbackslash\%) of data away from a distance (radius) \(
-% rho\) of the centre of the trait space.}
-%  \textit{\(
-% rho\) is estimated for each trait space to match the required intensity
-% For example, for one trait space, the algorithm estimated \(
-% rho\_{20}\) to be the minimum radius excluding 20\textbackslash\% of the observations, \(
-% rho\_{40}\) the one removing 40\textbackslash\%, etc
-% (with \(
-% rho\_{20} \> 
-% rho\_{40} \> 
-% rho\_{60} \> 
-% rho\_{80}\)).}
-%  \textit{This approximates our \textbackslash textbf\{equalising mechanism\}.}
-%  \textit{We chose this algorithm to approximate equalisation assuming that a stressor could increase the probability of extinction for observations with more rare trait combinations (i.e.~observations on the edges of the trait space).}
+\begin{itemize}
+\item \textit{Random removal: by randomly removing 20\%, 40\%, 60\% or 80\% of the data.
+This approximates our \textbf{null mechanism}. This is used to establish a reference to be compared to the other mechanisms and to test how removing elements in a specific way influences the metrics scores compared to removing them randomly. We chose this algorithm to approximate the absence of any specific stressor (i.e. the removal of data only changes the number of observations, not the properties of the trait space in a systematic way).}
 
-% \textit{\textbackslash item Increasing density: by removing the required amount of pairs of points with a variable pairwise distance of at least \(D\).}
-%  \textit{\(D\) is a distance estimated for each trait space to correspond to the minimal Euclidean distance that encompasses at least \(n\) pairs of points corresponding to the intensity of the stressor.}
-%  \textit{For example \(D\_{20}\) is the distance that excludes any \(n\_{20}\) pairs of points that are a distance of at least \(D\_{20}\) from each other, \(D\_{40}\) is the distance that excludes \(n\_{40}\) pairs, etc
-% (with \(D\_{20} \> D\_{40} \> D\_{60} \> D\_{80}\)).}
-%  \textit{Note that this algorithm is not directly based on the change of average density but rather on the change in pairwise distance between observations.}
-%  \textit{This approximates our \textbackslash textbf\{facilitation mechanism\} (i.e.~the points left are only ones that are close to at least another point in space).}
-%  \textit{We chose this algorithm to approximate facilitation mechanism where a stressor could increase the probability of extinction for observations that are more isolated in the trait space.}
-%  \textit{I.e
-% pairs of observations that share a close trait combinations are more likely to remain (i.e.~observations adjacent to each other in the trait space).}
+\item \textit{Decreasing size: by removing the required amount (20\%, 40\%, 60\% or 80\%) of data away from a distance (radius) $\rho$ of the centre of the trait space.
+$\rho$ is estimated for each trait space to match the required intensity. For example, for one trait space, the algorithm estimated $\rho_{20}$ to be the minimum radius excluding 20\% of the observations, $\rho_{40}$ the one removing 40\%, etc. (with $\rho_{20} > \rho_{40} > \rho_{60} > \rho_{80}$).
+This approximates our \textbf{equalising mechanism}. 
+We chose this algorithm to approximate equalisation assuming that a stressor could increase the probability of extinction for observations with more rare trait combinations (i.e. observations on the edges of the trait space).}
 
-% \textit{\textbackslash item Shifting space: by removing the required amount of data from a distance (radius) \(
-% rho'\) of the observation with the maximum numerical value on all dimensions.}
-%  \textit{This is similar to the decreasing size algorithm but instead of choosing \(
-% rho\) to be the radius from the centre of the trait space, \(
-% rho'\) is a radius from the ``top right corner'\,' of the trait space.}
-%  \textit{In other words the centre of the radius \(
-% rho'\) is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with \(
-% rho'\_{20} \> 
-% rho'\_{40} \> 
-% rho'\_{60} \> 
-% rho'\_{80}\)).}
-%  \textit{This approximates our \textbackslash textbf\{filtering mechanism\}.}
-%  \textit{We chose this algorithm to approximate a flitering assuming that a stressor that could increase the probability of extinction for observations further from some trait combination optimum.}
-%  \textit{This is similar to our equalising mechanism approximation but with the optimum not being in the center of the trait space (a region with a high density of observations) but with the optimum being in a corner of the trait space (a region with low density).}
+\item \textit{Increasing density: by removing the required amount of pairs of points with a variable pairwise distance of at least $D$.
+$D$ is a distance estimated for each trait space to correspond to the minimal Euclidean distance that encompasses at least $n$ pairs of points corresponding to the intensity of the stressor.
+For example $D_{20}$ is the distance that excludes any $n_{20}$ pairs of points that are a distance of at least $D_{20}$ from each other, $D_{40}$ is the distance that excludes $n_{40}$ pairs, etc. (with $D_{20} > D_{40} > D_{60} > D_{80}$).
+Note that this algorithm is not directly based on the change of average density but rather on the change in pairwise distance between observations.
+This approximates our \textbf{facilitation mechanism} (i.e. the points left are only ones that are close to at least another point in space).
+We chose this algorithm to approximate the facilitation mechanism where a stressor could increase the probability of extinction for observations that are more isolated in the trait space.
+I.e. pairs of observations that share similar trait combinations are more likely to remain (i.e. observations adjacent to each other in the trait space).}
 
-% \textit{\textbackslash item Increasing evenness: by resampling the proportion of data (i.e.~20\textbackslash\%, 40\textbackslash\%, 60\textbackslash\% or 80\textbackslash\%) but with skewed resampling probabilities.}
-%  \textit{In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.}
-%  \textit{This is done by selecting of \(B\) discrete categories to summarise the distribution - i.e.~bandwidths - using Silverman's ``rule of thumb'\,' \textbackslash citep{[}\textbackslash texttt\{bw.nrd0()\} function in \textbackslash texttt\{R\};{]}{[}{]}\{silverman1986density\}.}
-%  \textit{Each of these discrete category \(B\) has an observed probability of sampling of \(b\) (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove \(i\)) of \(i 
-% times (1-b)^{p}\).}
-%  \textit{Where \(p\) is factor increasing the scaling power of the algorithm (here we used \(p=3\)).}
-%  \textit{In other words, observations in categories with a low density (\(b\<0.5\)) were more likely to be resampled and the ones in categories with high density (\(b\>0.5\)) were less likely to be resampled.}
-%  \textit{This approximates our \textbackslash textbf\{competition mechanism\}, were observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.}
-%  \textit{We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination.}
-%  \textit{This could approximate the fact that observation that have similar trait combinations are more likely to go extinct, due to competition (e.g.~using the same resources).}
-%  \textit{\textbackslash end\{itemize\}}
-%  Lines @@@
+\item \textit{Shifting space: by removing the required amount of data from a distance (radius) $\rho'$ of the observation with the maximum numerical value on all dimensions.
+This is similar to the decreasing size algorithm but instead of choosing $\rho$ to be the radius from the centre of the trait space, $\rho'$ is a radius from the ``top right corner'' of the trait space.
+In other words the centre of the radius $\rho'$ is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with $\rho'_{20} > \rho'_{40} > \rho'_{60} > \rho'_{80}$).
+This approximates our \textbf{filtering mechanism}.
+We chose this algorithm to approximate a flitering mechanism assuming a stressor that could increase the probability of extinction for observations further from some trait combination optimum.
+This is similar to our equalising mechanism approximation but with the optimum not being in the center of the trait space (a region with a high density of observations) but with the optimum being in a corner of the trait space (a region with low density).}
+
+\item \textit{Increasing evenness: by resampling the proportion of data (i.e. 20\%, 40\%, 60\% or 80\%) but with skewed resampling probabilities.
+In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.
+This is done by selecting $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' (\texttt{bw.nrd0()} function in \texttt{R}; Silverman 1986).
+Each discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
+Where $p$ is a factor increasing the scaling power of the algorithm (here we used $p=3$).
+In other words, observations in categories with a low density ($b<0.5$) were more likely to be resampled and the ones in categories with high density ($b>0.5$) were less likely to be resampled.
+This approximates our \textbf{competition mechanism}, where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.
+We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination.
+This could approximate the fact that observations that have similar trait combinations are more likely to go extinct due to competition (e.g. using the same resources).}
+\end{itemize}
+Lines 148-209
 
 \textcolor{blue}{\textbf{Consistent terminology:}}
 
@@ -612,28 +591,31 @@ This lack of consistency creates confusion and often forced me to repeatedly rev
 To improve readability, I recommend establishing a consistent terminology early in the paper and adhering to it throughout.
 This would significantly reduce ambiguity and enhance the reader's ability to follow the methodology and conclusions.}
 
-% We have now standardised the terminology following \textbackslash cite\{guillerme2020shifting\} and \textbackslash cite\{mammola2021concepts\}
-% In brief, elements, tips or species are now referred to as ``observations''; and traits, dimensions and columns as ``dimensions'' when referring to our simulation approach
-% We also added a Glossary to the supplementary materials @@@ for clarity.
+We have now standardised the terminology following Guillerme et al. 2020 and Mammola et al 2021.
+In brief, elements, tips or species are now referred to as ``observations''; and traits, dimensions and columns as ``dimensions'' when referring to our simulation approach
+We also added a Glossary to the supplementary materials table 1 for clarity.
 
 \textcolor{blue}{\textbf{Detailed comments:}}
 
 \textcolor{blue}{L114: Really ``A single Brownian motion trait''? This implies that only a single trait dimension is generated, whereas from the later text it seems that higher-dimensional traits are simulated.}
-%  By ``trait'' here we refer to the single process (Brownian Motion) which can be simulated in any number of dimensions (i.e.~generating a time dependent element value using 2, 4 or 8 dimension coordinates to describe it)
-% In this context we differentiate ``dimensions'' which can be interpreted as a column in the data matrix, and the ``trait'' which is the definition of the measured (or simulated) feature
-% For example, the trait ``geographical location'' can be described using two dimensions (latitude and longitude) or can be described as two traits (``latitude coordinate'' and ``longitude coordinate'')
-% In this manuscript we preferred using the first definition
-% We've clarified this as follows:
-%  \textit{First, we simulated a single random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e.~a pure birth speciation model) until reaching 200 elements in \textbackslash texttt\{R\} \textbackslash citep\{rcore\} using \textbackslash texttt\{treats\} \textbackslash citep\{guillerme2024treats\}
-% This trait was simulated either as a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensional space.}
-%  Lines@@@
+
+By ``trait'' here we refer to the single process (Brownian Motion) which can be simulated in any number of dimensions (i.e. generating a time dependent element value using 2, 4 or 8 dimension coordinates to describe it).
+In this context we differentiate ``dimensions'' which can be interpreted as a column in the data matrix, and the ``trait'' which is the definition of the measured (or simulated) feature.
+For example, the trait ``geographical location'' can be described using two dimensions (latitude and longitude) or can be described as two traits (``latitude coordinate'' and ``longitude coordinate'').
+In this manuscript we preferred using the first definition.
+
+We've clarified this as follows:
+\textit{First, we simulated a single random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} (R Core Team, 2024) using \texttt{treats} (Guillerme, 2024). This trait was simulated either as a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensional space.}
+Lines 125-129.
 
 \textcolor{blue}{L115: what is a ``tip''?}
-%  By tip we meant a node with no descendants in an evolutionary tree
-% We have now standardised the terminology (see response to general comment above).
+
+By tip we meant a node with no descendants in an evolutionary tree.
+We have now standardised the terminology (see response to general comment above) and changed it to observation.
 
 \textcolor{blue}{L115, ``200 elements'': Why are so few data points used? A dataset of only 200 elements (reduced to 40 after data removal) seems exceptionally sparse, especially in a 4- or 8-dimensional space, as noted later in the text.
 What is the motivation behind studying such a sparse space? One of the main advantages of using simple models like a branching process is that they allow for the generation of larger datasets, which would provide more robust statistics and better analytical power.}
+
 %  @@@TODO: Rerun the simulations with 400, 800 and 1000 elements.
 %  But also highlight that 40 species is already quite big
 % We can also link that to the use of FD in palaeontology (disparity) where 40 is also already quite big!
@@ -641,46 +623,45 @@ What is the motivation behind studying such a sparse space? One of the main adva
 
 
 \textcolor{blue}{LL 120-124, ``four different stressors, five specific algorithms'': Inconsistency in the used terminology.
-In this section, ``stressors'' appear to refer to the amount of data being removed (ranging from 20\% to 80\%), but later, the term ``stressors'' is used to describe the five data-removal processes---referred to as ``specific algorithms'' here.}
-% We have now standardised the terminology throughout the manuscript (and included it in the glossary table in the supplementary materials): ``algorithm'' now designate the code algorithm, ``stressors'' (and ``stressors' intensity'') now designates how we modify the data (using the algorithms mentioned above) and ``mechanisms'' now designates the biological mechanisms we are approximating using a specific stressor (that is based on a specific algorithm)
-% We've namely changed this section for clarity:
-%  \textit{We then applied five different stressors to the trait space with different intensities.}
-%  \textit{The five different stressors are effectively five specific algorithms removing either 20\textbackslash\%, 40\textbackslash\%, 60\textbackslash\% or 80\textbackslash\% of the data (the intensities of the stressors, resulting in trait spaces with, respectively, 160, 120, 80 and 40 observations).}
-%  \textit{We used the following specific algorithms (Figure \textbackslash ref\{Fig:simulations\}; Table \textbackslash ref\{Tab:mechanisms\}; all algorithms, except ``increasing evenness'\,', were previously described in \textbackslash cite\{guillerme2020shifting\}):}
-%  Lines @@@
+In this section, ``stressors'' appear to refer to the amount of data being removed (ranging from 20\% to 80\%), but later, the term ``stressors'' is used to describe the five data-removal processes - referred to as ``specific algorithms'' here.}
+
+
+We have now standardised the terminology throughout the manuscript (and included it in the glossary table in the supplementary materials): ``algorithm'' now designate the code algorithm, ``stressors'' (and ``stressors' intensity'') now designates how we modify the data (using the algorithms mentioned above) and ``mechanisms'' now designates the biological mechanisms we are approximating using a specific stressor (that is based on a specific algorithm).
+
+We've namely changed this section for clarity:
+\textit{We then applied five different stressors to the trait space with different intensities.
+The five different stressors are effectively five specific algorithms removing either 20\%, 40\%, 60\% or 80\% of the data (the intensities of the stressors, resulting in trait spaces with, respectively, 160, 120, 80 and 40 observations).
+We used the following specific algorithms (Figure 1; Table 1; all algorithms, except ``increasing evenness'', were previously described in Guillerme et al. 2020):}
+Lines 142-147.
 
 \textcolor{blue}{L130, ``increasing density'': What is the motivation for this term? While I understand that this removal scheme may result in an overall increase in average density, the removal itself is not directly based on density but rather on pairwise distance in trait space.
 For instance, the equalizing scheme would also lead to an increase in density.}
-%  We used the term ``increasing density'' here to differentiate from ``decreasing size''
-% The reviewer is totally correct in their understanding that, especially for normally distributed data, changes in density in the data actually occur to some extent with all the algorithms used here
-% The stressor names and their algorithms are based on Guillerme et al 2020 and their implementation in the dispRity package: in their description they don't assume any specific distribution of the data a priori
-% In fact, when using a uniform distribution, the decreasing size stressor does not change the density and the increasing density algorithm does not decrease the size of the trait space.
-%  We've now added the following note to include the reviewer's comment:
-%  \textit{Note that the algorithm used here to simulate the stressors depend, to some extent, to the distribution of the data for each trait space.}
-%  \textit{The algorithms used can lead to similar stressors effects depending on the simulated data distribution.}
-%  \textit{For example, ``increasing density'\,' and ``decreasing size'\,' stressors will lead to just what their name suggest if the observations are uniformly distributed (just average increase in density for ``increasing density'\,' and just overall decrease in size for the ``decreasing size'\,' stressors) but will have more or less similar effects (albeit no identical) in the case of a normal distribution (average increase in density and overall decrease in size for both ``increasing density'\,' and ``decreasing size'\,' stressors.)}
-%  Lines @@@
+
+We used the term ``increasing density'' here to differentiate from ``decreasing size''.
+The reviewer is totally correct in their understanding that, especially for normally distributed data, changes in density in the data actually occur to some extent with all the algorithms used here.
+The stressor names and their algorithms are based on Guillerme et al 2020 and their implementation in the \texttt{dispRity} package: in their description they don't assume any specific distribution of the data \textit{a priori}.
+In fact, when using a uniform distribution, the decreasing size stressor does not change the density and the increasing density algorithm does not decrease the size of the trait space.
+
+We've now added the following note to include the reviewer's comment:
+\textit{Note that the algorithm used here to simulate the stressors depends, to some extent, on the distribution of the data for each trait space.
+The algorithms used can lead to similar stressor effects depending on the simulated data distribution.
+For example, ``increasing density'' and ``decreasing size'' stressors will lead to just what their names suggest if the observations are uniformly distributed (just average increase in density for ``increasing density'' and just overall decrease in size for the ``decreasing size'' stressors) but will have more or less similar effects (albeit not identical) in the case of a normal distribution (average increase in density and overall decrease in size for both ``increasing density'' and ``decreasing size'' stressors.)}
+Lines 213-221.
 
 \textcolor{blue}{L134, ``shifting space'': Similar to the previous point, this term is somewhat misleading.
 This removal scheme does not explicitly shift the distribution; rather, it cuts the distribution at one edge, causing the mean to shift.
 However, this effect of shifting the mean is not unique to this scheme - other removal schemes will generally result in a shift of the mean as well.}
-%  This is also a fair point
-% See comment above.
+
+This is also a very fair point.
+See our response to the comment above.
 
 \textcolor{blue}{L135, ``with the maximal value'': What does ``maximal value'' mean for points in a higher-dimensional space? Maybe this refer to the location in trait space with the highest density of trait elements?}
-%  We have now specified what we meant by maximal value:
-%  \textit{Shifting space: by removing the required amount of data from a distance (radius) \(
-% rho'\) of the observation with the maximum numerical value on all dimensions.}
-%  \textit{This is similar to the decreasing size algorithm but instead of choosing \(
-% rho\) to be the radius from the centre of the trait space, \(
-% rho'\) is a radius from the ``top right corner'\,' of the trait space.}
-%  \textit{In other words the centre of the radius \(
-% rho'\) is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with \(
-% rho'\_{20} \> 
-% rho'\_{40} \> 
-% rho'\_{60} \> 
-% rho'\_{80}\)).}
-%  Lines @@@
+
+We have now specified what we meant by maximal value:
+\textit{Shifting space: by removing the required amount of data from a distance (radius) $\rho'$ of the observation with the maximum numerical value on all dimensions.
+This is similar to the decreasing size algorithm but instead of choosing $\rho$ to be the radius from the centre of the trait space, $\rho'$ is a radius from the ``top right corner'' of the trait space.
+In other words the centre of the radius $\rho'$ is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with $\rho'_{20} > \rho'_{40} > \rho'_{60} > \rho'_{80}$).}
+Lines 168-184.
 
 \textcolor{blue}{LL138- 145: I found this section on the competition method difficult to follow:}
 
@@ -693,49 +674,61 @@ Could you clarify what ``n'' represents here? For example, what is meant by the 
 \textcolor{blue}{- The term ``flattening the curve'' needs more context.
 What curve is being flattened, and how does this relate to the competition method?}
 
-%  We have now completely rewritten the description of this stressor by defining more clearly what the bandwidth is, renaming the variables to be easier to understand, removed mention of flattening the curve and rewrote the equations to be specific to the increase in evenness (previous equations were generalised to both increase or decrease the eveness depending on the variable \textit{i} (formerly \textit{n}) being now always a proportion of removal (e.g.~0.2, 0.4, \ldots{} - former description worked with \textit{n} being also a proportion to add e.g.~1.2, 1.4, etc\ldots):
-%  \textit{Increasing evenness: by resampling the proportion of data (i.e.~20\textbackslash\%, 40\textbackslash\%, 60\textbackslash\% or 80\textbackslash\%) but with skewed resampling probabilities.}
-%  \textit{In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.}
-%  \textit{This is done by selecting of \(B\) discrete categories to summarise the distribution - i.e.~bandwidths - using Silverman's ``rule of thumb'\,' \textbackslash citep{[}\textbackslash texttt\{bw.nrd0()\} function in \textbackslash texttt\{R\};{]}{[}{]}\{silverman1986density\}.}
-%  \textit{Each of these discrete category \(B\) has an observed probability of sampling of \(b\) (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove \(i\)) of \(i 
-% times (1-b)^{p}\).}
-%  \textit{Where \(p\) is factor increasing the scaling power of the algorithm (here we used \(p=3\)).}
-%  \textit{In other words, observations in categories with a low density (\(b\<0.5\)) were more likely to be resampled and the ones in categories with high density (\(b\>0.5\)) were less likely to be resampled.}
-%  \textit{This approximates our \textbackslash textbf\{competition mechanism\}, were observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.}
-%  Lines @@@
+We have now completely rewritten the description of this stressor by defining more clearly what the bandwidth is, renaming the variables to be easier to understand, removed mention of flattening the curve and rewrote the equations to be specific to the increase in evenness (previous equations were generalised to both increase or decrease the eveness depending on the variable \textit{i} (formerly \textit{n}) being now always a proportion of removal (e.g. 0.2, 0.4, ... - former description worked with \textit{n} being also a proportion to add e.g. 1.2, 1.4, etc.):
+
+\textit{Increasing evenness: by resampling the proportion of data (i.e. 20\%, 40\%, 60\% or 80\%) but with skewed resampling probabilities.
+In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.
+This is done by selecting $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' (\texttt{bw.nrd0()} function in \texttt{R}; Silverman, 1986).
+Each discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
+Where $p$ is a factor increasing the scaling power of the algorithm (here we used $p=3$).
+In other words, observations in categories with a low density ($b<0.5$) were more likely to be resampled and the ones in categories with high density ($b>0.5$) were less likely to be resampled.
+This approximates our \textbf{competition mechanism}, where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space..}
+Lines 191-205.
 
 \textcolor{blue}{Figure 1: The caption is confusing and needs significant improvement.
 Below are some specific points that require attention:}
 
 \textcolor{blue}{- The caption completely omits any description of what is shown in left and right columns (i.e., 1d and 2d case).}
-%  We have now clarified what each column contains in the figure caption.
+
+We have now clarified what each column contains in the figure caption.
+
 \textcolor{blue}{- It is unclear whether this figure (both the 1d and 2d cases) is based on the actual simulations or is merely a schematic sketch.
 For instance, in the right column, it seems unlikely that the figure actually depicts 200 points.}
 
-% The figures does depict 200 points (200 blue in row A and 100 blue + 100 orange in the other columns).
-% We have now specified this in the caption.
+The figures does depict 200 points (200 blue in row A and 100 blue + 100 orange in the other columns; see specific script: \url{https://github.com/TGuillerme/eco_metrics_simulations/blob/a094183ab65543adc805db0b0c4f24314c9c7e99/Analysis/01_Simulating_spaces_and_stressors.Rmd#L40}).
+We have now specified this in the caption.
+
 \textcolor{blue}{- The caption mentions a ``trait space of 2, 4, or 8 dimensions,'' yet a 1d trait space is shown.
 If a 1d trait space is an illustrative example, this should be specified in the caption.}
-%  We have now specified that we are showing 1 or 2 dimensions regardless of the number of dimensions per traits (i.e.~8 dimensional traits are not fully represented here but what's happening on their first and second dimensions is displayed here)
-% We think one confusion on our part is the distinction between a dimension (a column in a matrix) and a trait (a measurable feature for an observation)
-% In our case we are always only looking at one trait per trait space
-% Although these traits can have 2, 4 or 8 dimensions
-% We have now clarified this in the glossary.
+
+We have now specified that we are showing 1 or 2 dimensions regardless of the number of dimensions per traits (i.e. 8 dimensional traits are not fully represented here but what's happening on their first and second dimensions is displayed here).
+We think one confusion on our part is the distinction between a dimension (a column in a matrix) and a trait (a measurable feature for an observation).
+In our case we are always only looking at one trait per trait space.
+Although these traits can have 2, 4 or 8 dimensions.
+We have now clarified this in the glossary (supplementary table 1).
+
 \textcolor{blue}{- The pattern shown in the subfigure labeled ``2d facilitating mechanism'' appears questionable.
 If point-pairs from a 2d distribution are removed based on a threshold distance, the resulting pattern would not typically resemble what is depicted here.}
-%  The illustration of the 2D facilitating mechanism directly comes from the output of the dispRity::reduce.space function where the algorithm is implemented
-% Here it selected every \textit{n} pairs of observations that are the closest to each other so that 50\% of the data is selected
-% Here \textit{n} is 50 so that 100 observations are selected
-% The algorithm is recursive so that once a pair of observations is selected, it cannot be selected again.
+
+The illustration of the 2D facilitating mechanism directly comes from the output of the \texttt{dispRity::reduce.space} function where the algorithm is implemented (implementation: \url{https://github.com/TGuillerme/dispRity/blob/master/R/reduce.space.R}; test: \url{https://github.com/TGuillerme/dispRity/blob/master/tests/testthat/test-reduce.space.R}.
+Here it selected every \textit{n} pairs of observations that are the closest to each other so that 50\% of the data is selected.
+Here \textit{n} is 50 so that 100 observations are selected.
+The algorithm is recursive so that once a pair of observations is selected, it cannot be selected again.
+
 \textcolor{blue}{- Terminology: The use of the term ``species'' in the caption is confusing, as the methods seem to generate traits rather than species.}
-%  We have now removed any mention of species.
+
+We have now removed any mention of ``species'' and replaced it with ``observations''.
+
 \textcolor{blue}{- The phrase ``removing half of the species, resulting in two groups of tips'' is unclear.
 How are these two groups defined? Presumably, one group consists of the removed traits and the other of non-removed traits.
 Additionally, it is unclear which color (blue or orange) corresponds to which group.}
-%  We have now specified this in the new caption.
+
+We have now specified this in the new caption.
+
 \textcolor{blue}{- I am skeptical about the use of ecological terminology such as ``competition'' and ``facilitation'' in this context.
 What is actually being shown are data distributions resulting from different point-removal algorithms, not ecological interactions per se.
 While these processes can be discussed and associated with ecological mechanisms in the text or discussion (if well justified), using such terms directly in the figure caption is highly misleading.}
+
 %  @@@TODO: Links back to main comment from reviewer 2: Go back to the previous version of table 1 that gives more description of the models
 % One thing here is probably to justify more why we think that, for example, ``removing points from the side of a traitspace = filtering''.
 %  We now changed the labels in the figure and the caption to highlight that we are indeed approximating such mechanisms, not simulating them per se as the reviewers pointed out.
