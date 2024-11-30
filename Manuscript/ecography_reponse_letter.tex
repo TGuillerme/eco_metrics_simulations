@@ -369,22 +369,26 @@ We did not illustrate the distributions in 4 or 8 dimensions here.}
 Figure 1.
 
 \textcolor{blue}{Line 194-195. Please improve clarity.}
-
-%  @@@TODO: rewrite following other reviewers comments (stats for results)
-
 \textcolor{blue}{Line 201-203. Please simplify and improve clarity.}
-
-%  @@@TODO: rewrite following other reviewers comments (stats for results)
-
 \textcolor{blue}{Line 207-211. Please provide a clearer explanation of the effect size and statistical significance of these model outcomes, similar to the explanation provided in lines 198-201.}
 
-%  @@@TODO: rewrite following other reviewers comments (stats for results)
-%  @@@TODO: calculate effect sizes
-We now added all the statistics results in the supplementary results from table 6 to 18.
+We rewrote this entire section to hopefully improve clarity:
+
+\textit{To understand the ability of each metric to capture a mechanism of interest, we compared their scores relative to the same metric scores of a null mechanism.
+To ease interpretation of the results across a range of metrics with different orders of magnitudes of outputs and different random simulations, we first calculated the difference between the stressor of interest and the null stressor (e.g. $metric_{stressor20\%} - metric_{null20\%}$).
+We then scaled these differences to be relative to the highest relative differences between all the simulations for that one metric and stressor (across the 4 levels of removal - 20\%, 40\%, etc.)
+This resulted in each metric being scaled between $-1$ and $1$ where a negative difference can be interpreted as the random removal of elements leading to a higher metric score; a positive difference as the focal removal of elements (i.e. approximating equalisation, facilitation, filtering and competition) leading to a higher metric score; and a difference near $0$ meaning both the null stressor and the focal stressor having a similar effect on the metric score (Figs 1, 2 and 3).
+We interpret this last scenario as the metric score being unable to clearly distinguish between a random removal of elements and a non random one.
+To assess these poor performances, we compared the distributions of the $171$ scores for each metric with each reduction level for each non-null stressor to the null stressor using pairwise t-tests.
+The results of these tests are displayed in figure 2 (for the non-null stressor, grey distributions are not clearly distinguishable from the null stressor).}
+Lines 273-290.
+
+Furtheremore, we have also added all the statistics results in the supplementary results from table 6 to 18 (including effect sizes).
 
 \textcolor{blue}{Line 221. Please specify the added species.}
 
-%  @@@TODO: name of the two added marine species
+We now changed the sentence to:
+\textit{We also added two marine species to the prehistoric species list (}Haliaeetus albicilla\textit{ and }Pterodroma hypoleuca\textit{);}. Lines 309-310.
 
 \textcolor{blue}{Table 2. The aspect for the third row is missing.}
 
@@ -616,11 +620,10 @@ We have now standardised the terminology (see response to general comment above)
 \textcolor{blue}{L115, ``200 elements'': Why are so few data points used? A dataset of only 200 elements (reduced to 40 after data removal) seems exceptionally sparse, especially in a 4- or 8-dimensional space, as noted later in the text.
 What is the motivation behind studying such a sparse space? One of the main advantages of using simple models like a branching process is that they allow for the generation of larger datasets, which would provide more robust statistics and better analytical power.}
 
-%  @@@TODO: Rerun the simulations with 400, 800 and 1000 elements.
-%  But also highlight that 40 species is already quite big
-% We can also link that to the use of FD in palaeontology (disparity) where 40 is also already quite big!
-% Tom's comment: *Reviewer 2's point about why we use only 200 data points - it's a while since I read our paper, but I guess we did that to make it more realistic in terms of the sample sizes people use. In island studies, 200 is pretty large, and I have many references (including my own ...) where people calculate FD using 1-5 species. So again we could make the argument that it represents a trade-off, between realistic sample sizes that people analyse vs large enough that we can really test the mechanisms
-
+We re-ran the simulations with 500 and 1000 observations for 2D and 4D traits (now in the supplementary figures 3 and 4).
+We did not however changed the main results in the manuscript because we believe that datasets with a low number of observations are actually not that uncommon across evolutionary biology (e.g. in palaeontology) and ecology.
+For example, in island studies, 200 observations is a pretty large number (e.g. the empirical dataset in this paper).
+We believe that 200 to 40 observations remains a fair trade-off between realistic sample sizes that researchers often analyse (e.g. Matthews et al. 2023) \textit{versus} much larger ones that are sometimes used (e.g. Guillerme et al. 2023).
 
 \textcolor{blue}{LL 120-124, ``four different stressors, five specific algorithms'': Inconsistency in the used terminology.
 In this section, ``stressors'' appear to refer to the amount of data being removed (ranging from 20\% to 80\%), but later, the term ``stressors'' is used to describe the five data-removal processes - referred to as ``specific algorithms'' here.}
@@ -750,7 +753,8 @@ We have now clarified this point:
 Lines 241-243.
 
 \textcolor{blue}{LL 170-178: why then did the authors not simply generate more data points (see my comment above)?}
-%  @@@TODO: Rerun the simulations with 400, 800 and 1000 elements.
+
+We have now added the results for 500 and 1000 observations in the supplementary figures 4 and 5.
 
 \textcolor{blue}{Table 1: The integration of this table into the main text could be improved.
 Specifically, the abrupt mention of species (which are not part of the model) is confusing.}
