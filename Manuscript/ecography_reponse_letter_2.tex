@@ -130,32 +130,123 @@ Thomas Guillerme, on behalf of all co-authors.
 
 \textcolor{blue}{\textbf{Reviewer: 3}}
 
-\textcolor{blue}{I greatly appreciate the effort the authors have put into revising the manuscript. The substantial reformulation has significantly improved the understanding of processes, mechanisms, and expectations. I particularly value the expanded explanation of how the stressors are applied. However, I have a few concerns that I believe should be addressed to further enhance the clarity and methodological rigor of the manuscript. First, the comparison of metrics across different dimensionalities raises questions, particularly when metrics from lower-dimensional spaces (e.g., the TPD package) are compared to those measured in higher-dimensional spaces. Given the manuscript's aim to compare metrics measured in a standardized way, ensuring consistency across dimensions is fundamental. Additionally, this version of the manuscript has highlighted concerns regarding the simulation of traits—specifically, whether the approach involves a single trait with multiple dimensions or multiple independent traits. This distinction has important implications for the assumptions of independence and variance, and subsequently, for the simulated patterns within the trait space. Below, I provide specific comments and suggestions to address these points. I will recommend a further revision to clarify the selection and implementation of these approaches, as this will enhance the transparency and methodological rigor of the manuscript.}
+\textcolor{blue}{I greatly appreciate the effort the authors have put into revising the manuscript.
+The substantial reformulation has significantly improved the understanding of processes, mechanisms, and expectations.
+I particularly value the expanded explanation of how the stressors are applied.
+However, I have a few concerns that I believe should be addressed to further enhance the clarity and methodological rigor of the manuscript.
+First, the comparison of metrics across different dimensionalities raises questions, particularly when metrics from lower-dimensional spaces (e.g., the TPD package) are compared to those measured in higher-dimensional spaces.
+Given the manuscript's aim to compare metrics measured in a standardized way, ensuring consistency across dimensions is fundamental.
+Additionally, this version of the manuscript has highlighted concerns regarding the simulation of traits—specifically, whether the approach involves a single trait with multiple dimensions or multiple independent traits.
+This distinction has important implications for the assumptions of independence and variance, and subsequently, for the simulated patterns within the trait space.
+Below, I provide specific comments and suggestions to address these points.
+I will recommend a further revision to clarify the selection and implementation of these approaches, as this will enhance the transparency and methodological rigor of the manuscript.}
 
 \textcolor{blue}{Specific comments: }
 
-\textcolor{blue}{Lines 128-135: The capacity of the algorithm to simulate the stressor strongly depends on the distribution of the data and the assumption of independence in the simulated dimensions (as should be the case in the simulation example). Given this, it is unclear why a single trait is simulated as multidimensional. This approach feels unnecessarily complex, potentially confounding the reader and introducing covariation that should be tested. To clarify, a trait is typically defined as a single measurable characteristic of an organism, particularly when considering the definition referenced in Violle et al. (2007). The concept of multidimensionality in trait spaces usually applies when multiple traits are combined into a matrix, with each column representing a distinct trait or a principal component summarizing trait variation. However, it is not common practice to describe a single trait using multiple variables (i.e., columns or dimensions). Regarding the statement in Lines 132–135:
-“These aspects are often expressed in one dimension but can in fact be described in any number of dimensions. For example, for trait defined as “leaf insertion angle”, this can measured in one dimension (an angle in degrees) or three dimensions (the same angle expressed as the trigonometric relation of three sides of a triangle).”
-While this explanation clarifies the authors’ definition of a “multidimensional trait,” it appears to complicate the methodology. If traits are often expressed in a single dimension (e.g., angle in degrees), I do not see the necessity to simulate them as “a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensions.” (lines 128-129 If I understood the text correctly, this approach results in a trait space built around a single trait defined by multiple dimensions. Instead, it would be more intuitive and broadly applicable to simulate 2, 4, or 8 separate traits. These traits, together, would define a 2-, 4-, or 8-dimensional trait space. Since these traits would be uncorrelated, they would correspond directly to the same number of principal components, aligning with the definition of dimensions provided in Supplementary Table 1.
-Moreover, simulating a single multidimensional trait may inadvertently introduce covariation across dimensions. For example, using “leaf insertion angle” as an illustration, the trigonometric relationships of the triangle’s sides and angles inherently interconnect mathematically (e.g., through sine, cosine, and tangent). This interconnection could introduce correlation in the variance, even under Brownian assumptions. While this correlation may not be inherently incorrect or distinct from real ecological data, the assumption of independence in the simulation should be explicitly tested. Correlated dimensions might create clustering in the trait space, potentially biasing the application of stressors in the simulation context. 
-Finally, simulating independent traits using Brownian motion without fixing the variance could also address the issue of homogeneity of variance across dimensions (Lines 463–464). Homogeneity of variance may introduce similar bias in the simulated mechanisms and it is far from approximating a set of independent trait or dimensions. I belive that simulating independent trait may mitigate that concern.}
+\textcolor{blue}{Lines 128-135: The capacity of the algorithm to simulate the stressor strongly depends on the distribution of the data and the assumption of independence in the simulated dimensions (as should be the case in the simulation example).
+Given this, it is unclear why a single trait is simulated as multidimensional.
+This approach feels unnecessarily complex, potentially confounding the reader and introducing covariation that should be tested.
+To clarify, a trait is typically defined as a single measurable characteristic of an organism, particularly when considering the definition referenced in Violle et al. (2007).
+The concept of multidimensionality in trait spaces usually applies when multiple traits are combined into a matrix, with each column representing a distinct trait or a principal component summarizing trait variation.
+However, it is not common practice to describe a single trait using multiple variables (i.e., columns or dimensions).
 
-\textcolor{blue}{Lines 191 – 209: This paragraph includes parts that require clarification. It begins by stating that the 'algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations', which corresponds to the equation ix(1-b)p.  However, if this algorithm is intended to approximate a competition mechanism ‘where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.’ and ‘We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination’ shouldn’t the pattern be the reverse? Furthermore, the formula, by subtracting 1 from the probability, seems to skew sampling towards less populated regions of the space, which, if I understand correctly, does not align with the concept of competitive exclusion.}
+Regarding the statement in Lines 132–135:
+\textit{“These aspects are often expressed in one dimension but can in fact be described in any number of dimensions. For example, for trait defined as “leaf insertion angle”, this can measured in one dimension (an angle in degrees) or three dimensions (the same angle expressed as the trigonometric relation of three sides of a triangle).”}
+While this explanation clarifies the authors’ definition of a “multidimensional trait,” it appears to complicate the methodology.
+If traits are often expressed in a single dimension (e.g., angle in degrees), I do not see the necessity to simulate them as “a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensions.” (lines 128-129 If I understood the text correctly, this approach results in a trait space built around a single trait defined by multiple dimensions.
 
-\textcolor{blue}{Lines 280-289: It seems that I may need further clarification regarding the second step of the scaling. If the data are only divided by the maximum value, the results would generally have a maximum of 1 in cases of consistently negative or positive metrics across all levels of species exclusion (e.g., -2/-2 = 1 and +2/+2 = 1). Similarly, when some metrics have negative values and others are positive (across different levels of removal), the range would not necessarily be constrained between -1 and 1 unless all values fall within the range [0, 1] (e.g., functional richness might not range between -1 and 1). Furthermore, I am concerned that this second scaling could reduce or bias the patterns of the metrics, potentially affecting the conclusions of the manuscript. For instance, in Supplementary Figure 8 (simulated data for 4 dimensions), taking FD:FEve for facilitation as a reference, subtracting the MetricStressor from the MetricNull results in a relatively linear pattern, with a general decrease in evenness as species removal increases (if I am seeing well from the figure), which aligns with expectations under this mechanism. However, in Figure 2, the same metric exhibits a more drastic decrease in stressor evenness at 60\% and an increase at 80\%, challenging to reconcile with the expected mechanism, given that the data were simulated to approximate a facilitation mechanism. A similar trend can be observed across other examples (e.g., Supplementary Figures with raw data), which may explain the contrasting patterns between historical and extant empirical data, with some metrics showing fewer extreme differences than observed. I suggest further exploring the impact of this second scaling on the final results.}
+Instead, it would be more intuitive and broadly applicable to simulate 2, 4, or 8 separate traits.
+These traits, together, would define a 2-, 4-, or 8-dimensional trait space.
+Since these traits would be uncorrelated, they would correspond directly to the same number of principal components, aligning with the definition of dimensions provided in Supplementary Table 1.
+Moreover, simulating a single multidimensional trait may inadvertently introduce covariation across dimensions.
+For example, using “leaf insertion angle” as an illustration, the trigonometric relationships of the triangle’s sides and angles inherently interconnect mathematically (e.g., through sine, cosine, and tangent).
+This interconnection could introduce correlation in the variance, even under Brownian assumptions.
+While this correlation may not be inherently incorrect or distinct from real ecological data, the assumption of independence in the simulation should be explicitly tested.
+Correlated dimensions might create clustering in the trait space, potentially biasing the application of stressors in the simulation context. 
+Finally, simulating independent traits using Brownian motion without fixing the variance could also address the issue of homogeneity of variance across dimensions (Lines 463–464).
+Homogeneity of variance may introduce similar bias in the simulated mechanisms and it is far from approximating a set of independent trait or dimensions.
+I belive that simulating independent trait may mitigate that concern.}
 
-\textcolor{blue}{Figure 1: To enhance readability, I suggest including a legend for the colours (orange and blue) directly in the figure, not just in the caption. I appreciate the improvements made to expand the figure. However, if metrics C to F are scaled for the null mechanisms, I assume that in the first two panels of section G, the term 'scaled' could be removed, as they likely represent the actual metric used to compute the scaled metric in panel 3. If the metrics are further scaled, this should be clarified in the text. For completeness and readability, I also suggest explicitly adding the details of the second scaling performed relative to the four levels of removal.}
+% TODO:  Change the trait definition from single to multiple. And say it's because in treats "traits" are treated as processes in n-dimensions but that we agree that this is adds extra complication here.
+ 
+\textcolor{blue}{Lines 191 – 209: This paragraph includes parts that require clarification.
+It begins by stating that the 'algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations', which corresponds to the equation ix(1-b)p.
+However, if this algorithm is intended to approximate a competition mechanism ‘where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.’ and ‘We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination’ shouldn’t the pattern be the reverse?
+Furthermore, the formula, by subtracting 1 from the probability, seems to skew sampling towards less populated regions of the space, which, if I understand correctly, does not align with the concept of competitive exclusion.}
 
-\textcolor{blue}{Lines 330 – 335/ Figure 4: I appreciate the clarification regarding the TPD metric. However, I regret to say that comparing a metric built on four dimensions with one working on five dimensions does not seem appropriate, particularly given the aims of the manuscript. Considering the amount of variation explained by the first four dimensions (Supplementary Figure 11) and the manuscript's focus on exploring metric performance with a real dataset rather than depicting bird diversity after extinction, standardizing the dimensionality across all metrics is necessary.  This approach would enable a fair comparison, even if it requires a slight compromise on the 95\% variation threshold, targeting approximately 90\% instead (as observed in the histogram for four dimensions, which aligns with the minimum number of dimensions recommended by Pigot et al. 2020). This adjustment is particularly important, as metric performance may vary significantly across different dimensionalities (e.g., metrics evaluated across 2, 4, or 8 dimensions). Standardizing to four dimensions would also ensure consistency with the dimensionality used in the simulated dataset and maintain uniformity throughout the analyses. Regarding the 8-dimensional space, since it is not central to the analysis, I suggest removing the TPD approach for this case to avoid introducing unnecessary variability, while clearly justifying this decision as a limit of the package in the text.
-Furthermore, upon focusing on Supplementary Figure 11, I have a concern. Based on the description in the main text, I understand that the analyses are performed starting from a single trait space (comprising 118 points), where species are removed either randomly or based on actual extinction events, and metrics are then recalculated. This approach seems appropriate for evaluating how species are distributed and how metric performance changes under different scenarios. However, the figure comparing extant and pre-1500 species leads me to wonder whether the trait spaces were recalculated based on the subset of species following extinctions. Am I correct in assuming that the analyses are based on a single trait space constructed with all 118 points?}
+% TODO: double check the definition and make sure it aligns with the correct one. Say we fucked up explanation because of the negative effect (i.e. removing X is the same as keeping not X).
 
-\textcolor{blue}{Discussion: While I appreciate the revisions and the inclusion of the Caveats section, I feel that Box 2 might not add substantial value, as it primarily refers to previously published materials rather than the manuscript's main findings. Expanding the Results/Discussion section instead could be more beneficial. For instance, the simulations were performed across 2, 4, and 8 dimensions, and the metrics and their relationships seem to vary across these spaces with different dimensionalities. Addressing this aspect in greater detail would add significant value to the manuscript and better align with its stated aims.}
+\textcolor{blue}{Lines 280-289: It seems that I may need further clarification regarding the second step of the scaling.
+If the data are only divided by the maximum value, the results would generally have a maximum of 1 in cases of consistently negative or positive metrics across all levels of species exclusion (e.g., -2/-2 = 1 and +2/+2 = 1).
+Similarly, when some metrics have negative values and others are positive (across different levels of removal), the range would not necessarily be constrained between -1 and 1 unless all values fall within the range [0, 1] (e.g., functional richness might not range between -1 and 1).
+Furthermore, I am concerned that this second scaling could reduce or bias the patterns of the metrics, potentially affecting the conclusions of the manuscript.
+For instance, in Supplementary Figure 8 (simulated data for 4 dimensions), taking FD:FEve for facilitation as a reference, subtracting the MetricStressor from the MetricNull results in a relatively linear pattern, with a general decrease in evenness as species removal increases (if I am seeing well from the figure), which aligns with expectations under this mechanism.
+However, in Figure 2, the same metric exhibits a more drastic decrease in stressor evenness at 60\% and an increase at 80\%, challenging to reconcile with the expected mechanism, given that the data were simulated to approximate a facilitation mechanism.
+A similar trend can be observed across other examples (e.g., Supplementary Figures with raw data), which may explain the contrasting patterns between historical and extant empirical data, with some metrics showing fewer extreme differences than observed.
+I suggest further exploring the impact of this second scaling on the final results.}
 
-\textcolor{blue}{Supplementary Table 1: This table is a valuable addition to the manuscript. However, geographical location or landmark coordinates should not be considered a trait of an observation, particularly when applying the definition of a trait as used throughout the text (e.g., Violle et al. 2007 and others). Additionally, I suggest revising the terminology in the same column to avoid defining a 'trait' as a 'trait'; using terms like 'characteristic' or 'aspect of observations' might align better with the main text's definitions. Finally, I recommend considering the inclusion of this table in the main text, as it enhances the reader's understanding of the concepts presented.}
+% TODO: re double checking how the scaling works and what it does to the data!
 
-\textcolor{blue}{Supplementary Figures 7–10: I appreciate the addition of the new figures showing the raw metrics. However, given the range of the values (particularly for functional richness) and the legend indicating that the metrics are scaled, it is unclear to me what the values are referencing. I suggest not scaling the metrics in this case, as they should naturally correspond to the same units as the null values, ensuring clarity and consistency. This adjustment would enhance the interpretability of the data.}
+\textcolor{blue}{Figure 1: To enhance readability, I suggest including a legend for the colours (orange and blue) directly in the figure, not just in the caption.
+I appreciate the improvements made to expand the figure.
+However, if metrics C to F are scaled for the null mechanisms, I assume that in the first two panels of section G, the term 'scaled' could be removed, as they likely represent the actual metric used to compute the scaled metric in panel 3.
+If the metrics are further scaled, this should be clarified in the text.
+For completeness and readability, I also suggest explicitly adding the details of the second scaling performed relative to the four levels of removal.}
 
-\textcolor{blue}{Supplementary Tables 6–18: I suggest including the measured metrics in addition to the differences currently reported. Additionally, I noticed that some mechanisms (e.g., Tables 8, 10, 12, 14, and 16) show differences that warrant double-checking. For example, if the reported values are raw, the differences for functional divergence with TPD should be constrained between 0 and 1, as the metric itself is bounded within this range. However, some values in the tables exceed this limit. Finally, could you clarify how the SES is calculated in these cases?}
+% TODO: add colour legend to the plot
+% TODO: distinguish between the two scalings in the figure
+% TODO: expand scaling explanation in the caption
+
+
+\textcolor{blue}{Lines 330 – 335/ Figure 4: I appreciate the clarification regarding the TPD metric.
+However, I regret to say that comparing a metric built on four dimensions with one working on five dimensions does not seem appropriate, particularly given the aims of the manuscript.
+Considering the amount of variation explained by the first four dimensions (Supplementary Figure 11) and the manuscript's focus on exploring metric performance with a real dataset rather than depicting bird diversity after extinction, standardizing the dimensionality across all metrics is necessary.
+This approach would enable a fair comparison, even if it requires a slight compromise on the 95\% variation threshold, targeting approximately 90\% instead (as observed in the histogram for four dimensions, which aligns with the minimum number of dimensions recommended by Pigot et al. 2020).
+This adjustment is particularly important, as metric performance may vary significantly across different dimensionalities (e.g., metrics evaluated across 2, 4, or 8 dimensions).
+Standardizing to four dimensions would also ensure consistency with the dimensionality used in the simulated dataset and maintain uniformity throughout the analyses.
+Regarding the 8-dimensional space, since it is not central to the analysis, I suggest removing the TPD approach for this case to avoid introducing unnecessary variability, while clearly justifying this decision as a limit of the package in the text.
+Furthermore, upon focusing on Supplementary Figure 11, I have a concern.
+Based on the description in the main text, I understand that the analyses are performed starting from a single trait space (comprising 118 points), where species are removed either randomly or based on actual extinction events, and metrics are then recalculated.
+This approach seems appropriate for evaluating how species are distributed and how metric performance changes under different scenarios.
+However, the figure comparing extant and pre-1500 species leads me to wonder whether the trait spaces were recalculated based on the subset of species following extinctions.
+Am I correct in assuming that the analyses are based on a single trait space constructed with all 118 points?}
+
+
+% TODO: clarify the artificial extinctions in the birds dataset (yes, we always start from 118 points).
+% TODO: Remove TPD metric altogether when it's not calculable?
+% TODO: double check if that's what the reviewer means.
+
+\textcolor{blue}{Discussion: While I appreciate the revisions and the inclusion of the Caveats section, I feel that Box 2 might not add substantial value, as it primarily refers to previously published materials rather than the manuscript's main findings.
+Expanding the Results/Discussion section instead could be more beneficial.
+For instance, the simulations were performed across 2, 4, and 8 dimensions, and the metrics and their relationships seem to vary across these spaces with different dimensionalities.
+Addressing this aspect in greater detail would add significant value to the manuscript and better align with its stated aims.}
+
+% TODO: say we're keeping Box 2 because.
+% TODO: but also develop points they want.
+
+\textcolor{blue}{Supplementary Table 1: This table is a valuable addition to the manuscript.
+However, geographical location or landmark coordinates should not be considered a trait of an observation, particularly when applying the definition of a trait as used throughout the text (e.g., Violle et al. 2007 and others).
+Additionally, I suggest revising the terminology in the same column to avoid defining a 'trait' as a 'trait'; using terms like 'characteristic' or 'aspect of observations' might align better with the main text's definitions.
+Finally, I recommend considering the inclusion of this table in the main text, as it enhances the reader's understanding of the concepts presented.}
+
+% TODO: add the table to the main text
+% TODO: say we keep our definition of a trait as "measurable characteristic" (but that we use the more common defintion for the simulations)
+
+\textcolor{blue}{Supplementary Figures 7–10: I appreciate the addition of the new figures showing the raw metrics.
+However, given the range of the values (particularly for functional richness) and the legend indicating that the metrics are scaled, it is unclear to me what the values are referencing.
+I suggest not scaling the metrics in this case, as they should naturally correspond to the same units as the null values, ensuring clarity and consistency.
+This adjustment would enhance the interpretability of the data.}
+
+% TODO: redo the supplementary plots but with different scale bars for every plot (and don't do the scaling)
+
+\textcolor{blue}{Supplementary Tables 6–18: I suggest including the measured metrics in addition to the differences currently reported.
+Additionally, I noticed that some mechanisms (e.g., Tables 8, 10, 12, 14, and 16) show differences that warrant double-checking.
+For example, if the reported values are raw, the differences for functional divergence with TPD should be constrained between 0 and 1, as the metric itself is bounded within this range.
+However, some values in the tables exceed this limit.
+Finally, could you clarify how the SES is calculated in these cases?}
+
+% TODO: double check what's in the tables
+% TODO: in caption, explain how SES is calculated (reference the R package)
 
 \textcolor{blue}{Lastly, I recommend a thorough review of the text, as I noticed several instances of missing punctuation throughout.}
 
