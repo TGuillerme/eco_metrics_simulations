@@ -165,8 +165,7 @@ Note that the distinction between what, how and why is not categorical in its na
 \hrule
 \bigskip
 
-While the first part of this framework (``what?'') has been studied extensively in the last decade, this was often undertaken outside of the ``what, how and why'' framework.
-Here we argue that the pattern description, although the basis of any future study, often follows some framework without a proper evaluation of its adequacy to answer the how and why.
+Although some previous work has been done in understanding patterns in the context of mechanisms and process (e.g. \cite{novack2016general1,novack2016general2}), we argue that often the pattern description follows some previously used framework without a proper evaluation of its adequacy to answer the how and why.
 The choice of the tool or metric used to describe the pattern is crucial for allowing us to understand the process and the mechanism.
 Using an inappropriate metric for describing a pattern can lead to biased conclusions.
 For example, let us imagine one is interested in understanding how two populations compete with each other for a resource (the mechanism - ``why?'') on two islands, one home to both populations and another one home to only one of the population (the process - ``how?'').
@@ -213,20 +212,20 @@ For example $D_{20}$ is the distance that excludes any $n_{20}$ pairs of points 
 Note that this algorithm is not directly based on the change of average density but rather on the change in pairwise distance between observations.
 This approximates our \textbf{facilitation mechanism} (i.e. the points left are only ones that are close to at least another point in space).
 We chose this algorithm to approximate the facilitation mechanism where a stressor could increase the probability of extinction for observations that are more isolated in the trait space.
-I.e. pairs of observations that share similar trait combinations are more likely to remain (i.e. observations adjacent to each other in the trait space).
+In other words, pairs of observations that share similar trait combinations are more common in the trait space than observations with dissimilar trait combinations (i.e. observations adjacent to each other in the trait space are more likely compared to common ones).
 
 \item Shifting space: by removing the required amount of data from a distance (radius) $\rho'$ of the observation with the maximum numerical value on all dimensions.
 This is similar to the decreasing size algorithm but instead of choosing $\rho$ to be the radius from the centre of the trait space, $\rho'$ is a radius from the ``top right corner'' of the trait space.
-In other words the centre of the radius $\rho'$ is the observation with the highest numerical value on all dimensions - in a 2D representation this is the observation in the top right corner (with $\rho'_{20} > \rho'_{40} > \rho'_{60} > \rho'_{80}$).
+In other words the centre of the radius $\rho'$ is the observation with the highest numerical value on all dimensions, in a 2D representation this is the observation in the top right corner (with $\rho'_{20} > \rho'_{40} > \rho'_{60} > \rho'_{80}$).
 This approximates our \textbf{filtering mechanism}.
 We chose this algorithm to approximate a flitering mechanism assuming a stressor that could increase the probability of extinction for observations further from some trait combination optimum.
 This is similar to our equalising mechanism approximation but with the optimum not being in the center of the trait space (a region with a high density of observations) but with the optimum being in a corner of the trait space (a region with low density).
 
 \item Increasing evenness: by resampling the proportion of data (i.e. 20\%, 40\%, 60\% or 80\%) but with skewed resampling probabilities.
 In brief, this algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations.
-This is done by selecting $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' \citep[\texttt{bw.nrd0()} function in \texttt{R};][]{silverman1986density}.
+This is done by selecting $B$ discrete categories to summarise the distribution - i.e. bandwidths - using Silverman's ``rule of thumb'' \citep[\texttt{bw.nrd0} function in \texttt{R};][]{silverman1986density}.
 Each discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
-Where $p$ is a factor increasing the scaling power of the algorithm (here we used $p=3$).
+Where $p$ is a factor increasing the scaling power of the algorithm (here we arbitrarily used $p=3$ which was a relatively low scaling value that still resulted in visible changes observable in 2D).
 In other words, observations in categories with a low density ($b<0.5$) were more likely to be resampled and the ones in categories with high density ($b>0.5$) were less likely to be resampled.
 This approximates our \textbf{competition mechanism}, where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.
 We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination.
@@ -381,7 +380,7 @@ Traits were log transformed and standardised to a mean of $0$ and standard devia
 
 The full trait dataset comprised $118$ bird species, all native species known to have existed on these islands over the last $125,000$ years.
 $55$ species are known to have gone extinct prior to $1500$ CE and $26$ after $1500$ CE.
-Note that we used the extinct species data as presented in \cite{matthews2023global}, and thus we do not include de Hawaiian species declared extinct by the IUCN in $2024$.
+Note that we used the extinct species data as presented in \cite{matthews2023global}, and thus we do not include Hawaiian species declared extinct by the IUCN in $2024$.
 For our analyses, we focused on two time periods: (i) the avifauna present in $1500$ CE (the ``historic dataset'') and (ii) the current native avifauna (``extant dataset'').
 We represented the distinct reductions in species richness preceding these two time periods as our two stressors, the first one representing all pre-$1500$ CE extinctions (i.e., $118-55$ species; a species richness reduction of 46\%) and the second all the extinctions that have occurred until the present (i.e., $118-(55+26)$ species; a species richness reduction of 69\%).
 
@@ -448,7 +447,7 @@ However, some metrics (e.g. the Functional evenness based on the hypervolume) ca
 This means that changes in metric values can be counter intuitive and should always been interpreted in the context of the metric, data and question at hand.
 
 For example, say one is interested in looking at changes in functional diversity using a divergence metric calculated with the probability density method (e.g. \texttt{TPD::REND}).
-They can apply this metric to their trait space and get two relative metric scores of, say, $0.7$ and $0.65$ (pattern) for two levels of extinction (process).
+They can apply this metric to their trait space and get two relative metric scores of $0.7$ and $0.65$ (pattern) for two levels of extinction (process).
 The interpretation of this score as a change in functional diversity will depend on the worker's assumption of which mechanism affected the trait space.
 In our simulations, if the mechanism approximated was the equalising one, the pattern can clearly be interpreted as a change in functional diversity, but if the mechanism is a facilitation one, the pattern can be meaningless (i.e. not clearly distinguishable from a null mechanism - Fig. \ref{Fig:simulation_results} shows this example by contrasting row 5, columns 1 and 2).
 In this made up example, the procedure is done in reverse order where the the pattern is specified first and then the process and the mechanism (``What process and mechanism are needed to interpret pattern X?'').
@@ -467,7 +466,9 @@ This could lead to the interpretation that the trait space was not changed under
 However, when using a different metric (say the Rao's quadratic entropy based on distance matrices), the results would indicate that a reduction of specific areas of the trait space could have also occured before $1500$ leading to very different interpretation of the results.
 
 
-Our results indicating that the loss of functional diversity (based on several metrics) was not more than expected by chance when focusing on all extinctions could be due to the fact that although most global bird species are (or were, if accounting for anthropogenic extinctions) passerines (approximatively $58$\%), the majority of global known anthropogenic extinctions (approx. $75$\%) have been non-passerines, which tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
+Our results show that the loss of  functional diversity for several metrics was not more than expected by chance.
+This could be due to the taxonomic distribution of the extinct birds: this example data has approximatively $58$\% passerines while the majority of anthropogenic extinctions have been affecting non-passerines (approximatively $75$\%).
+These species tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).
 However, in Hawaii, where the same proportion of known species were passerines (approx. $58$\%), the opposite is true: the majority of extinctions (approx. $60$\%) have been of passerine species.
 It is important to note that we are not implying that there existed little morphological variation within extinct Hawaiian passerines - indeed, many of these extinctions involved the honeycreepers, a famous adaptive radiation involving substantial evolution of beak morphology \citep{Walther2022} - but simply that this morphological variation is less than that observed across all birds.
 Given that the proportion of known Hawaiian species that are / were passerines roughly matches the proportion of extinct species that were passerines, our results indicate that these extinct species were more functionally similar than expected, thus relatively \textit{increasing} trait diversity (i.e. relative to random extinctions).
@@ -545,7 +546,7 @@ Although asking \textbf{why} and \textbf{how} is a relatively standard step in t
 \subsubsection{Find the type of metrics of interest:}
 
 Once the one has clearly defined the pattern they want to capture (\textbf{what}), we believe it gets easier to pick up the type of metric that would be the most adequate.
-For example, we can follow the suggestions from \cite{mammola2021concepts} (Table \ref{Tab:box2}).
+For example, we can follow the suggestions from \cite{mammola2021concepts} highlighting which kind of methodological pipeline best supports which type of metric of interest (Table \ref{Tab:box2}).
 
 \begin{table}
 \center

@@ -106,27 +106,57 @@ Thomas Guillerme, on behalf of all co-authors.
 \textcolor{blue}{Thank you for dedicating your time and attention to addressing the comments. Your manuscript has significantly improved in readability, content, discussion, and interpretations. The addition of the text box at the end is particularly appreciated, as it effectively highlights the key message of the manuscript. At this stage, I only recommend minor revisions, and after those are addressed, I recommend the manuscript for publication. Below I provided my minor comments and edits to the manuscript.}
 
 \textcolor{blue}{Line 89-90: I think that some references are necessary here.}
+We changed this sentence and merged it with the next one after discovering some previously missed literature:
+
+\textit{Although some previous work has been done in understanding patterns in the context of mechanisms and process (e.g. \cite{novack2016general1,novack2016general2}), we argue that often the pattern description follows some previously used framework without a proper evaluation of its adequacy to answer the how and why.} Lines @@@.
 
 \textcolor{blue}{Line 175-177: This sentence is not very clear. I recommend rephrasing.}
 
+We rephrased the sentence to:
+
+\textit{In other words, pairs of observations that share similar trait combinations are more common in the trait space than observations with dissimilar trait combinations (i.e. observations adjacent to each other in the trait space are more likely compared to common ones).} Lines @@@
+
 \textcolor{blue}{Line 183: Remove “-“.}
+
+We replaced the dash by a comma.
 
 \textcolor{blue}{Line 196: I don’t think you need the brackets when citing the function. }
 
+We removed the brackets.
+
 \textcolor{blue}{Line 201: Please explain why you chose p = 3.}
+
+We've now explained why we chose p=3:
+
+\textit{here we arbitrarily used $p=3$ which was a relatively low scaling value that still resulted in visible changes observable in 2D} Lines @@@.
 
 \textcolor{blue}{Line 322: Correct “de Hawaiian species”.}
 
-\textcolor{blue}{Line 339: I would recommend placing figure 2 after the first results paragraph.}
+We fixed the type.
 
+\textcolor{blue}{Line 339: I would recommend placing figure 2 after the first results paragraph.}
 \textcolor{blue}{Figure 3: I would recommend placing figure 3 in the results section. }
+
+The placing of figures is done automatically here by the compiler.
+But we'll make sure to forward this suggestion to the copy editors after the manuscript is accepted.
 
 \textcolor{blue}{Line 388: Remove “say”.}
 
+We remove the word ``say''.
+
 \textcolor{blue}{Line 426-432: Please rephrase and simplify.}
+
+We've now simplified the sentence to:
+
+\textit{Our results show that the loss of  functional diversity for several metrics was not more than expected by chance.
+This could be due to the taxonomic distribution of the extinct birds: this example data has approximatively $58$\% passerines while the majority of anthropogenic extinctions have been affecting non-passerines (approximatively $75$\%).
+These species tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).} Lines @@@
 
 \textcolor{blue}{Line 542: Please specify what suggestions you are referring to.}
 
+We've now specified the following:
+
+\textit{For example, we can follow the suggestions from \cite{mammola2021concepts} highlighting which kind of methodological pipeline best supports which type of metric of interest (Table 3).} Lines @@@
 
 \textcolor{blue}{\textbf{Reviewer: 3}}
 
@@ -148,14 +178,14 @@ Given this, it is unclear why a single trait is simulated as multidimensional.
 This approach feels unnecessarily complex, potentially confounding the reader and introducing covariation that should be tested.
 To clarify, a trait is typically defined as a single measurable characteristic of an organism, particularly when considering the definition referenced in Violle et al. (2007).
 The concept of multidimensionality in trait spaces usually applies when multiple traits are combined into a matrix, with each column representing a distinct trait or a principal component summarizing trait variation.
-However, it is not common practice to describe a single trait using multiple variables (i.e., columns or dimensions).
+However, it is not common practice to describe a single trait using multiple variables (i.e., columns or dimensions).}
 
-Regarding the statement in Lines 132–135:
+\textcolor{blue}{Regarding the statement in Lines 132–135:
 \textit{“These aspects are often expressed in one dimension but can in fact be described in any number of dimensions. For example, for trait defined as “leaf insertion angle”, this can measured in one dimension (an angle in degrees) or three dimensions (the same angle expressed as the trigonometric relation of three sides of a triangle).”}
 While this explanation clarifies the authors’ definition of a “multidimensional trait,” it appears to complicate the methodology.
-If traits are often expressed in a single dimension (e.g., angle in degrees), I do not see the necessity to simulate them as “a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensions.” (lines 128-129 If I understood the text correctly, this approach results in a trait space built around a single trait defined by multiple dimensions.
+If traits are often expressed in a single dimension (e.g., angle in degrees), I do not see the necessity to simulate them as “a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensions.” (lines 128-129 If I understood the text correctly, this approach results in a trait space built around a single trait defined by multiple dimensions.}
 
-Instead, it would be more intuitive and broadly applicable to simulate 2, 4, or 8 separate traits.
+\textcolor{blue}{Instead, it would be more intuitive and broadly applicable to simulate 2, 4, or 8 separate traits.
 These traits, together, would define a 2-, 4-, or 8-dimensional trait space.
 Since these traits would be uncorrelated, they would correspond directly to the same number of principal components, aligning with the definition of dimensions provided in Supplementary Table 1.
 Moreover, simulating a single multidimensional trait may inadvertently introduce covariation across dimensions.
