@@ -197,7 +197,20 @@ Finally, simulating independent traits using Brownian motion without fixing the 
 Homogeneity of variance may introduce similar bias in the simulated mechanisms and it is far from approximating a set of independent trait or dimensions.
 I belive that simulating independent trait may mitigate that concern.}
 
-% TODO:  Change the trait definition from single to multiple. And say it's because in treats "traits" are treated as processes in n-dimensions but that we agree that this is adds extra complication here.
+We have changed the description of the trait to multiple uni-dimensional traits.
+We used (and maybe insisted on) the previous definition of a single uncorrelated multidimensional trait because the way they can be defined in the \texttt{treats} package (a trait = any number of dimensions as long as the process is the same).
+We changed the description to the following:
+
+\textit{First, we simulated multiple independent random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
+We simulated either 2, 4 or 8 independent (uncorrelated) Brownian Motion traits (equivalent to 2, 4 or 8 dimensional traits).} Lines @@@
+
+However, we kept the broader definition of trait.
+\citealt{violle2007let} provided an ``unambiguous definition of plant trait, with a particular emphasis on functional trait'', which as per the authors aims was proposed to clarify and and conceptualise the definition on functional traits (``a surrogate of organismal performance'') specifically in plant ecology.
+Here we build on \citealt{mcgill2006rebuilding}'s more generalised approach, and, more interestingly on the work of \citealt{dawson2021traits} of how ecologists _actually_ operationalise the concept of trait based on researchers understanding vs. proposed definitions.
+We propose through the paragraph on lines @@@ to expand that to ``any measurable aspect of an organism'' which we hope allows expansion beyond one dimensional traits and, more importantly, beyond ecology.
+I.e. we believe that this definition of trait more accurately also includes how traits are used in microbiology (e.g. bacterial colony shape), macroevolution (e.g. 3D geometric morphometrics) or in palaeontology (e.g. ``position of a specific foramen in a skull relative to another feature'').
+
+% TODO: also define this in the new in-text glossary table.
  
 \textcolor{blue}{Lines 191 – 209: This paragraph includes parts that require clarification.
 It begins by stating that the 'algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations', which corresponds to the equation ix(1-b)p.
