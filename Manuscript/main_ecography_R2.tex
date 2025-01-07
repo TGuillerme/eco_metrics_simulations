@@ -182,8 +182,8 @@ We show that, that with a fixed process and mechanisms approximation, the choice
 \section{Methods}
 \subsection{Simulating trait space patterns}
 
-First, we simulated a single random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
-This trait was simulated either as a 2, 4 or 8 dimensional trait, in other words a Brownian Motion simulated in a 2, 4 or 8 dimensions.
+First, we simulated multiple independent random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
+We simulated either 2, 4 or 8 independent (uncorrelated) Brownian Motion traits (equivalent to 2, 4 or 8 dimensional traits).
 Note here that we refer to traits as any measurable aspect of an organism (\textit{sensu} \cite{mcgill2006rebuilding} - but see \cite{dawson2021traits} for nuances in what researchers perceive).
 These aspects are often expressed in one dimension but can in fact be described in any number of dimensions.
 For example, for trait defined as ``leaf insertion angle'', this can measured in one dimension (an angle in degrees) or three dimensions (the same angle expressed as the trigonometric relation of three sides of a triangle).
