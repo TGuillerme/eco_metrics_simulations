@@ -14,7 +14,7 @@
 #' @export
 
 ## Extract table
-extract.table <- function(results, centre = TRUE, scale.method) {
+extract.table <- function(results, centre = TRUE, scale = TRUE, scale.method) {
 
     # stop("DEBUG extract.table")
     # results <- all_results
@@ -35,17 +35,19 @@ extract.table <- function(results, centre = TRUE, scale.method) {
     }
 
     ## Scale all the metrics between each stressor
-    if(!missing(scale.method)) {
-        if(scale.method == "between") {
-            ## Merging all the results together to the the max per metric
-            metric_max <- apply(do.call(rbind, results), 2, function(x) return(max(abs(x))))
-            ## Scaling each result by its maximum
-            results <- lapply(results, function(X, max) t(apply(X, 1, function(x, max) return(x/max), max = metric_max)), max = metric_max)
-        }
-        ## Scale all the metrics within each stressor
-        if(scale.method == "within") {
-            ## Merging all the results together to the the max per metric
-             results <- lapply(results, function(one_results) apply(one_results, 2, function(X) return(X/max(abs(X)))))
+    if(scale) {
+        if(!missing(scale.method)) {
+            if(scale.method == "between") {
+                ## Merging all the results together to the the max per metric
+                metric_max <- apply(do.call(rbind, results), 2, function(x) return(max(abs(x))))
+                ## Scaling each result by its maximum
+                results <- lapply(results, function(X, max) t(apply(X, 1, function(x, max) return(x/max), max = metric_max)), max = metric_max)
+            }
+            ## Scale all the metrics within each stressor
+            if(scale.method == "within") {
+                ## Merging all the results together to the the max per metric
+                 results <- lapply(results, function(one_results) apply(one_results, 2, function(X) return(X/max(abs(X)))))
+            }
         }
     }
 
