@@ -47,7 +47,7 @@ simulated_data <- treats(bd.params = bd_params,
 ## We can then visualise the simulated data (just two show the process)
 par(mfrow = c(2, 1))
 plot(simulated_data, main = "The simulated BM through time")
-plot(simulated_data, main = "The 2D BM", trait = c(1,2))
+plot(simulated_data, main = "The 2D BM", trait = c(1,2), col = c("nodes" = "grey", "tips" = "blue"))
 
 ## The orange data points are node values and will be ignored
 ## Here we'll select only the tip values from the data
@@ -190,8 +190,8 @@ par(mfrow = c(6, 3), bty = "n")
 
 ## First line
 plot.text.box("A) Tree and trait\nsimulation:", cex = 2)
-plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (1D)", col = c(tips = "blue", "nodes" = "lightgrey"), ylab = "Trait 1")
-plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (2D)", col = c("lightgrey", "blue"), trait = c(1,2), xlab = "Trait 1", ylab = "Trait 2")
+plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (1D)", col = c("tips" = "blue", "nodes" = "lightgrey"), ylab = "Trait 1")
+plot(simulated_data, main = "Tree and trait simulation\nunder a BM process (2D)", col = c("tips" = "blue", "nodes" = "lightgrey"), trait = c(1,2), xlab = "Trait 1", ylab = "Trait 2")
 
 ## Stressors
 plot.text.box("B) Null mechanism:\nno specific\nmetric change", cex = 2)

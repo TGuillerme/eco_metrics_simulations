@@ -40,8 +40,10 @@ extract.table <- function(results, centre = TRUE, scale = TRUE, scale.method) {
             if(scale.method == "between") {
                 ## Merging all the results together to the the max per metric
                 metric_max <- apply(do.call(rbind, results), 2, function(x) return(max(abs(x))))
+                metric_min <- apply(do.call(rbind, results), 2, function(x) return(min(abs(x))))
                 ## Scaling each result by its maximum
-                results <- lapply(results, function(X, max) t(apply(X, 1, function(x, max) return(x/max), max = metric_max)), max = metric_max)
+                # results <- lapply(results, function(X, max) t(apply(X, 1, function(x, max) return(x/max), max = metric_max)), max = metric_max)
+                results <- lapply(results, function(X, max, min) t(apply(X, 1, function(x, max, min) return((x-min)/(max-min)), max = metric_max, min = metric_min)), max = metric_max, min = metric_min)
             }
             ## Scale all the metrics within each stressor
             if(scale.method == "within") {
