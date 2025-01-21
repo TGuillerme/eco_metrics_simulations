@@ -217,7 +217,15 @@ It begins by stating that the 'algorithm reduces the probability of resampling o
 However, if this algorithm is intended to approximate a competition mechanism ‘where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.’ and ‘We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination’ shouldn’t the pattern be the reverse?
 Furthermore, the formula, by subtracting 1 from the probability, seems to skew sampling towards less populated regions of the space, which, if I understand correctly, does not align with the concept of competitive exclusion.}
 
-% TODO: double check the definition and make sure it aligns with the correct one. Say we fucked up explanation because of the negative effect (i.e. removing X is the same as keeping not X).
+We believe the confusion stems from what probability we are talking here.
+In a way here we approximate both competitive exclusion (i.e. increased ``extinction'' in densely populated regions) the same way as increased ``survival'' in sparsely populated regions.
+The reviewer is true that these two mechanisms are fundamentally different in ecology but we believe that for our approximations, they result in the same patterns: extinction in dense region (due to high competition) and survival in sparse regions (due to low competition).
+
+The formula illustrates how we measure the probability of being sampled which is decreasing in densely populated regions.
+This probability of being sampled reflects the probability of ``surviving'', i.e. of not being removed from the simulation.
+We've now added this precision throughout the explanation:
+
+\textit{(or, inversely, observations are more likely to be ``preserved''/``surviving'' in less dense regions)}. Lines @@@
 
 \textcolor{blue}{Lines 280-289: It seems that I may need further clarification regarding the second step of the scaling.
 If the data are only divided by the maximum value, the results would generally have a maximum of 1 in cases of consistently negative or positive metrics across all levels of species exclusion (e.g., -2/-2 = 1 and +2/+2 = 1).

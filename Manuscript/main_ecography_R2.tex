@@ -255,7 +255,7 @@ This is done by selecting $B$ discrete categories to summarise the distribution 
 Each discrete category $B$ has an observed probability of sampling of $b$ (the proportion of observations in the category) and each observation then gets a probability of resampling scaling with the intensity of the stressor (the proportion of what to remove $i$) of $i \times (1-b)^{p}$. 
 Where $p$ is a factor increasing the scaling power of the algorithm (here we arbitrarily used $p=3$ which was a relatively low scaling value that still resulted in visible changes observable in 2D).
 In other words, observations in categories with a low density ($b<0.5$) were more likely to be resampled and the ones in categories with high density ($b>0.5$) were less likely to be resampled.
-This approximates our \textbf{competition mechanism}, where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space.
+This approximates our \textbf{competition mechanism}, where observations in dense regions of the trait space are more likely to be removed than in sparse regions of the trait space (or, inversely, observations are more likely to be ``preserved''/``surviving'' in less dense regions).
 We chose this algorithm to approximate a stressor that could increase the probability of extinction for observations that share traits combination.
 This could approximate the fact that observations that have similar trait combinations are more likely to go extinct due to competition (e.g. using the same resources). 
 \end{itemize}
