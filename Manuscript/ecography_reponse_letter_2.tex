@@ -86,13 +86,14 @@ Best regards,
 
 Thomas Guillerme, on behalf of all co-authors.
 
-\textcolor{blue}{Recommendation by the Subject Editor (Dr. Barry Brook):}
+% \textcolor{blue}{Recommendation by the Subject Editor (Dr. Barry Brook):}
 
 % \textcolor{blue}{While Reviewer 1 is largely satisfied with the improvements and only requests minor revisions (e.g., clarifying a few sentences, adding references, and fixing small typographical issues), Reviewer 2 identifies more substantive points that need further attention—particularly around your approach to comparing metrics across different dimensionalities, the conceptual definition of single vs. multiple traits, and the impact of your second scaling step on the observed patterns. Clarifying why and how you simulate trait dimensions and potentially standardising them at four dimensions for TPD comparisons, seem to be important for interpretability.}
 
 % \textcolor{blue}{In your revision,
 
 % - please focus on resolving these methodological and conceptual concerns to improve transparency and strengthen the presentation of your core findings.
+
 % - You will also need to address the referees’ points regarding:
 %   - the consistency of dimension usage,
 %   - the rationale for simulating “multidimensional” traits,
@@ -108,13 +109,13 @@ Thomas Guillerme, on behalf of all co-authors.
 \textcolor{blue}{Line 89-90: I think that some references are necessary here.}
 We changed this sentence and merged it with the next one after discovering some previously missed literature:
 
-\textit{Although some previous work has been done in understanding patterns in the context of mechanisms and process (e.g. \cite{novack2016general1,novack2016general2}), we argue that often the pattern description follows some previously used framework without a proper evaluation of its adequacy to answer the how and why.} Lines @@@.
+\textit{Although some previous work has been done in understanding patterns in the context of mechanisms and process (e.g. Novack-Gottshall (2016a,b))), we argue that often the pattern description follows some previously used framework without a proper evaluation of its adequacy to answer the how and why.} Lines 89-92. %@@@
 
 \textcolor{blue}{Line 175-177: This sentence is not very clear. I recommend rephrasing.}
 
 We rephrased the sentence to:
 
-\textit{In other words, pairs of observations that share similar trait combinations are more common in the trait space than observations with dissimilar trait combinations (i.e. observations adjacent to each other in the trait space are more likely compared to common ones).} Lines @@@
+\textit{In other words, pairs of observations that share similar trait combinations are more common in the trait space than observations with dissimilar trait combinations (i.e. observations adjacent to each other in the trait space are more likely compared to common ones).} Lines 175-178. %@@@
 
 \textcolor{blue}{Line 183: Remove “-“.}
 
@@ -128,7 +129,7 @@ We removed the brackets.
 
 We've now explained why we chose p=3:
 
-\textit{here we arbitrarily used $p=3$ which was a relatively low scaling value that still resulted in visible changes observable in 2D} Lines @@@.
+\textit{here we arbitrarily used $p=3$ which was a relatively low scaling value that still resulted in visible changes observable in 2D} Lines 202-203.% @@@.
 
 \textcolor{blue}{Line 322: Correct “de Hawaiian species”.}
 
@@ -150,13 +151,13 @@ We've now simplified the sentence to:
 
 \textit{Our results show that the loss of  functional diversity for several metrics was not more than expected by chance.
 This could be due to the taxonomic distribution of the extinct birds: this example data has approximatively $58$\% passerines while the majority of anthropogenic extinctions have been affecting non-passerines (approximatively $75$\%).
-These species tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).} Lines @@@
+These species tend to be larger and possess more unique morphological traits (thus resulting in relatively large reductions in functional diversity).} Lines 431-436. %@@@
 
 \textcolor{blue}{Line 542: Please specify what suggestions you are referring to.}
 
 We've now specified the following:
 
-\textit{For example, we can follow the suggestions from \cite{mammola2021concepts} highlighting which kind of methodological pipeline best supports which type of metric of interest (Table 3).} Lines @@@
+\textit{For example, we can follow the suggestions from Mammola et al. (2021) highlighting which kind of methodological pipeline best supports which type of metric of interest (Table 3).} Lines 545-547. %@@@
 
 \textcolor{blue}{\textbf{Reviewer: 3}}
 
@@ -201,16 +202,14 @@ We have changed the description of the trait to multiple uni-dimensional traits.
 We used (and maybe insisted on) the previous definition of a single uncorrelated multidimensional trait because the way they can be defined in the \texttt{treats} package (a trait = any number of dimensions as long as the process is the same).
 We changed the description to the following:
 
-\textit{First, we simulated multiple independent random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} \citep{rcore} using \texttt{treats} \citep{guillerme2024treats}.
-We simulated either 2, 4 or 8 independent (uncorrelated) Brownian Motion traits (equivalent to 2, 4 or 8 dimensional traits).} Lines @@@
+\textit{First, we simulated multiple independent random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} (R Core Team, 2024) using \texttt{treats} (Guillerme, 2024).
+We simulated either 2, 4 or 8 independent (uncorrelated) Brownian Motion traits (equivalent to 2, 4 or 8 dimensional traits).} Lines 124-124. %@@@
 
 However, we kept the broader definition of trait.
-\citealt{violle2007let} provided an ``unambiguous definition of plant trait, with a particular emphasis on functional trait'', which as per the authors aims was proposed to clarify and and conceptualise the definition on functional traits (``a surrogate of organismal performance'') specifically in plant ecology.
-Here we build on \citealt{mcgill2006rebuilding}'s more generalised approach, and, more interestingly on the work of \citealt{dawson2021traits} of how ecologists _actually_ operationalise the concept of trait based on researchers understanding vs. proposed definitions.
-We propose through the paragraph on lines @@@ to expand that to ``any measurable aspect of an organism'' which we hope allows expansion beyond one dimensional traits and, more importantly, beyond ecology.
+Violle et al. (2007) provided an ``unambiguous definition of plant trait, with a particular emphasis on functional trait'', which as per the authors aims was proposed to clarify and and conceptualise the definition on functional traits (``a surrogate of organismal performance'') specifically in plant ecology.
+Here we build on McGill et al. (2006)'s more generalised approach, and, more interestingly on the work of Dawson et al. (2021) of how ecologists \textit{actually} operationalise the concept of trait based on researchers understanding vs. proposed definitions.
+We propose through the paragraph on lines 124-139 to expand that to ``any measurable aspect of an organism'' which we hope allows expansion beyond one dimensional traits and, more importantly, beyond ecology.
 I.e. we believe that this definition of trait more accurately also includes how traits are used in microbiology (e.g. bacterial colony shape), macroevolution (e.g. 3D geometric morphometrics) or in palaeontology (e.g. ``position of a specific foramen in a skull relative to another feature'').
-
-% TODO: also define this in the new in-text glossary table.
  
 \textcolor{blue}{Lines 191 – 209: This paragraph includes parts that require clarification.
 It begins by stating that the 'algorithm reduces the probability of resampling observations in regions of the trait space that have many observations and increases it in regions that have few observations', which corresponds to the equation ix(1-b)p.
@@ -293,11 +292,10 @@ Furthermore, it is not entirely clear to us what the reviewer meant with the met
 Did they meant that spaces with different dimensionalities affect different metrics differently?
 We did mention the effect of the curse in the methods section:
 
-\textit{This curse changes the properties of space occupancy in a non-linear way depending on each observation's distribution and the number of dimensions.} lines @@@
-
+\textit{This curse changes the properties of space occupancy in a non-linear way depending on each observation's distribution and the number of dimensions.} lines 251-253.
 We now also mention it in the discussion:
 
-\textit{Note also that, as mentioned above, different dimensionalities can have different effects on the metrics, depending on both the traitspace and the metric nature \citep{bellman1957dynamic}.} Lines @@@
+\textit{Note also that, as mentioned above, different dimensionalities can have different effects on the metrics, depending on both the traitspace and the metric nature (Bellman et al., 1957).} Lines388-390. %@@@
 
 
 \textcolor{blue}{Supplementary Table 1: This table is a valuable addition to the manuscript.
@@ -309,7 +307,8 @@ We've now added the the glossary table (supplementary table 1) to the main text 
 We did however keep our broader definition of a trait as opposed to \cite{violle2007let}'s (see response to first comment of Reviewer 3 above).
 We have added this precision in the table:
 
-\textit{Note that our definition of a trait is a generalisation of \cite{violle2007let,mcgill2006rebuilding,dawson2021traits}'s suggestions which is expanded to include traits beyond the ones used for functional ecology (macroevolution, palaeontology, microbiology, etc.).} Lines @@@
+\textit{Note that our definition of a trait is a generalisation ofViolle et al. (2007); McGill et al.
+(2006); Dawson et al. (2021)’s suggestions which is expanded to include traits beyond the ones used for functional ecology (macroevolution, palaeontology, microbiology, etc.).} At the end of Table 1.
 
 \textcolor{blue}{Supplementary Figures 7–10: I appreciate the addition of the new figures showing the raw metrics.
 However, given the range of the values (particularly for functional richness) and the legend indicating that the metrics are scaled, it is unclear to me what the values are referencing.
