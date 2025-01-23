@@ -229,15 +229,26 @@ We've now added this precision throughout the explanation:
 
 \textcolor{blue}{Lines 280-289: It seems that I may need further clarification regarding the second step of the scaling.
 If the data are only divided by the maximum value, the results would generally have a maximum of 1 in cases of consistently negative or positive metrics across all levels of species exclusion (e.g., -2/-2 = 1 and +2/+2 = 1).
-Similarly, when some metrics have negative values and others are positive (across different levels of removal), the range would not necessarily be constrained between -1 and 1 unless all values fall within the range [0, 1] (e.g., functional richness might not range between -1 and 1).
-Furthermore, I am concerned that this second scaling could reduce or bias the patterns of the metrics, potentially affecting the conclusions of the manuscript.
+Similarly, when some metrics have negative values and others are positive (across different levels of removal), the range would not necessarily be constrained between -1 and 1 unless all values fall within the range [0, 1] (e.g., functional richness might not range between -1 and 1).}
+
+We did not use any metrics that output negative values.
+This means that the scaled and null centered values are always ranging between -1 and 1 in theory (even some values might not be achieved in practice).
+Hopefully the raw results in the supplementary materials now highlight this.
+
+\textcolor{blue}{Furthermore, I am concerned that this second scaling could reduce or bias the patterns of the metrics, potentially affecting the conclusions of the manuscript.
 For instance, in Supplementary Figure 8 (simulated data for 4 dimensions), taking FD:FEve for facilitation as a reference, subtracting the MetricStressor from the MetricNull results in a relatively linear pattern, with a general decrease in evenness as species removal increases (if I am seeing well from the figure), which aligns with expectations under this mechanism.
 However, in Figure 2, the same metric exhibits a more drastic decrease in stressor evenness at 60\% and an increase at 80\%, challenging to reconcile with the expected mechanism, given that the data were simulated to approximate a facilitation mechanism.
 A similar trend can be observed across other examples (e.g., Supplementary Figures with raw data), which may explain the contrasting patterns between historical and extant empirical data, with some metrics showing fewer extreme differences than observed.
 I suggest further exploring the impact of this second scaling on the final results.}
 
-% TODO: re double checking how the scaling works and what it does to the data!
-% USE SES instead?
+We are not entirely sure how to handle this comment.
+If we understood correctly, the reviewer suggests we use a different null scaling method to see how that changes the results for specific metrics.
+Doing so will certainly result in different results.
+Although we believe that there is no need to test a range of scaling methods since the null centering one was chosen specifically to make the results more readable in this specific paper: does metric A captures a ``directional'' change in a specific mechanism induced pattern and is this change distinguishable from a null mechanism induced pattern?
+
+We are definitely sure that there are more possibilities of metric combinations, pattern simulations, results summarising that would be of interest to readers but with our limited time resources, we decide to chose only the specific one presented in this manuscript.
+Thankfully though, we made this whole project entirely reproducible so hopefully some worker wishing to pursue our work could easily add and modify what we did here.
+
 
 \textcolor{blue}{Figure 1: To enhance readability, I suggest including a legend for the colours (orange and blue) directly in the figure, not just in the caption.
 I appreciate the improvements made to expand the figure.
@@ -310,13 +321,32 @@ We have now updated all these supplementary figures to show the raw results with
 \textcolor{blue}{Supplementary Tables 6–18: I suggest including the measured metrics in addition to the differences currently reported.
 Additionally, I noticed that some mechanisms (e.g., Tables 8, 10, 12, 14, and 16) show differences that warrant double-checking.
 For example, if the reported values are raw, the differences for functional divergence with TPD should be constrained between 0 and 1, as the metric itself is bounded within this range.
-However, some values in the tables exceed this limit.
-Finally, could you clarify how the SES is calculated in these cases?}
+However, some values in the tables exceed this limit.}
 
-% TODO: double check what's in the tables
-% TODO: in caption, explain how SES is calculated (reference the R package)
+Good spotting, the row names where mismatched (reversed) with the rows actual content.
+We have now fixed that in the supplementaries.
+
+\textcolor{blue}{Finally, could you clarify how the SES is calculated in these cases?}
+
+We used the Hedge's \textit{g} method to measure the standardised effect size (from the \texttt{effectsize} package) corrected for small sample sizes:
+
+\begin{equation}
+g = \frac{
+        median_{1} - median_{2}
+      }{
+    \sqrt{
+      \frac{
+           (n_{1}-1)\sigma_{1} + (n_{2}-1)\sigma_{2}
+          }{
+            n_{1}+n_{2}-2
+          }
+        }
+      }
+\end{equation}
 
 \textcolor{blue}{Lastly, I recommend a thorough review of the text, as I noticed several instances of missing punctuation throughout.}
 
+We have double checked the manuscript again.
+Hopefully there are no more typos.
 
 \end{document}
