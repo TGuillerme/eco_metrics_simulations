@@ -18,7 +18,7 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
-fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, empirical = FALSE, xlab, xlim = c(-1, 1), ...) {
+fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend = median, col.metrics, lm, null, metric.names = NULL, empirical = FALSE, xlab, xlim = c(-1, 1), remove.metrics = NULL, ...) {
 
     ## Get the plot parameters
     plot_params <- list(...)
@@ -45,7 +45,8 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                            grid  = FALSE,
                            xlab  = xlab,
                            xlim  = xlim,
-                           metric.names = metric.names)
+                           metric.names = metric.names,
+                           remove.metrics = remove.metrics)
             } else {
                 par(mar = c(5, 0, 4, 1))
                 ## Making the empty plot
@@ -54,7 +55,8 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                            add.x = TRUE,
                            add.y = FALSE,
                            xlim  = xlim,
-                           xlab  = xlab)
+                           xlab  = xlab,
+                           remove.metrics = remove.metrics)
 
                 ## Adding the data
                 if(!missing(lm)) {
@@ -67,8 +69,9 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                 } else {
                     null_data <- NULL
                 }
+
                 ## Plot the data
-                add.one.stressor(results[[one_stressor]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data)
+                add.one.stressor(results[[one_stressor]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data, remove.metrics = remove.metrics)
             }
         }
     } else {
@@ -80,7 +83,8 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
                    add.y = TRUE,
                    xlab  = xlab,
                    xlim  = xlim,
-                   metric.names = metric.names)
+                   metric.names = metric.names,
+                   remove.metrics = remove.metrics)
 
         ## Adding the data
         if(!missing(lm)) {
@@ -94,7 +98,7 @@ fancy.plot <- function(results, probs = c(0.025, 0.25, 0.75, 0.975), cent.tend =
             null_data <- NULL
         }
         ## Plot the data
-        add.one.stressor(results[[1]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data)
+        add.one.stressor(results[[1]], plot_params = plot_params, probs = probs, cent.tend = cent.tend, col = col.metrics, lm = model_data, null = null_data, remove.metrics = remove.metrics)
     }
 }
 
@@ -178,12 +182,41 @@ add.one.metric <- function(one_metric, plot_params, probs, cent.tend, col, lm_da
 }
 
 ## Adding the results for one stressor
-add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col, lm, null) {
+add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col, lm, null, remove.metrics) {
 
     ## Number of metrics
     n_metrics <- length(split.metric(one_results, just.names = TRUE))
     ## Number of levels
     n_levels <- ncol(one_results)/n_metrics
+
+    ## Remove potential metrics
+    if(!is.null(remove.metrics)) {
+
+        ## revert the numbering of the metrics to remove
+        revert_remove_id <- sort(abs(remove.metrics - (n_metrics+1)))
+
+        ## Update the results
+        remove_cols <- integer()
+        for(i in 1:length(revert_remove_id)) {
+            remove_cols <- c(remove_cols, (((revert_remove_id-1)*n_levels)[i]:((revert_remove_id)*n_levels)[i])[-1])
+        }
+        one_results <- one_results[,-remove_cols]
+        
+        ## Adjust the col vector
+        col <- col[-revert_remove_id]
+
+        ## Remove the model data
+        if(!is.null(lm)) {
+            lm <- lm[-revert_remove_id, ]
+        }
+        ## Remove the null data
+        if(!is.null(lm)) {
+            null <- null[-revert_remove_id, ]
+        }
+
+        ## Update the number of metrics
+        n_metrics <- n_metrics - length(remove.metrics)
+    }
 
     ## Set the colours
     if(length(col) != n_metrics) {
@@ -215,11 +248,8 @@ add.one.stressor <- function(one_results, plot_params, probs, cent.tend, col, lm
 }
 
 ## Creating an empty plot
-empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE,  plot.main, metric.names = NULL, xlab, xlim) {
+empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE, grid = TRUE, plot.main, metric.names = NULL, xlab, xlim, remove.metrics = NULL) {
     
-    ## Number of metrics
-    y_lim <- c(1,ncol(one_results))
-
     ## Scale values
     if(scaled) {
         x_lim <- c(-1, 1)
@@ -234,13 +264,6 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
         xlab <- "scaled difference from null"
     }
     
-    ## Base plot
-    if(add.x) {
-        plot(NULL, xlim = x_lim, ylim = y_lim, ylab = "", xlab = xlab, yaxt = "n", main = plot.main)
-    } else {
-        plot(NULL, xlim = x_lim, ylim = y_lim, ylab = "", xlab = "", xaxt = "n", yaxt = "n", main = plot.main)
-    }
-
     ## Get the metric names
     if(is.null(metric.names)) {
         metric_names <- fancy.names(split.metric(one_results, just.names = TRUE))
@@ -249,6 +272,27 @@ empty.plot <- function(one_results, scaled = TRUE, add.x = FALSE, add.y = FALSE,
     }
     n_levels <- ncol(one_results)/length(metric_names)
 
+    ## remove metrics
+    if(!is.null(remove.metrics)) {
+        ## Update the results
+        remove_cols <- integer()
+        for(i in 1:length(remove.metrics)) {
+            remove_cols <- c(remove_cols, remove.metrics[i]:(remove.metrics[i]+(n_levels-1)))
+        }
+        one_results <- one_results[,-remove_cols]
+        ## Update the metrics names
+        metric_names <- metric_names[-remove.metrics]
+    }
+
+    ## Number of metrics
+    y_lim <- c(1,ncol(one_results))
+
+    ## Base plot
+    if(add.x) {
+        plot(NULL, xlim = x_lim, ylim = y_lim, ylab = "", xlab = xlab, yaxt = "n", main = plot.main)
+    } else {
+        plot(NULL, xlim = x_lim, ylim = y_lim, ylab = "", xlab = "", xaxt = "n", yaxt = "n", main = plot.main)
+    }
 
     ## Add the y labels
     if(add.y) {

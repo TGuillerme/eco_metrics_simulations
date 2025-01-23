@@ -175,18 +175,18 @@ scaled_cent_results_4d1000 <- extract.table(all_results_4d1000, scale.method = "
 
 
 
-## Extracting all the results but not centred (still scaled)
-scaled_results_2d <- extract.table(all_results_2d, scale.method = "between", centre = FALSE)
-scaled_results_3d <- extract.table(all_results_3d, scale.method = "between", centre = FALSE)
-scaled_results_4d <- extract.table(all_results_4d, scale.method = "between", centre = FALSE)
-scaled_results_5d <- extract.table(all_results_5d, scale.method = "between", centre = FALSE)
-scaled_results_8d <- extract.table(all_results_8d, scale.method = "between", centre = FALSE)
-scaled_results_emp<- extract.table(empirical_results, scale.method = "between", centre = FALSE)
+# ## Extracting all the results but not centred (still scaled)
+# scaled_results_2d <- extract.table(all_results_2d, scale.method = "between", centre = FALSE)
+# scaled_results_3d <- extract.table(all_results_3d, scale.method = "between", centre = FALSE)
+# scaled_results_4d <- extract.table(all_results_4d, scale.method = "between", centre = FALSE)
+# scaled_results_5d <- extract.table(all_results_5d, scale.method = "between", centre = FALSE)
+# scaled_results_8d <- extract.table(all_results_8d, scale.method = "between", centre = FALSE)
+# scaled_results_emp<- extract.table(empirical_results, scale.method = "between", centre = FALSE)
 
-scaled_results_2d500 <- extract.table(all_results_2d500, scale.method = "between", centre = FALSE)
-scaled_results_4d500 <- extract.table(all_results_4d500, scale.method = "between", centre = FALSE)
-scaled_results_2d1000 <- extract.table(all_results_2d1000, scale.method = "between", centre = FALSE)
-scaled_results_4d1000 <- extract.table(all_results_4d1000, scale.method = "between", centre = FALSE)
+# scaled_results_2d500 <- extract.table(all_results_2d500, scale.method = "between", centre = FALSE)
+# scaled_results_4d500 <- extract.table(all_results_4d500, scale.method = "between", centre = FALSE)
+# scaled_results_2d1000 <- extract.table(all_results_2d1000, scale.method = "between", centre = FALSE)
+# scaled_results_4d1000 <- extract.table(all_results_4d1000, scale.method = "between", centre = FALSE)
 
 
 
@@ -424,11 +424,10 @@ dev.off()
 
 ```{r}
 ## The plot
-fancy.plot(scaled_cent_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names, pch = rep(19,4), xlim = c(-1, 1))
-
+fancy.plot(scaled_cent_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names, pch = rep(19,4), xlim = c(-1, 1), remove.metrics = c(4, 8, 12))
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_5d.pdf", height = 9, width = 9)
-fancy.plot(scaled_cent_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names, pch = rep(19,4), xlim = c(-1, 1))
+fancy.plot(scaled_cent_results_5d, col = col_vector, lm = model_fits_5d, null = null_differences_5d, metric.names = fancy_names, pch = rep(19,4), xlim = c(-1, 1), remove.metrics = c(4, 8, 12))
 dev.off()
 ```
 
@@ -439,7 +438,7 @@ fancy.plot(scaled_cent_results_8d, col = col_vector, lm = model_fits_8d, null = 
 
 ## Pdf version
 pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_8d.pdf", height = 9, width = 9)
-fancy.plot(scaled_cent_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names, pch = rep(19,4), xlim = c(-1, 1))
+fancy.plot(scaled_cent_results_8d, col = col_vector, lm = model_fits_8d, null = null_differences_8d, metric.names = fancy_names, pch = rep(19,4), xlim = c(-1, 1), remove.metrics = c(4, 8, 12))
 dev.off()
 ```
 
@@ -447,11 +446,11 @@ dev.off()
 
 ```{r}
 ## The plot
-fancy.plot(scaled_cent_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17), xlim = c(-1, 1))
+fancy.plot(scaled_cent_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17), xlim = c(-1, 1), remove.metrics = c(4, 8, 12))
 
 ## Pdf version
-pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 11, width = 3.5)
-fancy.plot(scaled_cent_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17), xlim = c(-1, 1))
+pdf(file = "../Manuscript/Figures/results_per_metric_per_stressor_emp.pdf", height = 10, width = 3.5)
+fancy.plot(scaled_cent_results_emp, col = col_vector, lm = NULL, null = null_differences_emp, metric.names = fancy_names, pch = c(19,15,17), xlim = c(-1, 1), remove.metrics = c(4, 8, 12))
 dev.off()
 ```
 
@@ -480,28 +479,6 @@ dev.off()
 
 
 
-
-
-## Raw results per metric
-
-```{r}
-
-pdf(file = "../Manuscript/Figures/scaled_results_per_metric_per_stressor_2d.pdf", height = 11, width = 8.5)
-fancy.plot(scaled_results_2d, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = rep(19,5), xlab = "scaled metric", xlim = c(0,1))
-dev.off()
-
-pdf(file = "../Manuscript/Figures/scaled_results_per_metric_per_stressor_4d.pdf", height = 11, width = 8.5)
-fancy.plot(scaled_results_4d, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = rep(19,5), xlab = "scaled metric", xlim = c(0,1))
-dev.off()
-
-pdf(file = "../Manuscript/Figures/scaled_results_per_metric_per_stressor_8d.pdf", height = 11, width = 8.5)
-fancy.plot(scaled_results_8d, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = rep(19,5), xlab = "scaled metric", xlim = c(0,1))
-dev.off()
-
-pdf(file = "../Manuscript/Figures/scaled_results_per_metric_per_stressor_emp.pdf", height = 11, width = 5.5)
-fancy.plot(scaled_results_emp, col = col_vector, lm = NULL, null = NULL, metric.names = fancy_names, pch = c(19,15,17), xlab = "scaled metric", xlim = c(0,1))
-dev.off()
-```
 
 
 
