@@ -16,6 +16,10 @@
 #' 
 #' @author Thomas Guillerme
 #' @export
+
+# data[[1]][c(8,9),  c(1, 4)] #OK
+# extracted_data[[1]][c(8,9), , drop = FALSE] #OK
+
 fancy.table <- function(data, columns, symbols = c("", ".", "*", "**", "***"), digits = 2) {
     ## Making the fancy table
     return(do.call(cbind, lapply(data, get.columns, columns, symbols, digits)))

@@ -242,6 +242,7 @@ columns_diff_ses <- c(columns_diff_ses,
                       lapply(columns_diff_ses, `+`, 4),
                       lapply(columns_diff_ses, `+`, 8),
                       lapply(columns_diff_ses, `+`, 12))
+
 null_table_2d   <- fancy.table(null_differences_2d, columns = columns_diff_ses, digits = 2)
 null_table_3d   <- fancy.table(null_differences_3d, columns = columns_diff_ses, digits = 2)
 null_table_4d   <- fancy.table(null_differences_4d, columns = columns_diff_ses, digits = 2)
@@ -297,76 +298,75 @@ change.names <- function(table, fancy_names, output = "xtable", colnames = FALSE
   return(table)
 }
 # kable(model_table_2d, caption = "Results of the model scaled metric ~ removal level per stressor (2D)", align = "c")
-print(xtable(change.names(model_table_2d, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (2D)"), file = "../Manuscript/Tables/results_model2d.tex")
+print(xtable(change.names(model_table_2d, rev(fancy_names)), caption = "Results of the model scaled metric $\\sim$ removal level per stressor (2D)"), file = "../Manuscript/Tables/results_model2d.tex")
 
-print(xtable(change.names(model_table_4d, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (4D)"), file = "../Manuscript/Tables/results_model4d.tex")
+print(xtable(change.names(model_table_4d, rev(fancy_names)), caption = "Results of the model scaled metric $\\sim$ removal level per stressor (4D)"), file = "../Manuscript/Tables/results_model4d.tex")
 
-print(xtable(change.names(model_table_8d, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (8D)"), file = "../Manuscript/Tables/results_model8d.tex")
+print(xtable(change.names(model_table_8d, rev(fancy_names)), caption = "Results of the model scaled metric $\\sim$ removal level per stressor (8D)"), file = "../Manuscript/Tables/results_model8d.tex")
 
-print(xtable(change.names(model_table_emp, fancy_names), caption = "Results of the model scaled metric ~ removal level per stressor (empirical data)"), file = "../Manuscript/Tables/results_empirical.tex")
+print(xtable(change.names(model_table_emp, rev(fancy_names)), caption = "Results of the model scaled metric $\\sim$ removal level per stressor (empirical data)"), file = "../Manuscript/Tables/results_empirical.tex")
 ```
 
 #### Printing the latex tables for the differences
 
 ```{r, echo = FALSE, eval = FALSE}
-print(xtable(change.names(null_table_2d[, 1:8], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_2d[, 1:8], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences2d_1.tex")
 
-print(xtable(change.names(null_table_2d[, 9:16], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_2d[, 9:16], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences2d_2.tex")
 
-print(xtable(change.names(null_table_2d[, 17:24], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_2d[, 17:24], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences2d_3.tex")
 
-print(xtable(change.names(null_table_2d[, 25:32], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_2d[, 25:32], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (2D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences2d_4.tex")
 
 
 
-print(xtable(change.names(null_table_4d[, 1:8], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_4d[, 1:8], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences4d_1.tex")
 
-print(xtable(change.names(null_table_4d[, 9:16], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_4d[, 9:16], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences4d_2.tex")
 
-print(xtable(change.names(null_table_4d[, 17:24], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_4d[, 17:24], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences4d_3.tex")
 
-print(xtable(change.names(null_table_4d[, 25:32], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_4d[, 25:32], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (4D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences4d_4.tex")
 
 
 
 
-print(xtable(change.names(null_table_8d[, 1:8], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_8d[, 1:8], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). EQ = equalising; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences8d_1.tex")
 
-print(xtable(change.names(null_table_8d[, 9:16], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_8d[, 9:16], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). FA = facilitation; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences8d_2.tex")
 
-print(xtable(change.names(null_table_8d[, 17:24], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_8d[, 17:24], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D). FI = filtering; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences8d_3.tex")
 
-print(xtable(change.names(null_table_8d[, 25:32], fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_8d[, 25:32], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (8D).CO = competition; d = difference, s = standardised effect size; 1 to 4 correspond to the levels of data removal (20\\%, 40\\%, 60\\% and 80\\%). Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differences8d_4.tex")
 
 
 
-print(xtable(change.names(null_table_emp, fancy_names, colnames = TRUE),
-  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each
-stressor (empirical); d = difference, s = standardised effect size. Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1."),
+print(xtable(change.names(null_table_emp[, ], rev(fancy_names)), colnames = TRUE,
+  caption = "Average difference between the null metric and the stressed metric (raw) for each level of removal and each stressor (empirical); d = difference, s = standardised effect size. Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1. Standardised effect size was calculated using the Hedges' \\textit{g} with a correction for small-sample bias (using \\texttt{effectsize::hedges_g})."),
   file = "../Manuscript/Tables/results_differencesempirical.tex")
 ```
 
