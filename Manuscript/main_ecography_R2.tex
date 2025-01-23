@@ -277,7 +277,7 @@ Therefore the prediction of how each different mechanism approximation would aff
 
 We repeated each simulation pipeline for 4 dimensional traits (generate a trait space and apply the stressor - Figure \ref{Fig:simulation_results}), and for 2 and 8 dimensional (see supplementary materials figures 1 and 2).
 In each pipeline, the dimensions where simulated as uncorrelated.
-We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait} - note that in the supplementary figures, we measured the \texttt{TPD} metrics on only the four first dimensions) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
+We limited our simulations to a relatively small number of dimensions due to the constraints of some of the metrics used (e.g., \texttt{TPD::TPDsMean} is only implemented for up to 4 dimensions; \citealt{carmona2019trait}) but also to avoid dealing with the curse of dimensionality \citep{bellman1957dynamic}.
 This curse changes the properties of space occupancy in a non-linear way depending on each observation's distribution and the number of dimensions.
 For example, the volume of a trait space (or hypervolume when using more than 3 dimensions) typically tends to zero in a high number of dimensions.
 However, the rate at which it approaches zero is not linear and depends on the distribution of each observation on every dimension.
@@ -347,7 +347,7 @@ Note that we focused here on three packages fully devoted to functional diversit
 
 \textbf{Aspect} & \textbf{Method} & \textbf{Name} & \textbf{Description} & \textbf{\texttt{R} function} & \textbf{Reference}\\
 \hline
-Richness & Trait Probability Density & Functional richness & Sum of cells where trait probability density $> 0$ & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+Richness & Trait Probability Density & Functional richness & Sum of cells where trait probability density $> 0$ & \texttt{TPD::REND}* & \cite{carmona2019trait}\\
  & \cr 
  & Kernel density hypervolume & Functional richness & Size (volume) of the hypervolume & \texttt{BAT::kernel.alpha} & \cite{mammola2020functional}\\
  & \cr
@@ -355,7 +355,7 @@ Richness & Trait Probability Density & Functional richness & Sum of cells where 
  & \cr
  & Dendrogram & Alpha diversity & Total branch length of the functional dendrogram & \texttt{BAT::alpha} & \cite{petchey2002functional,cardoso2015bat}\\
 \hline
-Divergence & Trait Probability Density & Divergence & Overlap between the TPD function of a single observation and the TPD function of the whole set of observations & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+Divergence & Trait Probability Density & Divergence & Overlap between the TPD function of a single observation and the TPD function of the whole set of observations & \texttt{TPD::REND}* & \cite{carmona2019trait}\\
  & \cr 
  & Kernel density hypervolume & Functional dispersion  & Average distance between an observation and a sample of random points within and the probabilistic hypervolume & \texttt{BAT::kernel.dispersion} & \cite{mammola2020functional}\\
  & \cr 
@@ -363,7 +363,7 @@ Divergence & Trait Probability Density & Divergence & Overlap between the TPD fu
  & \cr  
  & Distances & Rao's quadratic entropy & The mean Euclidean distance between every two random pairs of species & \texttt{FD::dbFD()\$RaoQ} & \cite{botta2005rao}\\
 \hline
-Regularity & Trait Probability Density & Functional evenness & An index of the spread of the trait distribution in an even spread of the distribution (e.g. the height of bins in a histogram) & \texttt{TPD::REND} & \cite{carmona2019trait}\\
+Regularity & Trait Probability Density & Functional evenness & An index of the spread of the trait distribution in an even spread of the distribution (e.g. the height of bins in a histogram) & \texttt{TPD::REND}* & \cite{carmona2019trait}\\
  & \cr 
  & Kernel density hypervolume & Functional evenness &  Overlap between a hypervolume and an imaginary hypervolume where dimensions are evenly distributed within their possible range & \texttt{BAT::kernel.evenness} & \cite{mammola2020functional}\\
  & \cr 
@@ -376,6 +376,7 @@ Regularity & Trait Probability Density & Functional evenness & An index of the s
 \caption{\scriptsize{\textbf{Functional diversity metrics tested in our simulations.}}
 }
 \label{Tab:metrics}
+* The \texttt{TPD} package currently only allows calculations for traitspaces up to four dimensions. This metric was exclude from traitspaces with more than four dimensions.
 \end{table}
 
 \subsubsection{Comparing and scaling the results to the random removals (null stressor)}
@@ -447,7 +448,6 @@ Furthermore, although we predicted some more common changes in aspects of functi
    \includegraphics[width=0.4\textwidth]{Figures/results_per_metric_per_stressor_emp.pdf}
 \caption{\scriptsize{\textbf{Empirical results:} the metrics and the scaled changes are measured in the same way as in figure 2 (green = richness, yellow = divergence, blue = regularity).
 Plain circles represent the metrics for the species present on Hawaii before 1500 (historic data; 46\% removal) and fainted squares for the species currently present on Hawaii (extant data; 69\% removal).
-\textbf{NOTE: for the \texttt{TPD} metrics, the metric is calculated using the 4 first dimensions only.}
 The model results (including $R^{2}$ and t-statistics) are available in supplementary table 4.
 }}
 \label{Fig:empirical_results}
