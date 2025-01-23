@@ -254,27 +254,40 @@ Considering the amount of variation explained by the first four dimensions (Supp
 This approach would enable a fair comparison, even if it requires a slight compromise on the 95\% variation threshold, targeting approximately 90\% instead (as observed in the histogram for four dimensions, which aligns with the minimum number of dimensions recommended by Pigot et al. 2020).
 This adjustment is particularly important, as metric performance may vary significantly across different dimensionalities (e.g., metrics evaluated across 2, 4, or 8 dimensions).
 Standardizing to four dimensions would also ensure consistency with the dimensionality used in the simulated dataset and maintain uniformity throughout the analyses.
-Regarding the 8-dimensional space, since it is not central to the analysis, I suggest removing the TPD approach for this case to avoid introducing unnecessary variability, while clearly justifying this decision as a limit of the package in the text.
-Furthermore, upon focusing on Supplementary Figure 11, I have a concern.
-Based on the description in the main text, I understand that the analyses are performed starting from a single trait space (comprising 118 points), where species are removed either randomly or based on actual extinction events, and metrics are then recalculated.
-This approach seems appropriate for evaluating how species are distributed and how metric performance changes under different scenarios.
-However, the figure comparing extant and pre-1500 species leads me to wonder whether the trait spaces were recalculated based on the subset of species following extinctions.
-Am I correct in assuming that the analyses are based on a single trait space constructed with all 118 points?}
+Regarding the 8-dimensional space, since it is not central to the analysis, I suggest removing the TPD approach for this case to avoid introducing unnecessary variability, while clearly justifying this decision as a limit of the package in the text.}
 
 We have now removed all the curves for the \texttt{TPD} metrics for any space of more than four dimensions (including the empirical space).
 We added this footnote to Table 3:
 
 \textit{-The \texttt{TPD} package currently only allows calculations for traitspaces up to four dimensions. This metric was exclude from traitspaces with more than four dimensions.}
-% TODO: clarify the artificial extinctions in the birds dataset (yes, we always start from 118 points).
-% TODO: double check if that's what the reviewer means.
+
+\textcolor{blue}{Furthermore, upon focusing on Supplementary Figure 11, I have a concern.
+Based on the description in the main text, I understand that the analyses are performed starting from a single trait space (comprising 118 points), where species are removed either randomly or based on actual extinction events, and metrics are then recalculated.
+This approach seems appropriate for evaluating how species are distributed and how metric performance changes under different scenarios.
+However, the figure comparing extant and pre-1500 species leads me to wonder whether the trait spaces were recalculated based on the subset of species following extinctions.
+Am I correct in assuming that the analyses are based on a single trait space constructed with all 118 points?}
+
+Yes, the empirical trait space is based on 118 observations split between three groups: 37 species present on the island today, 63 species that were present on island in 1500 and 18 species that went extinct before 1500.
+We believe that the confusion here might come from the equivalence between species present (63 at 1500 and 37 in the present) and species absent (55 (46\%) at 1500 and 81 (68\%) in the present).
+We have tried now to clarify this in the caption of the figure 3 and in the one from the supplementary figure concerning the dimensionality selection.
 
 \textcolor{blue}{Discussion: While I appreciate the revisions and the inclusion of the Caveats section, I feel that Box 2 might not add substantial value, as it primarily refers to previously published materials rather than the manuscript's main findings.
 Expanding the Results/Discussion section instead could be more beneficial.
 For instance, the simulations were performed across 2, 4, and 8 dimensions, and the metrics and their relationships seem to vary across these spaces with different dimensionalities.
 Addressing this aspect in greater detail would add significant value to the manuscript and better align with its stated aims.}
 
-% TODO: say we're keeping Box 2 because.
-% TODO: but also develop points they want.
+We believe that this specific point conflicts with reviewers 1 (``The addition of the text box at the end is particularly appreciated, as it effectively highlights the key message of the manuscript'' - reviewer 1 above).
+In this instance we thus prefer keeping the box 2 since we believe it might add value to at least some readers (and hopefully doesn't distract from the reading for other readers).
+Furthermore, it is not entirely clear to us what the reviewer meant with the metrics relationship ``varying across spaces with different dimensionalities''.
+Did they meant that spaces with different dimensionalities affect different metrics differently?
+We did mention the effect of the curse in the methods section:
+
+\textit{This curse changes the properties of space occupancy in a non-linear way depending on each observation's distribution and the number of dimensions.} lines @@@
+
+We now also mention it in the discussion:
+
+\textit{Note also that, as mentioned above, different dimensionalities can have different effects on the metrics, depending on both the traitspace and the metric nature \citep{bellman1957dynamic}.} Lines @@@
+
 
 \textcolor{blue}{Supplementary Table 1: This table is a valuable addition to the manuscript.
 However, geographical location or landmark coordinates should not be considered a trait of an observation, particularly when applying the definition of a trait as used throughout the text (e.g., Violle et al. 2007 and others).
