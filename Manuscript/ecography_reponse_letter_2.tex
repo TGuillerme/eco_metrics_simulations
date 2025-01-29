@@ -77,7 +77,7 @@
 Dear Editor,
 
 We are grateful for the detailed and useful comments from all two reviewers
-We have taken all their suggestions on board, integrated changes associated with the suggestion into the manuscript and responded to them in detail below
+We have integrated changes associated with the suggestion into the manuscript and responded to them in detail below
 For clarity we have displayed the \textcolor{blue}{reviewers' comments in blue} and our own responses in black
 We fully describe each change below.
 We have also attached a tracked change version of the manuscript to hopefully improve clarifying our changes.
@@ -107,15 +107,16 @@ Thomas Guillerme, on behalf of all co-authors.
 \textcolor{blue}{Thank you for dedicating your time and attention to addressing the comments. Your manuscript has significantly improved in readability, content, discussion, and interpretations. The addition of the text box at the end is particularly appreciated, as it effectively highlights the key message of the manuscript. At this stage, I only recommend minor revisions, and after those are addressed, I recommend the manuscript for publication. Below I provided my minor comments and edits to the manuscript.}
 
 \textcolor{blue}{Line 89-90: I think that some references are necessary here.}
+
 We changed this sentence and merged it with the next one after discovering some previously missed literature:
 
-\textit{Although some previous work has been done in understanding patterns in the context of mechanisms and process (e.g. Novack-Gottshall (2016a,b))), we argue that often the pattern description follows some previously used framework without a proper evaluation of its adequacy to answer the how and why.} Lines 89-92. %@@@
+\textit{Although some previous work has been done in understanding patterns in the context of mechanisms and processes (e.g. Novack-Gottshall (2016a,b))), we argue that often the pattern description follows some previously used framework without a proper evaluation of its adequacy to answer the how and why.} Lines 89-92. %@@@
 
 \textcolor{blue}{Line 175-177: This sentence is not very clear. I recommend rephrasing.}
 
 We rephrased the sentence to:
 
-\textit{In other words, pairs of observations that share similar trait combinations are more common in the trait space than observations with dissimilar trait combinations (i.e. observations adjacent to each other in the trait space are more likely compared to common ones).} Lines 175-178. %@@@
+\textit{In other words, pairs of observations that share similar trait combinations are more common in the trait space than observations with dissimilar trait combinations (i.e. observations adjacent to each other in the trait space are more common).} Lines 175-178. %@@@
 
 \textcolor{blue}{Line 183: Remove “-“.}
 
@@ -143,7 +144,7 @@ But we'll make sure to forward this suggestion to the copy editors after the man
 
 \textcolor{blue}{Line 388: Remove “say”.}
 
-We remove the word ``say''.
+We removed the word ``say''.
 
 \textcolor{blue}{Line 426-432: Please rephrase and simplify.}
 
@@ -202,7 +203,7 @@ We have changed the description of the trait to multiple uni-dimensional traits.
 We used (and maybe insisted on) the previous definition of a single uncorrelated multidimensional trait because the way they can be defined in the \texttt{treats} package (a trait = any number of dimensions as long as the process is the same).
 We changed the description to the following:
 
-\textit{First, we simulated multiple independent random time dependent trait (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} (R Core Team, 2024) using \texttt{treats} (Guillerme, 2024).
+\textit{First, we simulated multiple independent random time dependent traits (Brownian Motion) under a model where lineages only speciate (no extinction; i.e. a pure birth speciation model) until reaching 200 observations in \texttt{R} (R Core Team, 2024) using \texttt{treats} (Guillerme, 2024).
 We simulated either 2, 4 or 8 independent (uncorrelated) Brownian Motion traits (equivalent to 2, 4 or 8 dimensional traits).} Lines 124-124. %@@@
 
 However, we kept the broader definition of trait.
@@ -266,6 +267,8 @@ This adjustment is particularly important, as metric performance may vary signif
 Standardizing to four dimensions would also ensure consistency with the dimensionality used in the simulated dataset and maintain uniformity throughout the analyses.
 Regarding the 8-dimensional space, since it is not central to the analysis, I suggest removing the TPD approach for this case to avoid introducing unnecessary variability, while clearly justifying this decision as a limit of the package in the text.}
 
+
+% TODO: Do you think we should briefly explain why we decided to stick with 5 axes and removed TPD, rather than drop to 4 like they suggest?
 We have now removed all the curves for the \texttt{TPD} metrics for any space of more than four dimensions (including the empirical space).
 We added this footnote to Table 3:
 
@@ -286,7 +289,7 @@ Expanding the Results/Discussion section instead could be more beneficial.
 For instance, the simulations were performed across 2, 4, and 8 dimensions, and the metrics and their relationships seem to vary across these spaces with different dimensionalities.
 Addressing this aspect in greater detail would add significant value to the manuscript and better align with its stated aims.}
 
-We believe that this specific point conflicts with reviewers 1 (``The addition of the text box at the end is particularly appreciated, as it effectively highlights the key message of the manuscript'' - reviewer 1 above).
+We believe that this specific point conflicts with reviewer 1 (``The addition of the text box at the end is particularly appreciated, as it effectively highlights the key message of the manuscript'' - reviewer 1 above).
 In this instance we thus prefer keeping the box 2 since we believe it might add value to at least some readers (and hopefully doesn't distract from the reading for other readers).
 Furthermore, it is not entirely clear to us what the reviewer meant with the metrics relationship ``varying across spaces with different dimensionalities''.
 Did they meant that spaces with different dimensionalities affect different metrics differently?
