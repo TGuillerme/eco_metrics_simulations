@@ -267,8 +267,11 @@ This adjustment is particularly important, as metric performance may vary signif
 Standardizing to four dimensions would also ensure consistency with the dimensionality used in the simulated dataset and maintain uniformity throughout the analyses.
 Regarding the 8-dimensional space, since it is not central to the analysis, I suggest removing the TPD approach for this case to avoid introducing unnecessary variability, while clearly justifying this decision as a limit of the package in the text.}
 
+The aim of including the empirical data was not to compare the metrics directly \textit{per se} but rather to provide a second example that readers preferring real world data can hopefully relate to.
+In line with the aim, we have thus decided to keep the empirical dataset to 5 dimensions, namely to hopefully link it to a paper that is currently in preparation by some of the authors (with different objectives but a same subset of the data).
+Furthermore, reducing the dataset to 4 dimensions would require rerunning the full analyses which will require CPU time that we currently don't have available because of other projects using our allocated computational time.
 
-% TODO: Do you think we should briefly explain why we decided to stick with 5 axes and removed TPD, rather than drop to 4 like they suggest?
+We do agree with the reviewers point that including the \texttt{TPD} metrics that are limited to 4 dimensions can be misleading.
 We have now removed all the curves for the \texttt{TPD} metrics for any space of more than four dimensions (including the empirical space).
 We added this footnote to Table 3:
 
